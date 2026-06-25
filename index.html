@@ -6,9 +6,11 @@
 <title>Guilherme Fonseca — SFMC Portfolio</title>
 <style>
   :root {
-    --orange: #F54927;
-    --orange-bright: #FF846E;
-    --ink: #0a2c22;
+    --blue: #1b6ec2;
+    --blue-deep: #0d3b6e;
+    --purple: #6b4fd8;
+    --purple-deep: #3d2a8c;
+    --ink: #101a2e;
     --white: #ffffff;
     --sans: 'Poppins','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   }
@@ -16,118 +18,119 @@
   html, body {
     min-height: 100vh;
     font-family: var(--sans);
-    background: radial-gradient(circle at 50% 0%, #F54927 0%, #FF846E 42%, #FCA897 100%);
+    /* azul escuro -> roxo, intercalado */
+    background: linear-gradient(135deg, #0d3b6e 0%, #2a3a9c 30%, #4b3bbf 55%, #6b4fd8 78%, #3d2a8c 100%);
     color: var(--white);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
-  .stage {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-  }
+  .stage { position: relative; min-height: 100vh; overflow: hidden; }
 
   /* ============================================================
-     THE TILTED GRID  (one plane, rotated as a single block)
+     TILTED GRID — single plane, organic tile sizes
+     uses a fixed column/row track with spans for variety
      ============================================================ */
   .grid-wrap {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1700px;
-    transform: translate(-50%, -42%);
+    top: 50%; left: 50%;
+    width: 1750px;
+    transform: translate(-50%, -44%);
     perspective: 2600px;
     z-index: 1;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 26px;
-    transform: rotateX(34deg) rotateZ(-24deg) scale(1.02);
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 150px;
+    gap: 22px;
+    transform: rotateX(36deg) rotateZ(-26deg) scale(1.03);
     transform-style: preserve-3d;
   }
 
   .tile {
     background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 26px 50px -20px rgba(4,40,30,0.45);
+    border-radius: 16px;
+    box-shadow: 0 26px 50px -20px rgba(8,16,40,0.55);
     overflow: hidden;
     color: var(--ink);
-    aspect-ratio: 4 / 3;
     position: relative;
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
-  /* a couple of tiles span taller for rhythm */
-  .tile.tall { aspect-ratio: 3 / 4; }
+
+  /* ---- organic size variations via grid spans ---- */
+  .s-sq   { grid-column: span 2; grid-row: span 2; }  /* square-ish */
+  .s-wide { grid-column: span 3; grid-row: span 2; }  /* wide rectangle */
+  .s-tall { grid-column: span 2; grid-row: span 3; }  /* tall rectangle */
+  .s-big  { grid-column: span 3; grid-row: span 3; }  /* large */
+  .s-sm   { grid-column: span 2; grid-row: span 2; }
 
   .shot {
     width: 100%; height: 100%;
-    background-size: cover;
-    background-position: top center;
-    background-color: #eef3f1;
+    background-size: cover; background-position: top center;
+    background-color: #e7ecf3;
   }
   .shot.empty {
     display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 6px;
-    color: #b3c7c0;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
-    text-align: center; padding: 10px;
+    flex-direction: column; gap: 7px;
+    color: #aab8cc;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+    text-align: center; padding: 12px;
   }
-  .shot.empty svg { width: 22px; height: 22px; opacity: 0.5; }
-
-  /* ---------- the two CLICKABLE tiles ---------- */
-  .nav-tile {
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-    z-index: 5;
-  }
-  .nav-tile .cap {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 30px 16px 14px;
-    background: linear-gradient(to top, rgba(7,58,43,0.94), rgba(7,58,43,0));
-    color: #fff;
-  }
-  .nav-tile .cap .k {
-    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-    font-weight: 600; opacity: 0.85; margin-bottom: 2px;
-  }
-  .nav-tile .cap .t {
-    font-size: 19px; font-weight: 700;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .nav-tile .tab {
-    position: absolute; top: 12px; left: 12px;
-    font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
-    padding: 4px 10px; border-radius: 100px; color: #fff; z-index: 2;
-  }
-  .cloud-tile .tab { background: #0a4d8c; }
-  .mail-tile  .tab { background: #1f7a6d; }
-
-  /* hover: pop the tile OUT of the tilted plane toward the viewer */
-  .cloud-tile:hover, .cloud-tile:focus-visible,
-  .mail-tile:hover, .mail-tile:focus-visible {
-    transform: translateZ(120px) rotateZ(24deg) rotateX(-34deg) scale(1.04);
-    box-shadow: 0 60px 90px -30px rgba(4,40,30,0.75);
-    z-index: 50;
-    outline: none;
-  }
+  .shot.empty svg { width: 24px; height: 24px; opacity: 0.55; }
 
   /* ============================================================
-     FLOATING HEADLINE  (sits above the grid)
+     CLICKABLE TILES — solid colored so text is readable
+     ============================================================ */
+  .nav-tile { cursor: pointer; text-decoration: none; display: block; z-index: 5; }
+
+  .cloud-tile { background: linear-gradient(150deg, #1b6ec2 0%, #0d3b6e 100%); }
+  .mail-tile  { background: linear-gradient(150deg, #7a5cff 0%, #3d2a8c 100%); }
+
+  .nav-tile .inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 20px 22px;
+  }
+  .nav-tile .tab {
+    align-self: flex-start;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 5px 12px; border-radius: 100px;
+    background: rgba(255,255,255,0.22);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    backdrop-filter: blur(3px);
+  }
+  .nav-tile .big-icon { opacity: 0.9; }
+  .nav-tile .big-icon svg { width: 46px; height: 46px; }
+  .nav-tile .cap .k {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 4px;
+  }
+  .nav-tile .cap .t {
+    font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+    text-shadow: 0 2px 10px rgba(8,16,40,0.4);
+  }
+  .nav-tile .cap .t .arrow { transition: transform 0.3s ease; }
+
+  /* hover: pop OUT of the tilted plane toward viewer + straighten */
+  .nav-tile:hover, .nav-tile:focus-visible {
+    transform: translateZ(140px) rotateZ(26deg) rotateX(-36deg) scale(1.05);
+    box-shadow: 0 60px 100px -30px rgba(8,16,40,0.8);
+    z-index: 50; outline: none;
+  }
+  .nav-tile:hover .cap .t .arrow { transform: translateX(6px); }
+
+  /* ============================================================
+     FLOATING HEADLINE
      ============================================================ */
   .overlay {
-    position: relative;
-    z-index: 20;
-    text-align: center;
-    padding: 50px 24px 0;
-    pointer-events: none;
+    position: relative; z-index: 20;
+    text-align: center; padding: 52px 24px 0; pointer-events: none;
   }
-  .overlay .inner { pointer-events: auto; display: inline-block; }
-  .brand {
-    display: inline-flex; align-items: center; gap: 11px; margin-bottom: 22px;
-  }
+  .overlay .inner-h { pointer-events: auto; display: inline-block; }
+  .brand { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 22px; }
   .brand .logo {
     width: 40px; height: 40px; border-radius: 50%;
     background: #fff; display: flex; align-items: center; justify-content: center;
@@ -137,50 +140,42 @@
 
   h1 {
     font-size: 62px; line-height: 1.02; font-weight: 800; letter-spacing: -0.025em;
-    text-shadow: 0 8px 30px rgba(4,40,30,0.3);
+    text-shadow: 0 10px 40px rgba(8,16,40,0.5);
   }
   .sub {
     margin: 18px auto 0; max-width: 540px;
     font-size: 16px; font-weight: 500; line-height: 1.55;
     color: rgba(255,255,255,0.92);
-    text-shadow: 0 2px 12px rgba(4,40,30,0.35);
+    text-shadow: 0 2px 14px rgba(8,16,40,0.6);
   }
   .pill-tags { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
   .pill {
     font-size: 11.5px; font-weight: 600;
     background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.28);
-    padding: 5px 12px; border-radius: 100px;
-    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 12px; border-radius: 100px; backdrop-filter: blur(4px);
   }
   .hint {
     margin-top: 24px; font-size: 12.5px; font-weight: 600;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.92);
     display: inline-flex; align-items: center; gap: 8px;
   }
   .hint .dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: pulse 1.6s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
   footer {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    padding: 18px; text-align: center;
-    font-size: 12px; color: rgba(255,255,255,0.7);
-    z-index: 20; pointer-events: none;
+    position: fixed; bottom: 0; left: 0; right: 0; padding: 18px; text-align: center;
+    font-size: 12px; color: rgba(255,255,255,0.7); z-index: 20; pointer-events: none;
   }
 
-  @media (max-width: 1300px) { .grid-wrap { width: 1400px; } }
-  @media (max-width: 1000px) {
-    .grid-wrap { width: 1100px; transform: translate(-50%, -38%); }
-    h1 { font-size: 46px; }
-  }
+  @media (max-width: 1300px) { .grid-wrap { width: 1450px; } }
+  @media (max-width: 1000px) { .grid-wrap { width: 1150px; transform: translate(-50%, -40%); } h1 { font-size: 46px; } }
   @media (max-width: 720px) {
-    .grid-wrap { position: relative; top: auto; left: auto; transform: none; width: 100%; perspective: none; margin-top: 20px; padding-bottom: 60px; }
-    .grid { transform: none; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .tile, .tile.tall { aspect-ratio: 4/3; }
-    .cloud-tile:hover, .mail-tile:hover { transform: translateY(-6px) !important; }
-    .overlay { padding-top: 36px; }
-    h1 { font-size: 38px; }
-    footer { position: relative; }
+    .grid-wrap { position: relative; top: auto; left: auto; transform: none; width: 100%; perspective: none; margin-top: 20px; padding: 0 14px 70px; }
+    .grid { transform: none; grid-template-columns: 1fr 1fr; grid-auto-rows: 130px; gap: 12px; }
+    .s-sq,.s-sm,.s-wide,.s-tall,.s-big { grid-column: span 1; grid-row: span 1; }
+    .nav-tile:hover { transform: translateY(-6px) !important; }
+    .overlay { padding-top: 36px; } h1 { font-size: 38px; } footer { position: relative; }
   }
 </style>
 </head>
@@ -189,11 +184,9 @@
 
     <!-- ============ FLOATING HEADLINE ============ -->
     <div class="overlay">
-      <div class="inner">
+      <div class="inner-h">
         <div class="brand">
-          <span class="logo">
-            <svg viewBox="0 0 24 24" fill="#12b886"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-          </span>
+          <span class="logo"><svg viewBox="0 0 24 24" fill="#4b3bbf"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
           <span class="name">Guilherme Fonseca</span>
         </div>
         <h1>SFMC Portfolio</h1>
@@ -209,42 +202,47 @@
       </div>
     </div>
 
-    <!-- ============ TILTED GRID ============ -->
+    <!-- ============ TILTED GRID (organic sizes) ============ -->
     <div class="grid-wrap">
       <div class="grid">
 
-        <!-- Row 1 -->
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <!-- mix of sizes; decorative tiles + 2 clickable -->
+        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
 
-        <!-- Row 2  -->
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile s-wide"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
 
-        <!-- ===== CLICKABLE: CLOUDPAGES ===== -->
-        <a class="tile nav-tile cloud-tile" href="cloudpages.html" aria-label="View CloudPages">
-          <span class="tab">CloudPages</span>
-          <!-- ADD SCREENSHOT: <div class="shot" style="background-image:url('img/cloudpages-cover.png')"></div> -->
-          <div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>DASHBOARD<br>SCREENSHOT</div>
-          <div class="cap"><div class="k">Campaign Dashboards</div><div class="t">CloudPages &rarr;</div></div>
+        <!-- CLICKABLE: CLOUDPAGES (tall) -->
+        <a class="tile nav-tile cloud-tile s-tall" href="cloudpages.html" aria-label="View CloudPages">
+          <div class="inner">
+            <span class="tab">CloudPages</span>
+            <span class="big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M7 13h4"/></svg></span>
+            <div class="cap"><div class="k">Campaign Dashboards</div><div class="t">CloudPages <span class="arrow">&rarr;</span></div></div>
+          </div>
+          <!-- to add a screenshot behind the text, place an <img> or set background-image on .cloud-tile -->
         </a>
 
-        <!-- ===== CLICKABLE: EMAILS ===== -->
-        <a class="tile nav-tile mail-tile" href="emails.html" aria-label="View Emails">
-          <span class="tab">Emails</span>
-          <!-- ADD SCREENSHOT: <div class="shot" style="background-image:url('img/emails-cover.png')"></div> -->
-          <div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>EMAIL<br>SCREENSHOT</div>
-          <div class="cap"><div class="k">Responsive HTML</div><div class="t">Emails &rarr;</div></div>
+        <div class="tile s-sm"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <!-- CLICKABLE: EMAILS (wide) -->
+        <a class="tile nav-tile mail-tile s-wide" href="emails.html" aria-label="View Emails">
+          <div class="inner">
+            <span class="tab">Emails</span>
+            <span class="big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <div class="cap"><div class="k">Responsive HTML</div><div class="t">Emails <span class="arrow">&rarr;</span></div></div>
+          </div>
         </a>
 
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile s-tall"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
 
-        <!-- Row 3 -->
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <div class="tile s-wide"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <div class="tile s-sm"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
 
       </div>
     </div>
