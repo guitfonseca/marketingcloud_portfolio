@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OD Starter Kit 2026 - Data Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#CC0000;--red-dark:#A30000;--ff-serif:'Noto Serif',Georgia,serif;--ff-sans:'Inter',sans-serif;--bg-page:#FFFFFF;--bg-card:#FFFFFF;--bg-section:#F5F5F5;--text-main:#1A1A1A;--text-mid:#4A4A4A;--text-soft:#767676;--border:#E0E0E0}
+body.dark{--bg-page:#111111;--bg-card:#1C1C1C;--bg-section:#181818;--text-main:#F0F0F0;--text-mid:#CCCCCC;--text-soft:#888888;--border:#2E2E2E}
+body{background:var(--bg-page);font-family:var(--ff-sans);color:var(--text-main);min-height:100vh;transition:background 0.3s,color 0.3s}
+
+/* PLACEHOLDER LOGO TEXT */
+.ph-logo{display:inline-block;font-family:var(--ff-serif);font-weight:700;letter-spacing:0.04em;color:inherit}
+
+/* TOPBAR */
+.topbar{background:#0A0A0A;padding:0 40px;height:40px;display:flex;align-items:center;justify-content:space-between}
+.topbar-brand{display:flex;align-items:center;gap:10px}
+.topbar-brand .jnj-mark{font-family:var(--ff-serif);font-size:13px;color:#fff;letter-spacing:0.04em;opacity:0.9}
+.topbar-brand .tsep{width:1px;height:14px;background:rgba(255,255,255,0.25)}
+.topbar-brand .vision-mark{font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-link{font-size:11px;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;display:flex;align-items:center;gap:6px}
+.topbar-link:hover{color:#fff}
+.topbar-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* HEADER */
+.header{border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:var(--bg-page);position:sticky;top:0;z-index:100;transition:background 0.3s,border-color 0.3s;flex-wrap:wrap;gap:12px}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-logo{width:40px;height:40px;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-logo svg{width:20px;height:20px;stroke:white;fill:none;stroke-width:1.8}
+.header-divider{width:1px;height:22px;background:var(--border)}
+.header-wordmark{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--text-main);letter-spacing:0.03em}
+.header-sub{font-size:12px;color:var(--text-soft);letter-spacing:0.06em;text-transform:uppercase}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn-hub{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--red);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--red);padding:6px 14px;transition:all 0.2s}
+.btn-hub:hover{background:var(--red);color:#fff}
+.btn-hub svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}
+.btn-action{font-size:11px;font-weight:600;color:var(--text-soft);background:none;border:1px solid var(--border);padding:6px 14px;cursor:pointer;font-family:var(--ff-sans);letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-action:hover{border-color:var(--text-main);color:var(--text-main)}
+.btn-download{font-size:11px;font-weight:600;color:#fff;background:var(--red);border:1px solid var(--red);padding:6px 14px;cursor:pointer;font-family:var(--ff-sans);letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-download:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn-download svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* HERO */
+.hero{position:relative;background:var(--bg-section);border-bottom:3px solid var(--red);padding:48px 40px 40px;overflow:hidden;transition:background 0.3s}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:380px;height:380px;border-radius:50%;border:70px solid rgba(204,0,0,0.04);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;color:var(--red);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:2px;background:var(--red)}
+.hero h2{font-family:var(--ff-serif);font-size:clamp(22px,3vw,38px);font-weight:700;line-height:1.15;color:var(--text-main);margin-bottom:10px}
+.hero p{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.6}
+.hero-meta{display:flex;align-items:center;gap:20px;margin-top:20px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat-num{font-family:var(--ff-serif);font-size:28px;font-weight:700;color:var(--text-main);line-height:1}
+.hero-stat-label{font-size:11px;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+.hero-stat-divider{width:1px;height:36px;background:var(--border)}
+
+/* CONTAINER */
+.container{max-width:1400px;margin:0 auto;padding:48px 40px 80px}
+
+/* TABLE CARD */
+.table-card{background:var(--bg-card);border:1px solid var(--border);margin-bottom:28px;transition:background 0.3s,border-color 0.3s}
+.table-card-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.table-card-title{font-family:var(--ff-serif);font-size:16px;font-weight:700;color:var(--text-main)}
+.table-badges{display:flex;align-items:center;gap:8px}
+.badge{display:inline-block;padding:3px 10px;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+.badge-red{background:var(--red);color:#fff}
+.badge-soft{background:var(--bg-section);color:var(--text-soft);border:1px solid var(--border)}
+.badge-consent{background:#D1FAE5;color:#065F46}
+.badge-no-consent{background:var(--bg-section);color:var(--text-soft);border:1px solid var(--border)}
+.preview-note{padding:10px 24px;background:#FEF3C7;border-bottom:1px solid #FDE68A;font-size:12px;color:#92400E;font-weight:500;display:flex;align-items:center;gap:8px}
+.preview-note svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;color:var(--text-main)}
+thead th{text-align:left;padding:11px 14px;background:var(--bg-section);font-weight:600;color:var(--text-main);border-bottom:2px solid var(--red);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-mid);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--bg-section)}
+
+.sensitive-text{filter:blur(4px);user-select:none;transition:filter 0.2s}
+tbody tr:hover .sensitive-text{filter:blur(0)}
+
+/* FOOTER */
+.site-footer{background:#0A0A0A;padding:24px 40px;display:flex;align-items:center;justify-content:space-between}
+.site-footer .brand{font-family:var(--ff-serif);font-size:13px;color:rgba(255,255,255,0.6)}
+.site-footer .brand strong{color:rgba(255,255,255,0.9)}
+.site-footer .data{font-size:11px;color:rgba(255,255,255,0.3)}
+
+/* LOGIN */
+.login-page{min-height:100vh;display:flex;flex-direction:column}
+.login-topbar{background:#0A0A0A;height:40px;display:flex;align-items:center;padding:0 40px}
+.login-topbar span{font-family:var(--ff-serif);font-size:13px;color:rgba(255,255,255,0.7);letter-spacing:0.04em}
+.login-body{flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-section);padding:40px 20px}
+.login-card{background:var(--bg-card);border:1px solid var(--border);max-width:400px;width:100%;padding:48px 40px}
+.login-logo-wrap{width:48px;height:48px;background:var(--red);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.login-logo-wrap svg{width:22px;height:22px;stroke:white;fill:none;stroke-width:1.8}
+.login-card h2{font-family:var(--ff-serif);font-size:24px;font-weight:700;color:var(--text-main);margin-bottom:6px}
+.login-card p{font-size:13px;color:var(--text-soft);margin-bottom:32px;line-height:1.5}
+.login-label{display:block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px}
+.login-input{width:100%;padding:12px 14px;border:1px solid var(--border);font-size:14px;font-family:var(--ff-sans);color:var(--text-main);background:var(--bg-page);outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.login-input:focus{border-color:var(--text-main)}
+.login-btn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;font-size:11px;font-weight:600;font-family:var(--ff-sans);letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.login-btn:hover{background:var(--red-dark)}
+.login-error{background:#FFF0F0;border-left:3px solid var(--red);color:var(--red);padding:10px 14px;margin-bottom:16px;font-size:13px}
+.login-hint{margin-top:16px;font-size:11px;color:var(--text-soft);text-align:center}
+.demo-banner{background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;padding:10px 14px;margin-bottom:20px;font-size:12px;line-height:1.5;border-radius:4px}
+
+@media(max-width:700px){.topbar,.header,.hero,.container{padding-left:20px;padding-right:20px}.header{height:auto;padding-top:12px;padding-bottom:12px}.site-footer{flex-direction:column;gap:10px;padding:20px;text-align:center}.hero-stat-divider{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN VIEW ============ -->
+<div class="login-page" id="loginView">
+<div class="login-topbar">
+<span class="ph-logo">J&amp;J</span> &nbsp;&middot;&nbsp; Vision Care &middot; ACUVUE
+</div>
+<div class="login-body">
+<div class="login-card">
+<div class="login-logo-wrap">
+<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+</div>
+<h2>OD Starter Kit 2026</h2>
+<p>Enter your access password to view the submission data.</p>
+<div class="demo-banner"><strong>Portfolio demo.</strong> This is a static showcase build with fictional data &mdash; no real records. Password is <strong>demo</strong>.</div>
+<div class="login-error" id="loginError" style="display:none;">Incorrect password. Please try again.</div>
+<label class="login-label">Access Password</label>
+<input type="password" id="pwdInput" class="login-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
+<button class="login-btn" onclick="doLogin()">Access Dashboard</button>
+<div class="login-hint">Internal use only &middot; <span class="ph-logo" style="font-size:11px;">J&amp;J</span> Vision Care</div>
+</div>
+</div>
+</div>
+
+<!-- ============ DASHBOARD VIEW ============ -->
+<div id="dashView" style="display:none;">
+
+<div class="topbar">
+<div class="topbar-brand">
+<span class="jnj-mark"><span class="ph-logo">J&amp;J</span> Vision</span>
+<div class="tsep"></div>
+<span class="vision-mark">ACUVUE</span>
+</div>
+<div class="topbar-right">
+<a href="#" class="topbar-link">
+<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+Dashboard Hub
+</a>
+</div>
+</div>
+
+<header class="header">
+<div class="header-left">
+<div class="header-logo">
+<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+</div>
+<div class="header-divider"></div>
+<span class="header-wordmark">OD Starter Kit</span>
+<div class="header-divider"></div>
+<span class="header-sub">Data Viewer 2026</span>
+</div>
+<div class="header-right">
+<a href="#" class="btn-hub">
+<svg viewBox="0 0 24 24"><path d="M3 9L12 3L21 9V20H3V9Z"/><path d="M9 20V12H15V20"/></svg>
+Dashboard Hub
+</a>
+<button class="btn-action" id="themeToggle">Dark Mode</button>
+<button class="btn-download" id="btnDownload">
+<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+Download CSV
+</button>
+</div>
+</header>
+
+<section class="hero">
+<div class="hero-eyebrow">Form Submissions</div>
+<h2>OD Starter Kit 2026</h2>
+<p>ACUVUE &middot; Submission records from <strong>OD_Starter_Kit_Form_2026</strong> &middot; Read-only view</p>
+<div class="hero-meta">
+<div class="hero-stat">
+<span class="hero-stat-num">148</span>
+<span class="hero-stat-label">Total Records</span>
+</div>
+<div class="hero-stat-divider"></div>
+<div class="hero-stat">
+<span class="hero-stat-num">96</span>
+<span class="hero-stat-label">With Consent</span>
+</div>
+<div class="hero-stat-divider"></div>
+<div class="hero-stat">
+<span class="hero-stat-num">52</span>
+<span class="hero-stat-label">No Consent</span>
+</div>
+<div class="hero-stat-divider"></div>
+<div class="hero-stat">
+<span class="hero-stat-num">18</span>
+<span class="hero-stat-label">Shown Here</span>
+</div>
+</div>
+</section>
+
+<div class="container">
+<div class="table-card">
+<div class="table-card-header">
+<span class="table-card-title">Form Submissions</span>
+<div class="table-badges">
+<span class="badge badge-soft">Showing first 18</span>
+<span class="badge badge-red">148 total</span>
+</div>
+</div>
+<div class="preview-note">
+<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+Sensitive fields are masked. Hover a row to reveal. Download CSV exports all 148 records.
+</div>
+<div class="table-wrap">
+<table id="previewTable">
+<thead>
+<tr>
+<th>First Name</th><th>Last Name</th><th>Email</th><th>University / College</th>
+<th>Grad Year</th><th>City</th><th>State</th><th>Zip</th>
+<th>Street Address</th><th>Date</th><th>Consent</th>
+</tr>
+</thead>
+<tbody id="previewBody"><!-- rows injected by JS --></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<table id="fullTable" style="display:none;">
+<thead><tr>
+<th>FirstName</th><th>LastName</th><th>Email</th><th>UniversityCollege</th>
+<th>GraduationYear</th><th>City</th><th>State</th><th>ZipCode</th>
+<th>StreetAddress</th><th>Date</th><th>MarketingConsent</th>
+</tr></thead>
+<tbody id="fullBody"><!-- rows injected by JS --></tbody>
+</table>
+
+<footer class="site-footer">
+<span class="brand"><strong>ACUVUE</strong> - <span class="ph-logo" style="font-size:13px;color:rgba(255,255,255,0.6);">J&amp;J</span> Vision Care</span>
+<span class="data">OD_Starter_Kit_Form_2026 &middot; <span id="footerTime"></span> &middot; Read-only</span>
+</footer>
+
+</div>
+
+<script>
+/* ===== FICTIONAL DATASET (no real records) ===== */
+var DATA = [
+  {fn:"Mariana",  ln:"Albuquerque", em:"mariana.alb@exemplo.com",   uni:"USP - Faculdade de Medicina",        grad:"2026", city:"São Paulo",      st:"SP", zip:"05508-000", addr:"Rua das Acácias, 120",      date:"01/14/2026", consent:true},
+  {fn:"Rafael",   ln:"Tavares",     em:"r.tavares@exemplo.com",      uni:"UNIFESP",                            grad:"2025", city:"São Paulo",      st:"SP", zip:"04023-062", addr:"Av. Brasil, 880",          date:"01/14/2026", consent:true},
+  {fn:"Beatriz",  ln:"Nogueira",    em:"bia.nog@exemplo.com",        uni:"UFRJ - Oftalmologia",                grad:"2026", city:"Rio de Janeiro", st:"RJ", zip:"22290-240", addr:"Rua Voluntários, 45",      date:"01/15/2026", consent:false},
+  {fn:"Lucas",    ln:"Fernandes",   em:"lucas.fern@exemplo.com",     uni:"UNICAMP",                            grad:"2024", city:"Campinas",       st:"SP", zip:"13083-852", addr:"Rua Roxo Moreira, 1000",   date:"01/15/2026", consent:true},
+  {fn:"Camila",   ln:"Pacheco",     em:"camila.p@exemplo.com",       uni:"UFMG - Faculdade de Medicina",       grad:"2025", city:"Belo Horizonte", st:"MG", zip:"30130-100", addr:"Av. Afonso Pena, 230",     date:"01/16/2026", consent:true},
+  {fn:"Thiago",   ln:"Barros",      em:"thiago.barros@exemplo.com",  uni:"UFPR",                               grad:"2026", city:"Curitiba",       st:"PR", zip:"80060-140", addr:"Rua XV de Novembro, 70",   date:"01/16/2026", consent:false},
+  {fn:"Juliana",  ln:"Moreira",     em:"ju.moreira@exemplo.com",     uni:"UFRGS",                              grad:"2025", city:"Porto Alegre",   st:"RS", zip:"90010-150", addr:"Av. Borges de Medeiros, 5",date:"01/17/2026", consent:true},
+  {fn:"Gabriel",  ln:"Santos",      em:"gabriel.s@exemplo.com",      uni:"UFBA",                               grad:"2024", city:"Salvador",       st:"BA", zip:"40110-100", addr:"Rua Chile, 12",            date:"01/17/2026", consent:true},
+  {fn:"Larissa",  ln:"Carvalho",    em:"lari.carv@exemplo.com",      uni:"UFPE",                               grad:"2026", city:"Recife",         st:"PE", zip:"50030-230", addr:"Av. Guararapes, 250",      date:"01/18/2026", consent:true},
+  {fn:"Pedro",    ln:"Almeida",     em:"pedro.almeida@exemplo.com",  uni:"USP - Ribeirão Preto",               grad:"2025", city:"Ribeirão Preto", st:"SP", zip:"14049-900", addr:"Rua São Sebastião, 33",    date:"01/18/2026", consent:false},
+  {fn:"Fernanda", ln:"Ribeiro",     em:"fe.ribeiro@exemplo.com",     uni:"UFC",                                grad:"2026", city:"Fortaleza",      st:"CE", zip:"60160-230", addr:"Av. Beira Mar, 1500",      date:"01/19/2026", consent:true},
+  {fn:"Vinícius", ln:"Lima",        em:"vinicius.lima@exemplo.com",  uni:"UnB - Faculdade de Medicina",        grad:"2024", city:"Brasília",       st:"DF", zip:"70840-901", addr:"SQN 105, Bloco B",         date:"01/19/2026", consent:true},
+  {fn:"Amanda",   ln:"Costa",       em:"amanda.costa@exemplo.com",   uni:"PUC-SP",                             grad:"2025", city:"São Paulo",      st:"SP", zip:"01303-050", addr:"Rua Bela Cintra, 900",     date:"01/20/2026", consent:false},
+  {fn:"Bruno",    ln:"Martins",     em:"bruno.martins@exemplo.com",  uni:"UFSC",                               grad:"2026", city:"Florianópolis",  st:"SC", zip:"88040-900", addr:"Rua Lauro Linhares, 200",  date:"01/20/2026", consent:true},
+  {fn:"Patrícia", ln:"Souza",       em:"paty.souza@exemplo.com",     uni:"UERJ",                               grad:"2025", city:"Rio de Janeiro", st:"RJ", zip:"20550-013", addr:"Rua São Francisco Xavier",  date:"01/21/2026", consent:true},
+  {fn:"Eduardo",  ln:"Rocha",       em:"edu.rocha@exemplo.com",      uni:"UFG",                                grad:"2024", city:"Goiânia",        st:"GO", zip:"74605-010", addr:"Av. Anhanguera, 700",      date:"01/21/2026", consent:false},
+  {fn:"Isabela",  ln:"Dias",        em:"isabela.dias@exemplo.com",   uni:"UEL",                                grad:"2026", city:"Londrina",       st:"PR", zip:"86010-300", addr:"Rua Sergipe, 88",          date:"01/22/2026", consent:true},
+  {fn:"Felipe",   ln:"Cardoso",     em:"felipe.card@exemplo.com",    uni:"UFRN",                               grad:"2025", city:"Natal",          st:"RN", zip:"59012-300", addr:"Av. Prudente de Morais, 40",date:"01/22/2026", consent:true}
+];
+
+/* ===== LOGIN (client-side demo only) ===== */
+function doLogin(){
+  var pwd = document.getElementById('pwdInput').value;
+  var err = document.getElementById('loginError');
+  if (pwd === 'demo') {
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('dashView').style.display = 'block';
+    initDashboard();
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+/* ===== BUILD TABLES ===== */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function initDashboard(){
+  var pv = document.getElementById('previewBody');
+  var fb = document.getElementById('fullBody');
+  var pvHtml = '', fbHtml = '';
+  DATA.forEach(function(r){
+    var consentBadge = r.consent
+      ? '<span class="badge badge-consent">on</span>'
+      : '<span class="badge badge-no-consent">--</span>';
+    pvHtml +=
+      '<tr>'+
+      '<td><span class="sensitive-text">'+esc(r.fn)+'</span></td>'+
+      '<td>'+esc(r.ln)+'</td>'+
+      '<td><span class="sensitive-text">'+esc(r.em)+'</span></td>'+
+      '<td>'+esc(r.uni)+'</td>'+
+      '<td><span class="sensitive-text">'+esc(r.grad)+'</span></td>'+
+      '<td>'+esc(r.city)+'</td>'+
+      '<td><span class="sensitive-text">'+esc(r.st)+'</span></td>'+
+      '<td><span class="sensitive-text">'+esc(r.zip)+'</span></td>'+
+      '<td><span class="sensitive-text">'+esc(r.addr)+'</span></td>'+
+      '<td>'+esc(r.date)+'</td>'+
+      '<td>'+consentBadge+'</td>'+
+      '</tr>';
+    fbHtml +=
+      '<tr>'+
+      '<td>'+esc(r.fn)+'</td><td>'+esc(r.ln)+'</td>'+
+      '<td>'+esc(r.em)+'</td><td>'+esc(r.uni)+'</td>'+
+      '<td>'+esc(r.grad)+'</td><td>'+esc(r.city)+'</td>'+
+      '<td>'+esc(r.st)+'</td><td>'+esc(r.zip)+'</td>'+
+      '<td>'+esc(r.addr)+'</td><td>'+esc(r.date)+'</td>'+
+      '<td>'+(r.consent?'on':'')+'</td>'+
+      '</tr>';
+  });
+  pv.innerHTML = pvHtml;
+  fb.innerHTML = fbHtml;
+
+  // footer timestamp
+  var d = new Date();
+  function p(n){return (n<10?'0':'')+n;}
+  document.getElementById('footerTime').textContent =
+    p(d.getMonth()+1)+'/'+p(d.getDate())+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes());
+
+  // theme restore
+  var toggle = document.getElementById('themeToggle');
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark'); toggle.innerText = 'Light Mode';
+  }
+  toggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark');
+    var dark = document.body.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    toggle.innerText = dark ? 'Light Mode' : 'Dark Mode';
+  });
+
+  // CSV download
+  document.getElementById('btnDownload').addEventListener('click', function() {
+    var table = document.getElementById('fullTable');
+    var rows = table.querySelectorAll('tr');
+    var csv = [];
+    for (var i = 0; i < rows.length; i++) {
+      var cells = rows[i].querySelectorAll('th, td');
+      var row = [];
+      for (var j = 0; j < cells.length; j++) {
+        var val = cells[j].innerText.replace(/"/g, '""');
+        row.push('"' + val + '"');
+      }
+      csv.push(row.join(','));
+    }
+    var blob = new Blob([csv.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'OD_Starter_Kit_2026.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  });
+}
+</script>
+
+</body>
+</html>
