@@ -1,284 +1,341 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guilherme Fonseca — SFMC Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #101a2e;
+    --ink: #0a0f1e;
     --white: #ffffff;
-    --sans: 'Poppins','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --accent-blue: #00d2ff;
+    --accent-purple: #9d50bb;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
+
+  body {
     min-height: 100vh;
-    font-family: var(--sans);
-    background: linear-gradient(135deg, #0d3b6e 0%, #2a3a9c 30%, #4b3bbf 55%, #6b4fd8 78%, #3d2a8c 100%);
+    font-family: 'Space Grotesk', sans-serif;
+    background: radial-gradient(circle at top right, #1a1a40, #0a0f1e 50%, #000000);
     color: var(--white);
-    -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  .stage { position: relative; min-height: 100vh; overflow: visible; padding-bottom: 80px; }
-
-  /* ============================================================
-     BENTO GRID LAYOUT
-     ============================================================ */
-  .grid-wrap {
     position: relative;
-    width: 1200px;
-    max-width: 92vw;
-    margin: 60px auto 0;
-    z-index: 1;
-    perspective: 2000px; /* Mantém a perspectiva para a animação */
   }
+
+  /* Background "Galáxia Matemática" */
+  .galaxy-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    background-image: 
+      radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+      radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+      radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 20px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    animation: stars 200s linear infinite;
+    opacity: 0.4;
+  }
+
+  @keyframes stars {
+    from { background-position: 0 0, 40px 60px, 130px 270px; }
+    to { background-position: 550px 550px, 390px 410px, 380px 820px; }
+  }
+
+  /* Grid Matemático Sutil */
+  .math-grid {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .stage { position: relative; z-index: 1; padding: 60px 20px; max-width: 1400px; margin: 0 auto; }
+
+  /* Header Profissional */
+  header {
+    text-align: left;
+    margin-bottom: 80px;
+    border-left: 2px solid var(--accent-blue);
+    padding-left: 30px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+  .logo {
+    width: 50px; height: 50px; border-radius: 12px;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+  }
+  .logo svg { width: 28px; height: 28px; fill: white; }
+  .name { font-size: 24px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+  h1 {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 800;
+    line-height: 0.9;
+    background: linear-gradient(to right, #fff, var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+  }
+
+  .sub {
+    font-size: 18px;
+    max-width: 650px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 30px;
+  }
+
+  /* Bento Grid "Space Station" */
   .grid {
     display: grid;
-    /* 4 colunas principais para flexibilidade */
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 180px;
-    gap: 24px;
-    /* A animação original usava tilt, vamos manter de forma mais sutil ou apenas no hover */
-    transform: rotateX(10deg) rotateZ(-5deg);
-    transform-style: preserve-3d;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 160px;
+    gap: 20px;
+    perspective: 1200px;
   }
 
   .tile {
-    background: #ffffff;
-    border-radius: 24px;
-    cursor: default;
-    box-shadow: 0 15px 35px -10px rgba(8,16,40,0.3);
-    overflow: hidden;
-    color: var(--ink);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
     position: relative;
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
-  }
-
-  /* Variações de Tamanho (Bento Style) */
-  .s-large { grid-column: span 2; grid-row: span 2; }
-  .s-wide  { grid-column: span 2; grid-row: span 1; }
-  .s-tall  { grid-column: span 1; grid-row: span 2; }
-  .s-small { grid-column: span 1; grid-row: span 1; }
-
-  /* ===== clickable tiles ===== */
-  .nav-tile { cursor: pointer; text-decoration: none; display: block; z-index: 5; }
-  .cloud-tile { background: linear-gradient(150deg, #1b6ec2 0%, #0d3b6e 100%); }
-  .mail-tile  { background: linear-gradient(150deg, #7a5cff 0%, #3d2a8c 100%); }
-  
-  .nav-tile .inner {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 30px;
-  }
-  .nav-tile .tab {
-    align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
-    padding: 6px 14px; border-radius: 100px;
-    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: #fff;
-    text-transform: uppercase;
-  }
-  .nav-tile .big-icon svg { width: 56px; height: 56px; margin-bottom: 10px; }
-  .nav-tile .cap .k {
-    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-    font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 6px;
-  }
-  .nav-tile .cap .t {
-    font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.02em;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .nav-tile .cap .t .arrow { transition: transform 0.3s ease; }
-
-  /* ANIMAÇÃO ORIGINAL PRESERVADA E AJUSTADA */
-  .tile:hover, .tile:focus-visible {
-    /* Contra-ataca o tilt do grid e adiciona profundidade */
-    transform: rotateZ(5deg) rotateX(-10deg) translateZ(60px) scale(1.03);
-    box-shadow: 0 40px 80px -20px rgba(8,16,40,0.6);
-    z-index: 60; outline: none;
-  }
-  .nav-tile:hover .cap .t .arrow { transform: translateX(8px); }
-
-  /* themed decorative mini-cards */
-  .theme {
-    display: flex; flex-direction: column; align-items: flex-start;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    width: 100%; height: 100%; padding: 24px;
+    padding: 30px;
+    text-decoration: none;
+    color: white;
   }
-  .theme .ico {
-    width: 48px; height: 48px; border-radius: 14px;
+
+  /* Tamanhos Bento */
+  .t-6-2 { grid-column: span 6; grid-row: span 2; }
+  .t-4-2 { grid-column: span 4; grid-row: span 2; }
+  .t-3-1 { grid-column: span 3; grid-row: span 1; }
+  .t-3-2 { grid-column: span 3; grid-row: span 2; }
+  .t-2-1 { grid-column: span 2; grid-row: span 1; }
+
+  /* Animações Originais Refinadas */
+  .tile:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+    border-color: var(--accent-blue);
+    box-shadow: 0 20px 60px rgba(0, 210, 255, 0.3), inset 0 0 20px rgba(0, 210, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Elementos Decorativos "Matemáticos" */
+  .tile::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0, 210, 255, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .tile:hover::before { opacity: 1; }
+
+  /* Elemento Geométrico no Card */
+  .tile .geo-shape {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgba(0, 210, 255, 0.1);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: morph 10s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes morph {
+    0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(0deg); }
+    50% { border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%; }
+    100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: rotate(360deg); }
+  }
+
+  .tile .icon {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-  .theme .ico svg { width: 24px; height: 24px; stroke: #ffffff !important; }
-  .theme .lbl { font-size: 18px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;
-    line-height: 1.2; }
-  .theme .lbl small { display: block; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8);
-    letter-spacing: 0.04em; text-transform: uppercase; margin-top: 4px; }
-
-  /* per-theme fills */
-  .t-journey { background: linear-gradient(155deg, #4f9bf0 0%, #2f6fc4 100%); }
-  .t-data    { background: linear-gradient(155deg, #14306e 0%, #0a1c44 100%); }
-  .t-auto    { background: linear-gradient(155deg, #9b7df0 0%, #6f4fd6 100%); }
-  .t-query   { background: linear-gradient(155deg, #4a2da0 0%, #2a165f 100%); }
-  .t-wa      { background: linear-gradient(155deg, #6fb3f5 0%, #3d8ad6 100%); }
-  .t-ai      { background: linear-gradient(155deg, #b88ef5 0%, #8a5ae0 100%); }
-
-  /* light-toned cards adjustment */
-  .t-journey .lbl, .t-auto .lbl, .t-wa .lbl, .t-ai .lbl { color: #10204a; }
-  .t-journey .lbl small, .t-auto .lbl small, .t-wa .lbl small, .t-ai .lbl small { color: rgba(16,32,74,0.7); }
-  .t-journey .ico, .t-auto .ico, .t-wa .ico, .t-ai .ico {
-    background: rgba(255,255,255,0.5); border-color: rgba(16,32,74,0.2);
-  }
-  .t-journey .ico svg, .t-auto .ico svg, .t-wa .ico svg, .t-ai .ico svg { stroke: #10204a !important; }
-
-  /* ============================================================
-     FLOATING HEADLINE
-     ============================================================ */
-  .overlay {
-    position: relative; z-index: 2;
-    text-align: center; padding: 80px 24px 20px;
-  }
-  .brand { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-  .brand .logo {
-    width: 44px; height: 44px; border-radius: 50%; background: #fff;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 20px rgba(8,16,40,0.3);
-  }
-  .brand .logo svg { width: 24px; height: 24px; }
-  .brand .name { font-size: 24px; font-weight: 700; }
-
-  h1 {
-    font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.03em;
     margin-bottom: 20px;
+    transition: transform 0.3s;
   }
-  .sub {
-    margin: 0 auto; max-width: 600px;
-    font-size: 18px; font-weight: 500; line-height: 1.6; color: rgba(255,255,255,0.9);
-  }
-  .pill-tags { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-  .pill {
-    font-size: 12px; font-weight: 600; color: #fff;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    padding: 6px 16px; border-radius: 100px; backdrop-filter: blur(10px);
-  }
-  .hint {
-    margin-top: 40px; font-size: 14px; font-weight: 600; color: #fff;
-    display: inline-flex; align-items: center; gap: 10px; opacity: 0.8;
-  }
-  .hint .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1; transform: scale(1);} 50%{opacity:.4; transform: scale(0.8);} }
+  .tile:hover .icon { transform: scale(1.1) rotate(5deg); background: var(--accent-blue); }
+  .tile .icon svg { width: 24px; height: 24px; stroke: white; fill: none; stroke-width: 2; }
 
+  .tile .tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-blue);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .tile h3 { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+  .tile p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  /* Projetos Principais com Gradiente */
+  .main-project {
+    background: linear-gradient(135deg, rgba(157, 80, 187, 0.1), rgba(0, 210, 255, 0.1));
+  }
+
+  /* Footer */
   footer {
-    margin-top: 100px; padding: 40px 20px; text-align: center;
-    font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 500;
+    margin-top: 100px;
+    padding-top: 40px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
   }
 
-  /* Responsive */
-  @media (max-width: 1000px) {
-    .grid { grid-template-columns: repeat(3, 1fr); }
-    h1 { font-size: 52px; }
+  /* Responsividade */
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(6, 1fr); }
+    .t-6-2, .t-4-2, .t-3-2 { grid-column: span 3; }
+    .t-3-1, .t-2-1 { grid-column: span 2; }
   }
+
   @media (max-width: 768px) {
-    .grid-wrap { margin-top: 40px; }
-    .grid { 
-        transform: none; 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 16px;
-    }
-    .s-large, .s-wide, .s-tall { grid-column: span 2; grid-row: span 1; }
-    .s-small { grid-column: span 1; }
-    .tile:hover { transform: translateY(-10px); }
-    h1 { font-size: 42px; }
-    .overlay { padding-top: 60px; }
+    .grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+    .t-6-2, .t-4-2, .t-3-1, .t-3-2, .t-2-1 { grid-column: span 1; grid-row: span 1; }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 48px; }
   }
+
 </style>
 </head>
 <body>
+
+  <div class="galaxy-bg"></div>
+  <div class="math-grid"></div>
+  <svg class="constellation" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; pointer-events: none;">
+    <circle cx="10%" cy="20%" r="2" fill="white" />
+    <circle cx="25%" cy="45%" r="2" fill="white" />
+    <circle cx="40%" cy="15%" r="2" fill="white" />
+    <circle cx="60%" cy="60%" r="2" fill="white" />
+    <circle cx="85%" cy="30%" r="2" fill="white" />
+    <line x1="10%" y1="20%" x2="25%" y2="45%" stroke="white" stroke-width="0.5" />
+    <line x1="25%" y1="45%" x2="40%" y2="15%" stroke="white" stroke-width="0.5" />
+    <line x1="40%" y1="15%" x2="60%" y2="60%" stroke="white" stroke-width="0.5" />
+    <line x1="60%" y1="60%" x2="85%" y2="30%" stroke="white" stroke-width="0.5" />
+  </svg>
+
   <div class="stage">
-
-    <!-- ============ FLOATING HEADLINE ============ -->
-    <div class="overlay">
-      <div class="inner-h">
-        <div class="brand">
-          <span class="logo"><svg viewBox="0 0 24 24" fill="#4b3bbf"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
-          <span class="name">Guilherme Fonseca</span>
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
         </div>
-        <h1>SFMC Portfolio</h1>
-        <p class="sub">Responsive HTML emails and interactive Marketing Cloud CloudPages, built hands-on for regulated life-sciences programs.</p>
-        <div class="pill-tags">
-          <span class="pill">AMPscript</span>
-          <span class="pill">Content Builder</span>
-          <span class="pill">Data Extensions</span>
-          <span class="pill">ISI / Fair Balance</span>
-          <span class="pill">Chart.js</span>
-        </div>
-        <div><span class="hint"><span class="dot"></span>Tap a card to explore</span></div>
+        <div class="name">Guilherme Fonseca</div>
       </div>
+      <h1>SFMC Engineer</h1>
+      <p class="sub">Unindo a precisão da arquitetura de dados com a criatividade do front-end. Especialista em Salesforce Marketing Cloud, construindo jornadas digitais de alta performance.</p>
+    </header>
+
+    <div class="grid">
+      <!-- Destaque: CloudPages -->
+      <a href="cloudpages.html" class="tile t-6-2 main-project">
+        <div>
+          <div class="tag">Interface & Dados</div>
+          <h3>CloudPages Ecosystem</h3>
+          <p>Dashboards interativos e landing pages construídas com AMPscript e integrações via API para programas regulados.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="geo-shape"></div>
+      </a>
+
+      <!-- Destaque: Emails -->
+      <a href="emails.html" class="tile t-6-2 main-project">
+        <div>
+          <div class="tag">Design Responsivo</div>
+          <h3>High-End Email Dev</h3>
+          <p>Desenvolvimento de e-mails HTML complexos com conteúdo dinâmico, garantindo consistência em todos os clientes de e-mail.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg>
+        </div>
+        <div class="geo-shape"></div>
+      </a>
+
+      <!-- Skills Matemáticas/Técnicas -->
+      <div class="tile t-4-2">
+        <div>
+          <div class="tag">Arquitetura</div>
+          <h3>Data Extensions</h3>
+          <p>Estruturação lógica de dados para segmentações complexas e personalização em escala.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+        </div>
+      </div>
+
+      <div class="tile t-4-2">
+        <div>
+          <div class="tag">Automação</div>
+          <h3>Automation Studio</h3>
+          <p>Workflows de ETL e processamento de dados via SQL para manter o ecossistema SFMC otimizado.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+      </div>
+
+      <div class="tile t-4-2">
+        <div>
+          <div class="tag">Estratégia</div>
+          <h3>Journey Builder</h3>
+          <p>Desenho de jornadas multicanal focadas na experiência do usuário e conversão.</p>
+        </div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+        </div>
+      </div>
+
+      <!-- Pequenos cards de skills extras -->
+      <div class="tile t-3-1">
+        <h3>SQL</h3>
+        <p>Queries avançadas.</p>
+      </div>
+      <div class="tile t-3-1">
+        <h3>AMPscript</h3>
+        <p>Lógica dinâmica.</p>
+      </div>
+      <div class="tile t-3-1">
+        <h3>SSJS</h3>
+        <p>Server-side scripting.</p>
+      </div>
+      <div class="tile t-3-1">
+        <h3>API</h3>
+        <p>REST & SOAP.</p>
+      </div>
+
     </div>
 
-    <!-- ============ BENTO GRID ============ -->
-    <div class="grid-wrap">
-      <div class="grid">
-        
-        <!-- Main Projects (Large) -->
-        <a class="tile nav-tile cloud-tile s-large" href="cloudpages.html">
-          <div class="inner">
-            <span class="tab">CloudPages</span>
-            <span class="big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M7 13h4"/></svg></span>
-            <div class="cap"><div class="k">Campaign Dashboards</div><div class="t">CloudPages <span class="arrow">&rarr;</span></div></div>
-          </div>
-        </a>
-
-        <a class="tile nav-tile mail-tile s-large" href="emails.html">
-          <div class="inner">
-            <span class="tab">Emails</span>
-            <span class="big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
-            <div class="cap"><div class="k">Responsive HTML</div><div class="t">Emails <span class="arrow">&rarr;</span></div></div>
-          </div>
-        </a>
-
-        <!-- Skills & Themes (Mixed Sizes) -->
-        <div class="tile s-tall"><div class="theme t-journey">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1b6ec2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M5 8v4a4 4 0 0 0 4 4h6"/><path d="M12 6h5a2 2 0 0 1 2 2v4"/></svg></span>
-          <span class="lbl">Journeys<small>Journey Builder</small></span>
-        </div></div>
-
-        <div class="tile s-small"><div class="theme t-auto">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#12b886" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.9 4.9 2.9 2.9"/><path d="m16.2 16.2 2.9 2.9"/><circle cx="12" cy="12" r="4"/></svg></span>
-          <span class="lbl">Automations<small>Studio</small></span>
-        </div></div>
-
-        <div class="tile s-small"><div class="theme t-data">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#6b4fd8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
-          <span class="lbl">Data<small>Architecture</small></span>
-        </div></div>
-
-        <div class="tile s-wide"><div class="theme t-query">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#e8820e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></span>
-          <span class="lbl">Query Studio<small>SQL / Optimization</small></span>
-        </div></div>
-
-        <div class="tile s-small"><div class="theme t-wa">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1faa4e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6a8.5 8.5 0 0 1-.9-3.9 8.38 8.38 0 0 1 8.5-8.5 8.38 8.38 0 0 1 8.5 8.5z"/></svg></span>
-          <span class="lbl">WhatsApp<small>Messaging</small></span>
-        </div></div>
-
-        <div class="tile s-small"><div class="theme t-ai">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#d6418a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="12" rx="2"/><path d="M12 7V4"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M3 12v3M21 12v3"/></svg></span>
-          <span class="lbl">AI<small>Assistant</small></span>
-        </div></div>
-
-        <div class="tile s-wide"><div class="theme t-data">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#6b4fd8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
-          <span class="lbl">Subscriber Data<small>Multi-BU Management</small></span>
-        </div></div>
-
-      </div>
-    </div>
-
-    <footer>Guilherme Fonseca · São Paulo · Salesforce Marketing Cloud</footer>
-
+    <footer>
+      <span>© 2026 GUILHERME FONSECA</span>
+      <span>SFMC SPECIALIST · SÃO PAULO, BR</span>
+    </footer>
   </div>
+
 </body>
 </html>
