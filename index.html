@@ -30,7 +30,7 @@
     position: relative;
     width: 1750px;
     max-width: 96vw;
-    margin: -120px auto 0;     /* pull up under the headline */
+    margin: 30px auto 0;       /* sits below the headline */
     perspective: 2600px;
     z-index: 1;
   }
@@ -107,7 +107,6 @@
   }
   .nav-tile:hover .cap .t .arrow { transform: translateX(6px); }
 
-
   /* themed decorative mini-cards (icon + label) — colored fills, blue/purple */
   .theme {
     display: flex; flex-direction: column; align-items: flex-start;
@@ -142,7 +141,6 @@
   }
   .t-journey .ico svg, .t-auto .ico svg, .t-wa .ico svg, .t-ai .ico svg { stroke: #10204a !important; }
 
-
   /* ============================================================
      DIMMING VEIL — sits between grid and headline
      this is what makes the white text readable
@@ -160,7 +158,7 @@
      ============================================================ */
   .overlay {
     position: relative; z-index: 20;
-    text-align: center; padding: 40px 24px 0; pointer-events: none;
+    text-align: center; padding: 54px 24px 0; pointer-events: none;
   }
   .overlay .inner-h { pointer-events: none; display: inline-block; }
   .overlay .inner-h a, .overlay .inner-h .pill { pointer-events: auto; }
@@ -218,6 +216,25 @@
 <body>
   <div class="stage">
 
+    <!-- ============ FLOATING HEADLINE ============ -->
+    <div class="overlay">
+      <div class="inner-h">
+        <div class="brand">
+          <span class="logo"><svg viewBox="0 0 24 24" fill="#4b3bbf"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+          <span class="name">Guilherme Fonseca</span>
+        </div>
+        <h1>SFMC Portfolio</h1>
+        <p class="sub">Responsive HTML emails and interactive Marketing Cloud CloudPages, built hands-on for regulated life-sciences programs.</p>
+        <div class="pill-tags">
+          <span class="pill">AMPscript</span>
+          <span class="pill">Content Builder</span>
+          <span class="pill">Data Extensions</span>
+          <span class="pill">ISI / Fair Balance</span>
+          <span class="pill">Chart.js</span>
+        </div>
+        <div><span class="hint"><span class="dot"></span>Tap a card to explore</span></div>
+      </div>
+
     <!-- ============ TILTED GRID ============ -->
     <div class="grid-wrap">
       <div class="grid">
@@ -225,7 +242,8 @@
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1b6ec2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M5 8v4a4 4 0 0 0 4 4h6"/><path d="M12 6h5a2 2 0 0 1 2 2v4"/></svg></span>
           <span class="lbl">Journeys<small>Journey Builder</small></span>
         </div></div>
-        <div class="tile s-mini"><div class="theme t-auto">
+
+            <div class="tile s-mini"><div class="theme t-auto">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#12b886" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.9 4.9 2.9 2.9"/><path d="m16.2 16.2 2.9 2.9"/><circle cx="12" cy="12" r="4"/></svg></span>
           <span class="lbl">Automations<small>Automation Studio</small></span>
         </div></div>
@@ -266,28 +284,9 @@
       </div>
     </div>
 
-    <!-- ============ DIMMING VEIL ============ -->
-    <div class="veil"></div>
+    
 
-    <!-- ============ FLOATING HEADLINE ============ -->
-    <div class="overlay">
-      <div class="inner-h">
-        <div class="brand">
-          <span class="logo"><svg viewBox="0 0 24 24" fill="#4b3bbf"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
-          <span class="name">Guilherme Fonseca</span>
         </div>
-        <h1>SFMC Portfolio</h1>
-        <p class="sub">Responsive HTML emails and interactive Marketing Cloud CloudPages, built hands-on for regulated life-sciences programs.</p>
-        <div class="pill-tags">
-          <span class="pill">AMPscript</span>
-          <span class="pill">Content Builder</span>
-          <span class="pill">Data Extensions</span>
-          <span class="pill">ISI / Fair Balance</span>
-          <span class="pill">Chart.js</span>
-        </div>
-        <div><span class="hint"><span class="dot"></span>Tap a card to explore</span></div>
-      </div>
-    </div>
 
     <footer>Guilherme Fonseca · São Paulo · Salesforce Marketing Cloud</footer>
 
