@@ -55,6 +55,7 @@
   .s-wide { grid-column: span 3; grid-row: span 2; }
   .s-tall { grid-column: span 2; grid-row: span 3; }
   .s-sm   { grid-column: span 2; grid-row: span 2; }
+  .s-mini { grid-column: span 2; grid-row: span 2; }  /* themed minis */
 
   .shot {
     width: 100%; height: 100%;
@@ -96,11 +97,48 @@
 
   /* FIX: gentler pop that stays on screen (less Z, no big scale) */
   .nav-tile:hover, .nav-tile:focus-visible {
-    transform: translateZ(60px) scale(1.03);
-    box-shadow: 0 50px 90px -30px rgba(8,16,40,0.85);
+    /* counter the grid tilt (rotateX30 rotateZ-20) so the card faces front, then lift */
+    transform: rotateZ(20deg) rotateX(-30deg) translateZ(90px) translateY(-10px) scale(1.06);
+    box-shadow: 0 55px 95px -28px rgba(8,16,40,0.85);
     z-index: 60; outline: none;
   }
   .nav-tile:hover .cap .t .arrow { transform: translateX(6px); }
+
+
+  /* themed decorative mini-cards (icon + label) — colored fills, blue/purple */
+  .theme {
+    display: flex; flex-direction: column; align-items: flex-start;
+    justify-content: space-between;
+    width: 100%; height: 100%; padding: 18px 18px;
+  }
+  .theme .ico {
+    width: 42px; height: 42px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.28);
+  }
+  .theme .ico svg { width: 22px; height: 22px; stroke: #ffffff !important; }
+  .theme .lbl { font-size: 15px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;
+    text-shadow: 0 1px 6px rgba(8,16,40,0.4); }
+  .theme .lbl small { display: block; font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,0.8);
+    letter-spacing: 0.04em; text-transform: uppercase; margin-top: 2px; }
+
+  /* per-theme fills — full spectrum of blues & purples, light to dark */
+  .t-journey { background: linear-gradient(155deg, #4f9bf0 0%, #2f6fc4 100%); }   /* sky / mid blue */
+  .t-data    { background: linear-gradient(155deg, #14306e 0%, #0a1c44 100%); }   /* deep navy */
+  .t-auto    { background: linear-gradient(155deg, #9b7df0 0%, #6f4fd6 100%); }   /* light lavender */
+  .t-query   { background: linear-gradient(155deg, #4a2da0 0%, #2a165f 100%); }   /* deep violet */
+  .t-wa      { background: linear-gradient(155deg, #6fb3f5 0%, #3d8ad6 100%); }   /* bright azure */
+  .t-ai      { background: linear-gradient(155deg, #b88ef5 0%, #8a5ae0 100%); }   /* soft purple */
+
+  /* light-toned cards: dark text + dark icons for contrast */
+  .t-journey .lbl, .t-auto .lbl, .t-wa .lbl, .t-ai .lbl { color: #10204a; text-shadow: none; }
+  .t-journey .lbl small, .t-auto .lbl small, .t-wa .lbl small, .t-ai .lbl small { color: rgba(16,32,74,0.7); }
+  .t-journey .ico, .t-auto .ico, .t-wa .ico, .t-ai .ico {
+    background: rgba(255,255,255,0.45); border-color: rgba(16,32,74,0.18);
+  }
+  .t-journey .ico svg, .t-auto .ico svg, .t-wa .ico svg, .t-ai .ico svg { stroke: #10204a !important; }
+
 
   /* ============================================================
      DIMMING VEIL — sits between grid and headline
@@ -111,7 +149,7 @@
     z-index: 10;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 760px 520px at 50% 33%, rgba(13,28,70,0.78) 0%, rgba(13,28,70,0.45) 45%, rgba(13,28,70,0) 75%);
+      radial-gradient(ellipse 620px 300px at 50% 20%, rgba(13,28,70,0.82) 0%, rgba(13,28,70,0.5) 40%, rgba(13,28,70,0) 70%);
   }
 
   /* ============================================================
@@ -180,9 +218,18 @@
     <!-- ============ TILTED GRID ============ -->
     <div class="grid-wrap">
       <div class="grid">
-        <div class="tile s-wide"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-wide"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile s-mini"><div class="theme t-journey">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1b6ec2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M5 8v4a4 4 0 0 0 4 4h6"/><path d="M12 6h5a2 2 0 0 1 2 2v4"/></svg></span>
+          <span class="lbl">Journeys<small>Journey Builder</small></span>
+        </div></div>
+        <div class="tile s-mini"><div class="theme t-auto">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#12b886" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.9 4.9 2.9 2.9"/><path d="m16.2 16.2 2.9 2.9"/><circle cx="12" cy="12" r="4"/></svg></span>
+          <span class="lbl">Automations<small>Automation Studio</small></span>
+        </div></div>
+        <div class="tile s-mini"><div class="theme t-data">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#6b4fd8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
+          <span class="lbl">Data Architecture<small>Data Extensions</small></span>
+        </div></div>
         <a class="tile nav-tile cloud-tile s-sq" href="cloudpages.html" aria-label="View CloudPages">
           <div class="inner">
             <span class="tab">CloudPages</span>
@@ -197,12 +244,22 @@
             <div class="cap"><div class="k">Responsive HTML</div><div class="t">Emails <span class="arrow">&rarr;</span></div></div>
           </div>
         </a>
-        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-wide"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-wide"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
-        <div class="tile s-sq"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile s-mini"><div class="theme t-query">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#e8820e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></span>
+          <span class="lbl">Query<small>SQL / Query Studio</small></span>
+        </div></div>
+        <div class="tile s-mini"><div class="theme t-wa">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1faa4e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.9-.9L3 21l1.9-5.6a8.5 8.5 0 0 1-.9-3.9 8.38 8.38 0 0 1 8.5-8.5 8.38 8.38 0 0 1 8.5 8.5z"/></svg></span>
+          <span class="lbl">WhatsApp<small>Messaging</small></span>
+        </div></div>
+        <div class="tile s-mini"><div class="theme t-ai">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#d6418a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="12" rx="2"/><path d="M12 7V4"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M3 12v3M21 12v3"/></svg></span>
+          <span class="lbl">AI Assistant<small>Chat panel</small></span>
+        </div></div>
+        <div class="tile s-mini"><div class="theme t-data">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#6b4fd8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
+          <span class="lbl">Subscriber Data<small>Multi-BU</small></span>
+        </div></div>
       </div>
     </div>
 
