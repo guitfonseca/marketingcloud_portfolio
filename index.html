@@ -21,7 +21,7 @@
     overflow-y: auto;
   }
 
-  .stage { position: relative; min-height: 100vh; overflow: visible; padding-bottom: 80px; }
+  .stage { position: relative; min-height: 100vh; overflow: visible; padding-bottom: 40px; }
 
   /* ============================================================
      TILTED GRID  (sits BEHIND a dimming veil so text reads)
@@ -145,23 +145,15 @@
      DIMMING VEIL — sits between grid and headline
      this is what makes the white text readable
      ============================================================ */
-  .veil {
-    position: absolute; inset: 0;
-    z-index: 10;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 620px 300px at 50% 20%, rgba(13,28,70,0.82) 0%, rgba(13,28,70,0.5) 40%, rgba(13,28,70,0) 70%);
-  }
 
   /* ============================================================
      FLOATING HEADLINE
      ============================================================ */
   .overlay {
-    position: relative; z-index: 20;
-    text-align: center; padding: 54px 24px 0; pointer-events: none;
+    position: relative; z-index: 2;
+    text-align: center; padding: 54px 24px 10px;
   }
-  .overlay .inner-h { pointer-events: none; display: inline-block; }
-  .overlay .inner-h a, .overlay .inner-h .pill { pointer-events: auto; }
+  .overlay .inner-h { display: inline-block; }
   .brand { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 16px; }
   .brand .logo {
     width: 40px; height: 40px; border-radius: 50%; background: #fff;
@@ -208,8 +200,7 @@
     .grid { transform: none; grid-template-columns: 1fr 1fr; grid-auto-rows: 130px; gap: 12px; }
     .s-sq,.s-sm,.s-wide,.s-tall { grid-column: span 1; grid-row: span 1; }
     .nav-tile:hover { transform: translateY(-6px) !important; }
-    .veil { display: none; }
-    .overlay { padding-top: 36px; } h1 { font-size: 38px; } footer { position: relative; }
+      .overlay { padding-top: 36px; } h1 { font-size: 38px; } footer { position: relative; }
   }
 </style>
 </head>
