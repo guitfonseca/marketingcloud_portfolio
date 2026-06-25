@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guilherme Fonseca — SFMC Portfolio</title>
+<style>
+  :root {
+    --green: #12b886;
+    --green-bright: #1ed99a;
+    --ink: #0a2c22;
+    --white: #ffffff;
+    --sans: 'Poppins','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100vh;
+    font-family: var(--sans);
+    background: radial-gradient(circle at 50% 0%, #1ed99a 0%, #12b886 42%, #0c9b73 100%);
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ============================================================
+     THE TILTED GRID  (one plane, rotated as a single block)
+     ============================================================ */
+  .grid-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1700px;
+    transform: translate(-50%, -42%);
+    perspective: 2600px;
+    z-index: 1;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+    transform: rotateX(34deg) rotateZ(-24deg) scale(1.02);
+    transform-style: preserve-3d;
+  }
+
+  .tile {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 26px 50px -20px rgba(4,40,30,0.45);
+    overflow: hidden;
+    color: var(--ink);
+    aspect-ratio: 4 / 3;
+    position: relative;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  /* a couple of tiles span taller for rhythm */
+  .tile.tall { aspect-ratio: 3 / 4; }
+
+  .shot {
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: top center;
+    background-color: #eef3f1;
+  }
+  .shot.empty {
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 6px;
+    color: #b3c7c0;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+    text-align: center; padding: 10px;
+  }
+  .shot.empty svg { width: 22px; height: 22px; opacity: 0.5; }
+
+  /* ---------- the two CLICKABLE tiles ---------- */
+  .nav-tile {
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    z-index: 5;
+  }
+  .nav-tile .cap {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 30px 16px 14px;
+    background: linear-gradient(to top, rgba(7,58,43,0.94), rgba(7,58,43,0));
+    color: #fff;
+  }
+  .nav-tile .cap .k {
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; opacity: 0.85; margin-bottom: 2px;
+  }
+  .nav-tile .cap .t {
+    font-size: 19px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-tile .tab {
+    position: absolute; top: 12px; left: 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 4px 10px; border-radius: 100px; color: #fff; z-index: 2;
+  }
+  .cloud-tile .tab { background: #0a4d8c; }
+  .mail-tile  .tab { background: #1f7a6d; }
+
+  /* hover: pop the tile OUT of the tilted plane toward the viewer */
+  .cloud-tile:hover, .cloud-tile:focus-visible,
+  .mail-tile:hover, .mail-tile:focus-visible {
+    transform: translateZ(120px) rotateZ(24deg) rotateX(-34deg) scale(1.04);
+    box-shadow: 0 60px 90px -30px rgba(4,40,30,0.75);
+    z-index: 50;
+    outline: none;
+  }
+
+  /* ============================================================
+     FLOATING HEADLINE  (sits above the grid)
+     ============================================================ */
+  .overlay {
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    padding: 50px 24px 0;
+    pointer-events: none;
+  }
+  .overlay .inner { pointer-events: auto; display: inline-block; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 11px; margin-bottom: 22px;
+  }
+  .brand .logo {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #fff; display: flex; align-items: center; justify-content: center;
+  }
+  .brand .logo svg { width: 21px; height: 21px; }
+  .brand .name { font-size: 21px; font-weight: 700; }
+
+  h1 {
+    font-size: 62px; line-height: 1.02; font-weight: 800; letter-spacing: -0.025em;
+    text-shadow: 0 8px 30px rgba(4,40,30,0.3);
+  }
+  .sub {
+    margin: 18px auto 0; max-width: 540px;
+    font-size: 16px; font-weight: 500; line-height: 1.55;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 2px 12px rgba(4,40,30,0.35);
+  }
+  .pill-tags { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+  .pill {
+    font-size: 11.5px; font-weight: 600;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.28);
+    padding: 5px 12px; border-radius: 100px;
+    backdrop-filter: blur(4px);
+  }
+  .hint {
+    margin-top: 24px; font-size: 12.5px; font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hint .dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  footer {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    padding: 18px; text-align: center;
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    z-index: 20; pointer-events: none;
+  }
+
+  @media (max-width: 1300px) { .grid-wrap { width: 1400px; } }
+  @media (max-width: 1000px) {
+    .grid-wrap { width: 1100px; transform: translate(-50%, -38%); }
+    h1 { font-size: 46px; }
+  }
+  @media (max-width: 720px) {
+    .grid-wrap { position: relative; top: auto; left: auto; transform: none; width: 100%; perspective: none; margin-top: 20px; padding-bottom: 60px; }
+    .grid { transform: none; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .tile, .tile.tall { aspect-ratio: 4/3; }
+    .cloud-tile:hover, .mail-tile:hover { transform: translateY(-6px) !important; }
+    .overlay { padding-top: 36px; }
+    h1 { font-size: 38px; }
+    footer { position: relative; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+
+    <!-- ============ FLOATING HEADLINE ============ -->
+    <div class="overlay">
+      <div class="inner">
+        <div class="brand">
+          <span class="logo">
+            <svg viewBox="0 0 24 24" fill="#12b886"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+          </span>
+          <span class="name">Guilherme Fonseca</span>
+        </div>
+        <h1>SFMC Portfolio</h1>
+        <p class="sub">Responsive HTML emails and interactive Marketing Cloud CloudPages, built hands-on for regulated life-sciences programs.</p>
+        <div class="pill-tags">
+          <span class="pill">AMPscript</span>
+          <span class="pill">Content Builder</span>
+          <span class="pill">Data Extensions</span>
+          <span class="pill">ISI / Fair Balance</span>
+          <span class="pill">Chart.js</span>
+        </div>
+        <div><span class="hint"><span class="dot"></span>Tap a card to explore</span></div>
+      </div>
+    </div>
+
+    <!-- ============ TILTED GRID ============ -->
+    <div class="grid-wrap">
+      <div class="grid">
+
+        <!-- Row 1 -->
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <!-- Row 2  -->
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <!-- ===== CLICKABLE: CLOUDPAGES ===== -->
+        <a class="tile nav-tile cloud-tile" href="cloudpages.html" aria-label="View CloudPages">
+          <span class="tab">CloudPages</span>
+          <!-- ADD SCREENSHOT: <div class="shot" style="background-image:url('img/cloudpages-cover.png')"></div> -->
+          <div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>DASHBOARD<br>SCREENSHOT</div>
+          <div class="cap"><div class="k">Campaign Dashboards</div><div class="t">CloudPages &rarr;</div></div>
+        </a>
+
+        <!-- ===== CLICKABLE: EMAILS ===== -->
+        <a class="tile nav-tile mail-tile" href="emails.html" aria-label="View Emails">
+          <span class="tab">Emails</span>
+          <!-- ADD SCREENSHOT: <div class="shot" style="background-image:url('img/emails-cover.png')"></div> -->
+          <div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>EMAIL<br>SCREENSHOT</div>
+          <div class="cap"><div class="k">Responsive HTML</div><div class="t">Emails &rarr;</div></div>
+        </a>
+
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+        <!-- Row 3 -->
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+        <div class="tile"><div class="shot empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>IMAGE SLOT</div></div>
+
+      </div>
+    </div>
+
+    <footer>Guilherme Fonseca · São Paulo · Salesforce Marketing Cloud</footer>
+
+  </div>
+</body>
+</html>
