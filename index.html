@@ -18,18 +18,19 @@
     color: var(--white);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    overflow-y: auto;
   }
 
-  .stage { position: relative; min-height: 100vh; overflow: hidden; }
+  .stage { position: relative; min-height: 100vh; overflow: visible; padding-bottom: 80px; }
 
   /* ============================================================
      TILTED GRID  (sits BEHIND a dimming veil so text reads)
      ============================================================ */
   .grid-wrap {
-    position: absolute;
-    top: 50%; left: 50%;
+    position: relative;
     width: 1750px;
-    transform: translate(-50%, -30%);
+    max-width: 96vw;
+    margin: -120px auto 0;     /* pull up under the headline */
     perspective: 2600px;
     z-index: 1;
   }
@@ -45,6 +46,7 @@
   .tile {
     background: #ffffff;
     border-radius: 16px;
+    cursor: default;
     box-shadow: 0 26px 50px -20px rgba(8,16,40,0.55);
     overflow: hidden;
     color: var(--ink);
@@ -96,10 +98,11 @@
   .nav-tile .cap .t .arrow { transition: transform 0.3s ease; }
 
   /* FIX: gentler pop that stays on screen (less Z, no big scale) */
-  .nav-tile:hover, .nav-tile:focus-visible {
-    /* counter the grid tilt (rotateX30 rotateZ-20) so the card faces front, then lift */
-    transform: rotateZ(20deg) rotateX(-30deg) translateZ(90px) translateY(-10px) scale(1.06);
-    box-shadow: 0 55px 95px -28px rgba(8,16,40,0.85);
+  /* ALL tiles lift & straighten gently on hover */
+  .tile:hover, .tile:focus-visible, .nav-tile:hover, .nav-tile:focus-visible {
+    /* counter the grid tilt so the card faces front, slight lift — no big scale */
+    transform: rotateZ(20deg) rotateX(-30deg) translateZ(50px) scale(1.02);
+    box-shadow: 0 40px 70px -26px rgba(8,16,40,0.8);
     z-index: 60; outline: none;
   }
   .nav-tile:hover .cap .t .arrow { transform: translateX(6px); }
@@ -157,7 +160,7 @@
      ============================================================ */
   .overlay {
     position: relative; z-index: 20;
-    text-align: center; padding: 34px 24px 0; pointer-events: none;
+    text-align: center; padding: 40px 24px 0; pointer-events: none;
   }
   .overlay .inner-h { pointer-events: none; display: inline-block; }
   .overlay .inner-h a, .overlay .inner-h .pill { pointer-events: auto; }
@@ -195,8 +198,8 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
   footer {
-    position: fixed; bottom: 0; left: 0; right: 0; padding: 18px; text-align: center;
-    font-size: 12px; color: rgba(255,255,255,0.75); z-index: 20; pointer-events: none;
+    position: relative; padding: 40px 18px 24px; text-align: center;
+    font-size: 12px; color: rgba(255,255,255,0.75); z-index: 20;
     text-shadow: 0 1px 6px rgba(8,16,40,0.8);
   }
 
