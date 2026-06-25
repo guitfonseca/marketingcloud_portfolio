@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Hunter | Email 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#CC0000;--red-dark:#A30000;--ff-serif:'Noto Serif',Georgia,serif;--ff-sans:'Inter',sans-serif;--bg-page:#FFFFFF;--bg-card:#FFFFFF;--bg-section:#F5F5F5;--text-main:#1A1A1A;--text-mid:#4A4A4A;--text-soft:#767676;--line:#E0E0E0;--success:#2E7D32;--danger:#C62828;--warning:#B45309;--info:#0066B4}
+body.dark{--bg-page:#111111;--bg-card:#1C1C1C;--bg-section:#181818;--text-main:#F0F0F0;--text-mid:#CCCCCC;--text-soft:#888888;--line:#2E2E2E}
+body{background:var(--bg-page);font-family:var(--ff-sans);color:var(--text-main);transition:background 0.3s,color 0.3s}
+.page{min-height:100vh}
+.topbar{background:#0A0A0A;padding:0 40px;height:40px;display:flex;align-items:center;justify-content:space-between}
+.topbar-brand{display:flex;align-items:center;gap:10px}
+.topbar-brand .jnj-mark{font-family:var(--ff-serif);font-size:13px;color:#fff;letter-spacing:0.04em;opacity:0.9}
+.topbar-brand .tsep{width:1px;height:14px;background:rgba(255,255,255,0.25)}
+.topbar-brand .vision-mark{font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase}
+.header{border-bottom:1px solid var(--line);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:var(--bg-page);position:sticky;top:0;z-index:500;flex-wrap:wrap;gap:12px;transition:background 0.3s,border-color 0.3s}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-logo{width:40px;height:40px;background:var(--red);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background 0.2s;flex-shrink:0}
+.header-logo:hover{background:var(--red-dark)}
+.header-logo svg{width:20px;height:20px;fill:white}
+.header-divider{width:1px;height:22px;background:var(--line)}
+.header-text h1{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--text-main);letter-spacing:0.02em}
+.header-text span{font-size:12px;color:var(--text-soft);letter-spacing:0.04em}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn-hub{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--red);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--red);padding:6px 14px;transition:all 0.2s}
+.btn-hub:hover{background:var(--red);color:#fff}
+.btn-hub svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}
+.badge-date{font-size:11px;font-weight:500;color:var(--text-soft);border:1px solid var(--line);padding:6px 12px;letter-spacing:0.04em}
+.theme-toggle,.btn-refresh{font-size:11px;font-weight:600;color:var(--text-soft);background:none;border:1px solid var(--line);padding:6px 14px;cursor:pointer;font-family:var(--ff-sans);letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s}
+.theme-toggle:hover,.btn-refresh:hover{border-color:var(--text-main);color:var(--text-main)}
+.hero{position:relative;border-bottom:3px solid var(--red);padding:48px 40px 40px;overflow:hidden;background:var(--bg-section);background-image:linear-gradient(rgba(10,10,10,0.62),rgba(10,10,10,0.62));background-size:cover;background-position:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;color:#fff;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:2px;background:var(--red)}
+.hero h2{font-family:var(--ff-serif);font-size:clamp(20px,3vw,32px);font-weight:700;line-height:1.15;color:#fff;margin-bottom:8px}
+.hero p{font-size:13px;font-weight:300;color:rgba(255,255,255,0.85);line-height:1.6}
+.automation-strip{display:flex;gap:10px;padding:12px 40px;background:var(--bg-card);border-bottom:1px solid var(--line);justify-content:flex-end;flex-wrap:wrap}
+.auto-box{background:var(--bg-section);padding:10px 14px;cursor:pointer;min-width:200px;border:1px solid var(--line);transition:border-color 0.2s}
+.auto-box:hover{border-color:var(--red)}
+.auto-box .auto-title{font-weight:600;font-size:12px;color:var(--text-main)}
+.auto-box .auto-cycle{font-size:10px;color:var(--text-soft)}
+.auto-box .auto-meta{display:flex;justify-content:space-between;font-size:10px;color:var(--text-mid);margin:5px 0}
+.auto-track{background:var(--line);height:5px}
+.auto-track .auto-fill{height:100%;background:var(--red);width:0%;transition:width 1s ease}
+.auto-pct{font-size:9px;color:var(--text-soft);margin-top:3px;text-align:right}
+.container{max-width:1400px;margin:0 auto;padding:40px 24px 80px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:28px}
+.stat-card{background:var(--bg-card);border:1px solid var(--line);padding:22px;position:relative;cursor:pointer;transition:box-shadow 0.2s,transform 0.2s,border-color 0.2s,background 0.3s}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);width:0;transition:width 0.3s ease}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.1);border-color:var(--red)}
+.stat-card:hover::before{width:100%}
+.stat-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--bg-section);color:var(--red);border:1px solid var(--line)}
+.stat-value{font-family:var(--ff-serif);font-size:30px;font-weight:700;margin-bottom:6px;color:var(--text-main);line-height:1}
+.stat-label{font-size:12px;color:var(--text-mid);margin-bottom:8px;font-weight:500}
+.stat-trend{font-size:10px;padding:3px 8px;display:inline-block;font-weight:600;letter-spacing:0.04em;background:var(--bg-section);color:var(--red)}
+.two-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px}
+.three-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:28px}
+.card{background:var(--bg-card);border:1px solid var(--line);padding:22px;transition:background 0.3s,border-color 0.3s}
+.card-title{font-family:var(--ff-serif);font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--text-main)}
+.email-table{overflow-x:auto}
+.email-table table{width:100%;border-collapse:collapse}
+.email-table th,.email-table td{padding:11px 8px;text-align:left;border-bottom:1px solid var(--line);font-size:12px;color:var(--text-mid)}
+.email-table th{background:var(--bg-section);font-weight:600;color:var(--text-main);border-bottom:2px solid var(--red);font-size:10px;text-transform:uppercase;letter-spacing:0.06em}
+.pie-legend{display:flex;justify-content:center;gap:16px;margin-top:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-mid)}
+.legend-color{width:12px;height:12px}
+.pie-chart-container{position:relative;height:200px;margin:10px 0}
+.funnel-container{display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:20px;margin:20px 0}
+.funnel-step{text-align:center;flex:1;min-width:90px}
+.funnel-number{font-family:var(--ff-serif);font-size:28px;font-weight:700;color:var(--red)}
+.funnel-label{font-size:11px;color:var(--text-mid);margin:5px 0}
+.funnel-drop{font-size:10px;color:var(--danger);font-weight:500}
+.progress-bar{background:var(--line);height:6px;margin:8px 0}
+.progress-fill{background:var(--red);height:100%;width:0%}
+.forms-list{max-height:320px;overflow-y:auto}
+.form-item{padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}
+.form-name{font-weight:600;color:var(--text-main)}
+.form-detail{color:var(--text-mid);font-size:11px}
+.consent-badge{background:#E8F5E9;color:var(--success);padding:2px 8px;font-size:10px;font-weight:600}
+.divergent-badge{background:#FFF3E0;color:#B45309;padding:2px 8px;font-size:10px;font-weight:600}
+.btn-export{background:none;border:1px solid var(--line);padding:6px 14px;font-size:10px;font-weight:600;color:var(--text-soft);cursor:pointer;transition:all 0.2s;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--ff-sans)}
+.btn-export:hover{border-color:var(--red);color:var(--red)}
+.btn-export.active{background:var(--red);color:#fff;border-color:var(--red)}
+.modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.6);align-items:center;justify-content:center}
+.modal-content{background:var(--bg-card);border:1px solid var(--line);max-width:450px;width:90%;padding:28px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:2px solid var(--red);padding-bottom:12px}
+.modal-header h3{font-family:var(--ff-serif);font-size:17px;color:var(--text-main)}
+.close-modal{font-size:24px;font-weight:bold;cursor:pointer;color:var(--text-soft);line-height:1}
+.close-modal:hover{color:var(--red)}
+.modal-body p{font-size:14px;line-height:1.6;color:var(--text-mid)}
+.interest-bar{height:26px;margin:12px 0;overflow:hidden;display:flex;width:100%}
+.divergent-list{max-height:150px;overflow-y:auto;font-size:11px;padding:8px;background:var(--bg-section);margin-top:10px;border:1px solid var(--line)}
+.divergent-item{padding:4px 0;border-bottom:1px solid var(--line);font-family:monospace;color:var(--text-mid)}
+.site-footer{background:#0A0A0A;width:100%;padding:24px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.site-footer .brand{font-family:var(--ff-serif);font-size:13px;color:rgba(255,255,255,0.6)}
+.site-footer .brand strong{color:rgba(255,255,255,0.9)}
+.site-footer .data{font-size:11px;color:rgba(255,255,255,0.3);text-align:right;max-width:60%}
+@media(max-width:768px){.two-columns,.three-columns{grid-template-columns:1fr}.topbar,.header,.hero,.automation-strip{padding-left:20px;padding-right:20px}.container{padding:24px 16px 60px}.stat-value{font-size:24px}.site-footer{flex-direction:column;text-align:center}.site-footer .data{max-width:100%;text-align:center}}
+.email-table td .email-link{color:var(--red);font-weight:600;cursor:pointer;border-bottom:1px dashed var(--red);padding-bottom:1px;transition:color .15s,border-color .15s}
+.email-table td .email-link:hover{color:var(--red-dark);border-bottom-color:var(--red-dark)}
+.email-table td .email-link-hint{display:inline-block;margin-left:6px;font-family:var(--ff-sans);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--red);cursor:pointer;opacity:.85;transition:opacity .15s}
+.email-table td .email-link-hint:hover{opacity:1}
+.email-table td .email-link-hint::before{content:"\2197 "}
+.email-modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.78);z-index:9999;backdrop-filter:blur(2px);padding:24px;overflow-y:auto}
+.email-modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.email-modal{background:#fff;border-radius:8px;max-width:680px;width:100%;margin:24px auto;box-shadow:0 24px 80px rgba(0,0,0,0.5);overflow:hidden;animation:emFade .2s ease}
+@keyframes emFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.email-modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#0A0A0A;border-bottom:3px solid var(--red)}
+.email-modal-head h3{font-family:var(--ff-serif);font-size:15px;font-weight:700;color:#fff;margin:0}
+.email-modal-head .sub{font-family:var(--ff-sans);font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px}
+.email-modal-close{background:transparent;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:0 4px;transition:color .15s}
+.email-modal-close:hover{color:var(--red)}
+.email-modal-body{height:70vh;background:#f0f0f0;overflow:hidden}
+.email-modal-body iframe{width:100%;height:100%;border:none;display:block}
+.email-modal-foot{padding:10px 20px;background:#fafafa;border-top:1px solid #eee;font-family:var(--ff-sans);font-size:11px;color:var(--text-soft);text-align:center}
+@media(max-width:768px){.email-modal-body{height:62vh}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="topbar"><div class="topbar-brand"><span class="jnj-mark"><span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Vision</span><div class="tsep"></div><span class="vision-mark">ACUVUE</span></div></div>
+<header class="header">
+<div class="header-left">
+<a href="# class="header-logo"><svg viewBox="0 0 24 24"><path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2Z"/></svg></a>
+<div class="header-divider"></div>
+<div class="header-text"><h1>Email 01</h1><span>Project Hunter &middot; Initial Outreach</span></div>
+</div>
+<div class="header-right">
+<a href="# class="btn-hub"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>All Waves</a>
+<span class="badge-date"></span>
+<button class="theme-toggle" id="themeToggle">Dark Mode</button>
+<button class="btn-refresh" id="refreshBtn">Refresh</button>
+</div>
+</header>
+<section class="hero"><div class="hero-eyebrow">Campaign Intelligence</div><h2>Email Performance &mdash; Wave 01. All Sends</h2><p>Send-level metrics across Emails 01, 02 and 03, combined with campaign-wide form submissions, funnel, and geographic breakdown</p></section>
+<div class="automation-strip">
+<div class="auto-box" id="dvInfoBtn"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;"><span class="auto-title">Dataviews</span><span class="auto-cycle">Every hour &middot; ~10 min</span></div><div class="auto-meta"><span>Last: <strong id="dvLastRun">--</strong></span><span>Next: <strong id="dvNextRun">--</strong></span></div><div class="auto-track"><div class="auto-fill" id="dvProgressBar"></div></div><div class="auto-pct" id="dvProgressLabel">Calculating...</div></div>
+<div class="auto-box" id="emInfoBtn"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;"><span class="auto-title">Email Metrics</span><span class="auto-cycle">Every 30 min &middot; ~3 min</span></div><div class="auto-meta"><span>Last: <strong id="emLastRun">--</strong></span><span>Next: <strong id="emNextRun">--</strong></span></div><div class="auto-track"><div class="auto-fill" id="emProgressBar"></div></div><div class="auto-pct" id="emProgressLabel">Calculating...</div></div>
+</div>
+<div class="container">
+<div class="stats-grid">
+<div class="stat-card" data-metric="sent"><div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg></div><div class="stat-value" id="sentValue">0</div><div class="stat-label">Emails Sent</div><div class="stat-trend">All 3 emails</div></div>
+<div class="stat-card" data-metric="opens"><div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="stat-value" id="opensValue">0</div><div class="stat-label">Unique Opens</div><div class="stat-trend" id="openRateBadge">0% open rate</div></div>
+<div class="stat-card" data-metric="clicks"><div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-5 3 9 2-4h4"/></svg></div><div class="stat-value" id="clicksValue">0</div><div class="stat-label">Unique Clicks</div><div class="stat-trend" id="ctrBadge">0% CTR</div></div>
+<div class="stat-card" data-metric="forms"><div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="stat-value" id="formsValue">0</div><div class="stat-label">Form Submissions <span style="font-size:9px;color:var(--text-soft);">(campaign)</span></div><div class="stat-trend" id="convBadge">0% conv</div></div>
+</div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Send Metrics</span><button class="btn-export" id="exportMetricsCSV">Export Metrics CSV</button></div>
+<div class="email-table"><table><thead><tr><th>Job ID</th><th>Sent</th><th>Delivered</th><th>Opens</th><th>Clicks</th><th>Bounces</th><th>Unsubs</th><th title="Form submissions are aggregated at the campaign level - they cannot be attributed to a single email">Forms*</th><th>Open Rate</th><th>Click Rate</th><th>CTOR</th></tr></thead>
+<tbody><tr><td><span class="email-link" data-email="1">4400101 (E01)</span> <span class="email-link-hint" data-email="1">see email</span></td><td>820</td><td>804</td><td>344</td><td>62</td><td>16</td><td>2</td><td style="color:var(--text-soft);" title="Aggregated at campaign level">&mdash;</td><td id="or1">0%</td><td id="cr1">0%</td><td id="ctor1">0%</td></tr><tr><td><span class="email-link" data-email="2">4400102 (E02)</span> <span class="email-link-hint" data-email="2">see email</span></td><td>805</td><td>793</td><td>362</td><td>76</td><td>12</td><td>2</td><td style="color:var(--text-soft);" title="Aggregated at campaign level">&mdash;</td><td id="or2">0%</td><td id="cr2">0%</td><td id="ctor2">0%</td></tr><tr><td><span class="email-link" data-email="3">4400103 (E03)</span> <span class="email-link-hint" data-email="3">see email</span></td><td>790</td><td>776</td><td>371</td><td>85</td><td>14</td><td>3</td><td style="color:var(--text-soft);" title="Aggregated at campaign level">&mdash;</td><td id="or3">0%</td><td id="cr3">0%</td><td id="ctor3">0%</td></tr><tr style="font-weight:700;background:var(--bg-section);"><td>TOTAL</td><td>2415</td><td>2373</td><td>1077</td><td>223</td><td>42</td><td>7</td><td style="font-weight:700;" title="Total campaign form submissions">40</td><td id="orT">0%</td><td id="crT">0%</td><td id="ctorT">0%</td></tr></tbody></table></div></div>
+<div class="two-columns">
+<div class="card"><div class="card-title"><span>Button Clicks &mdash; All Emails (Total)</span></div><div class="pie-chart-container"><canvas id="pieChart"></canvas></div><div class="pie-legend" id="pieLegend"></div><div class="card-title" style="margin-top:8px;font-size:12px;"><span>Primary CTA (E01/03 solicitecontato + E02 especialista) + saibamais01 + saibamais02, summed across emails</span></div></div>
+<div class="card"><div class="card-title"><span>Conversion Funnel</span><span class="badge-date">Email + campaign forms</span></div>
+<div class="funnel-container">
+<div class="funnel-step"><div class="funnel-number" id="fSent">0</div><div class="funnel-label">Sent</div><div class="progress-bar"><div class="progress-fill" id="fillFSent" style="width:100%"></div></div></div>
+<div class="funnel-step"><div class="funnel-number" id="fOpens">0</div><div class="funnel-label">Opens</div><div class="funnel-drop" id="dropSO">-0</div><div class="progress-bar"><div class="progress-fill" id="fillFOpens"></div></div></div>
+<div class="funnel-step"><div class="funnel-number" id="fClicks">0</div><div class="funnel-label">Clicks</div><div class="funnel-drop" id="dropOC">-0</div><div class="progress-bar"><div class="progress-fill" id="fillFClicks"></div></div></div>
+<div class="funnel-step"><div class="funnel-number" id="fForms">0</div><div class="funnel-label">Forms</div><div class="funnel-drop" id="dropCF">-0</div><div class="progress-bar"><div class="progress-fill" id="fillFForms"></div></div></div>
+</div>
+<div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--line);"><div style="font-size:12px;font-weight:600;">Funnel Metrics:</div><div style="font-size:11px;margin-top:6px;">Open Rate: <strong id="fOR">0%</strong> | Click Rate: <strong id="fCR">0%</strong> | CTOR (clicks/opens): <strong id="fCTOR">0%</strong> | Form Conversion (from clicks): <strong id="fConv">0%</strong></div></div></div>
+</div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Conversion Funnel (Visual)</span><span class="badge-date">Sent &rarr; Opens &rarr; Clicks &rarr; Forms</span></div>
+<div style="height:340px;position:relative;width:100%;"><canvas id="funnelChart"></canvas></div>
+<div class="pie-legend" style="font-size:11px;color:var(--text-soft);justify-content:center;margin-top:8px;">Each bar is a campaign-wide stage. Percentages show conversion from the previous stage. Forms are aggregated across all three emails.</div></div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Button Clicks by Email</span><span class="badge-date">Per-email breakdown</span></div>
+<div class="three-columns" style="margin-bottom:0;">
+<div style="text-align:center;">
+<div style="font-family:var(--ff-serif);font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text-main);">Email 01</div>
+<div style="position:relative;height:180px;"><canvas id="pieChart1"></canvas></div>
+<div class="pie-legend" id="pieLegend1" style="font-size:10px;"></div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:var(--ff-serif);font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text-main);">Email 02</div>
+<div style="position:relative;height:180px;"><canvas id="pieChart2"></canvas></div>
+<div class="pie-legend" id="pieLegend2" style="font-size:10px;"></div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:var(--ff-serif);font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text-main);">Email 03</div>
+<div style="position:relative;height:180px;"><canvas id="pieChart3"></canvas></div>
+<div class="pie-legend" id="pieLegend3" style="font-size:10px;"></div>
+</div>
+</div></div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Form Submissions by State</span><span class="badge-date" id="mapSubtitle">Loading...</span></div><div id="map" style="height:350px;"></div></div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Form Submissions Over Time (Daily)</span><div style="display:flex;gap:8px;"><button class="btn-export active" id="filterAll" onclick="filterTimeline('all')">All</button><button class="btn-export" id="filterAcuvue" onclick="filterTimeline('ACUVUE')">ACUVUE</button><button class="btn-export" id="filterBoth" onclick="filterTimeline('Both')">Both</button></div></div>
+<div style="height:300px;position:relative;width:100%;"><canvas id="timelineChart"></canvas></div><div class="pie-legend" style="font-size:11px;color:var(--text-soft);justify-content:center;">Each dot represents the total number of forms submitted that day.</div></div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Top Hospitals / Clinics by Submissions</span><span class="badge-date" id="hospitalSubtitle"></span></div><div style="height:350px;position:relative;"><canvas id="hospitalChart"></canvas></div></div>
+<div class="card" style="margin-bottom:24px;"><div class="card-title"><span>Interest by State</span><span class="badge-date" id="stateInterestSubtitle"></span></div><div style="height:300px;position:relative;"><canvas id="stateInterestChart"></canvas></div></div>
+<div class="two-columns">
+<div class="card"><div class="card-title"><span>Automation &amp; Re-engagement Logic</span><span class="badge-date">Sequence</span></div>
+<div style="background:var(--bg-section);border:1px solid var(--line);padding:14px;margin-bottom:16px;"><div style="font-size:14px;font-weight:600;color:var(--red);margin-bottom:6px;">Email 01 &rarr; 7d &rarr; Email 02 or Email 03</div><div style="font-size:12px;font-weight:600;">Email 1 &rarr; Wait 7 days &rarr; Email 2 or Email 3</div></div>
+<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;"><span>Total form submissions (campaign):</span><span id="autoForms">0</span></div><div class="progress-bar"><div class="progress-fill" id="fillAutoForms" style="background:var(--success);width:0%"></div></div><div style="font-size:10px;color:var(--text-mid);">Across all three emails in the sequence</div></div>
+<div><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;"><span>Clicks across all emails:</span><span id="autoClicks">0</span></div><div class="progress-bar"><div class="progress-fill" id="fillAutoClicks" style="background:var(--red);width:0%"></div></div></div></div>
+<div class="card"><div class="card-title"><span>Marketing Consent (Opt-in)</span><span class="badge-date">Campaign</span></div>
+<div style="text-align:center;padding:10px;"><div style="font-family:var(--ff-serif);font-size:44px;font-weight:700;color:var(--success);" id="consentRateValue">0%</div><div style="font-size:12px;margin-top:5px;color:var(--text-mid);">of form submitters opted in</div><div class="progress-bar" style="margin:20px 0;"><div class="progress-fill" id="consentBar" style="background:var(--success);width:0%"></div></div><div style="display:flex;justify-content:space-around;margin-top:16px;"><div><span style="font-family:var(--ff-serif);font-size:24px;font-weight:700;" id="consentYesCount">0</span><br><span style="font-size:11px;color:var(--text-mid);">Opted In</span></div><div><span style="font-family:var(--ff-serif);font-size:24px;font-weight:700;" id="consentNoCount">0</span><br><span style="font-size:11px;color:var(--text-mid);">Opted Out</span></div></div></div></div>
+</div>
+<div class="card" style="margin-bottom:28px;"><div class="card-title"><span>Recent Form Submissions (All Interests)</span><button class="btn-export" id="exportFormsCSV">Export Forms CSV</button></div><div class="forms-list" id="formsList"></div></div>
+
+<div class="two-columns">
+<div class="card">
+<div class="card-title"><span>Interest Breakdown &amp; Comments Analysis</span><span class="badge-date">All form submissions</span></div>
+<div style="margin-bottom:16px;">
+<div style="font-size:13px;font-weight:600;margin-bottom:8px;">Interest Distribution</div>
+<div class="interest-bar">
+<div style="background:var(--red);height:100%;color:white;font-size:11px;display:flex;align-items:center;justify-content:center;flex:26;">ACUVUE&reg;: 65%</div>
+<div style="background:#767676;height:100%;color:white;font-size:11px;display:flex;align-items:center;justify-content:center;flex:14;">Cir&uacute;rgicos: 35%</div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:4px;">
+<span><span style="color:var(--red);font-weight:600;">&#9679;</span> Lentes de Contato ACUVUE&reg;: <strong id="acuvueCount">0</strong></span>
+<span><span style="color:#767676;font-weight:600;">&#9679;</span> Equipamentos Cir&uacute;rgicos: <strong id="surgicalCount">0</strong></span>
+</div>
+</div>
+<div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--line);">
+<div style="font-size:13px;font-weight:600;margin-bottom:12px;">Comments Field Analysis</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+<div style="text-align:center;flex:1;"><div style="font-family:var(--ff-serif);font-size:30px;font-weight:700;color:var(--info);" id="commentsFilledValue">0</div><div style="font-size:11px;color:var(--text-mid);">Comments filled</div></div>
+<div style="text-align:center;flex:1;"><div style="font-family:var(--ff-serif);font-size:30px;font-weight:700;" id="commentsRateValue">0%</div><div style="font-size:11px;color:var(--text-mid);">Completion rate</div></div>
+<div style="text-align:center;flex:1;"><div style="font-family:var(--ff-serif);font-size:30px;font-weight:700;" id="commentsTotalValue">0</div><div style="font-size:11px;color:var(--text-mid);">Total submissions</div></div>
+</div>
+<div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" id="commentsBar" style="background:var(--info);width:0%"></div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title"><span>Email Divergence Analysis</span><span class="badge-date">Email vs NewEmail field</span></div>
+<div style="text-align:center;margin-bottom:16px;">
+<div style="display:flex;justify-content:space-around;gap:16px;flex-wrap:wrap;">
+<div style="text-align:center;"><div style="font-family:var(--ff-serif);font-size:34px;font-weight:700;color:var(--success);" id="emailMatchCount">0</div><div style="font-size:11px;color:var(--text-mid);">Matching emails</div></div>
+<div style="text-align:center;"><div style="font-family:var(--ff-serif);font-size:34px;font-weight:700;color:var(--danger);" id="emailDivergentCountValue">0</div><div style="font-size:11px;color:var(--text-mid);">Divergent emails</div></div>
+<div style="text-align:center;"><div style="font-family:var(--ff-serif);font-size:34px;font-weight:700;" id="emailDivergentRateValue">0%</div><div style="font-size:11px;color:var(--text-mid);">Divergence rate</div></div>
+</div>
+<div class="progress-bar" style="margin:12px 0;"><div class="progress-fill" id="emailDivergentBar" style="background:var(--danger);width:0%"></div></div>
+</div>
+<div><div style="font-size:12px;font-weight:600;margin-bottom:8px;">List of divergent submissions</div><div id="divergentListContainer" class="divergent-list"><div style="color:var(--text-soft);text-align:center;padding:8px;">No divergent records found</div></div></div>
+</div>
+</div>
+</div>
+<footer class="site-footer"><span class="brand"><strong>ACUVUE</strong> - <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Vision Care</span><span class="data">Project Hunter &middot; Email 01 &middot; Job 4485701 &middot; Data as of 01/22/2026 09:14</span></footer>
+</div>
+<div id="infoModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="modalTitle">Info</h3><span class="close-modal">&times;</span></div><div class="modal-body" id="modalBody"><p></p></div></div></div>
+
+<!-- Email Preview Modal -->
+<div class="email-modal-overlay" id="emailModalOverlay">
+<div class="email-modal">
+<div class="email-modal-head">
+<div><h3 id="emailModalTitle">Email Preview</h3><div class="sub" id="emailModalSub"></div></div>
+<button class="email-modal-close" id="emailModalClose" type="button" aria-label="Close">&times;</button>
+</div>
+<div class="email-modal-body"><iframe id="emailModalFrame" title="Email preview"></iframe></div>
+<div class="email-modal-foot">Preview of the email as delivered &middot; Wave 01</div>
+</div>
+</div>
+<script type="text/template" id="emailTpl1">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+<title><span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2) format('woff2'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url(https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2) format('woff2'); }
+body { margin:0; padding:0; background:#f0f0f0; }
+</style>
+</head>
+<body style="margin: 0px; padding:0px;" bgcolor="#f0f0f0">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+<tr><td bgcolor="#f0f0f0"><div align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="600" role="presentation" bgcolor="#ffffff" class="width-full">
+<tr><td align="center" valign="top">
+<!-- Header Logo -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 20px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><img alt="<span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Logo" height="21" src="https://image.s7.sfmc-content.com/lib/fe8513727c6403757c/m/1/37b58df2-716e-46c4-bf85-b05fb18623f8.png" style="display: block; height: 21px; width: 220px; border: none;" width="220"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 24px; line-height: 30px; color: #212121;" valign="top">Transforme a experi&ecirc;ncia visual dos seus pacientes com solu&ccedil;&otilde;es inovadoras da <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span></td></tr></table></td></tr></table></td></tr></table>
+<!-- Hero Image -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%;"><tr><td><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top" width="600"><img alt="Imagem de destaque" height="279" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 279px; width: 600px; border: 0;" width="600"></td></tr></table></td></tr></table></td></tr></table>
+<!-- Body Copy -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #F8F8F8; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 0px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #63666A;" valign="top">Na <span style="color: #191919; font-weight: bold;"><span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span></span>, acreditamos que cada paciente merece enxergar o mundo com nitidez e conforto.<br><br>Queremos ajudar voc&ecirc; a oferecer o melhor cuidado ocular aos seus pacientes.<br><br>Estamos prontos para conversar e entender suas necessidades</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="600"><img alt="Solicite Contato" height="47" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 47px; width: 192px; border: 0;" width="192"></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+<!-- Article 1: Intraoculares -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px 32px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 0px 0 32px; border-bottom: 1px solid #dddddd;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><th align="center" class="stack" valign="middle" width="300"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-right: 30px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #212121;" valign="top">Conhe&ccedil;a as solu&ccedil;&otilde;es em lentes intraoculares e equipamentos</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 14px; line-height: 20px; color: #63666A;" valign="top">Tecnologias inovadoras para cirurgia de catarata, com amplo portf&oacute;lio de lentes intraoculares, facoemulsificadores, microsc&oacute;pios, equipamentos de diagn&oacute;stico e solu&ccedil;&otilde;es com intelig&ecirc;ncia artificial.</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="231"><img alt="Saiba mais" height="41" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 41px; width: 133px; border: 0;" width="133"></td></tr></table></td></tr></table></td></tr></table></th><th align="center" class="stack" valign="middle" width="230"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top"><img alt="Icon" height="184" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 184px; width: 231px; border: none;" width="231"></td></tr></table></th></tr></table></td></tr></table></td></tr></table></td></tr></table>
+<!-- Article 2: Marca #1 -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 0px 32px 32px" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><th align="center" class="stack" rowspan="2" valign="middle" width="300"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-left: 30px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #212121;" valign="top">A marca #1 de lentes de contato do mundo&sup1;</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 14px; line-height: 20px; color: #63666A;" valign="top">L&iacute;der em vendas no mundo&sup1; e a mais confiada pelos oftalmologistas*&sup2;.<br><br>As lentes de contato ACUVUE<span style="font-size: 60%; vertical-align: top;">&reg;</span> s&atilde;o imbat&iacute;veis em Conforto**<span style="font-size: 60%; vertical-align: top;">3,4,5</span>.</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="231"><img alt="Saiba mais" height="41" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 41px; width: 133px; border: 0;" width="133"></td></tr></table></td></tr></table></td></tr></table></th></tr><tr><th align="center" class="stack" valign="middle" width="230"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top:30px;" valign="top"><img alt="Icon" height="113" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 113px; width: 230px; border: none;" width="230"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 10px; line-height: 16px; color: #1E22AA;" valign="top">Lentes de Contato ACUVUE<span style="font-size: 70%; vertical-align: top;">&reg;</span></td></tr></table></th></tr></table></td></tr></table></td></tr></table>
+<!-- Footer -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td align="center" valign="top" style="padding-bottom: 60px;"><table width="100%" cellpadding="0" cellspacing="0" role="presentation" border="0"><tr><td align="center" valign="middle"><table class="width-full" width="600" cellpadding="0" role="presentation" cellspacing="0" border="0"><tr><td align="center" valign="middle" bgcolor="#191919" style="padding: 0px 0;"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #191919; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px 32px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><img alt="<span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Logo" height="20" src="https://image.s7.sfmc-content.com/lib/fe8513727c6403757c/m/1/e71a30ea-fe79-45a5-ac5f-b300dca32f09.png" style="display: block; height: 20px; width: 192px; border: none;" width="192"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 10px 0 0;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="border-bottom: 1px solid #999999" valign="top">&nbsp;</td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 20px;" valign="top"><table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" style="font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12px; line-height: 18px; color: #ffffff;" valign="top"><a href="#" style="color:#ffffff;text-decoration:none;">Pol&iacute;tica de Privacidade</a></td><td align="center" style="padding-left: 0px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12px; line-height: 18px; color: #ffffff;" valign="top"><span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href="#" style="color:#ffffff;text-decoration:none;">Cancelar Inscri&ccedil;&atilde;o</a></td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding: 20px 0 0px; font-family: 'Nunito', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 9px; line-height: 15px; color: #ffffff;" valign="top">*Pesquisa realizada com 659 profissionais da &aacute;rea de cuidados com os olhos em mercados que representam mais de 70% das vendas globais de lentes de contato, incluindo Estados Unidos, Reino Unido, Jap&atilde;o, Coreia do Sul, China e Alemanha, conduzida entre outubro e novembro de 2025.<br>**Fam&iacute;lias da marca ACUVUE&reg; com alega&ccedil;&otilde;es de conforto imbat&iacute;vel: ACUVUE&reg; OASYS (incluindo as fam&iacute;lias de descarte di&aacute;rio), 1-DAY ACUVUE&reg; MOIST (dentro da categoria de lentes de descarte di&aacute;rio em hidrogel).<br><br>Refer&ecirc;ncias:<br><b>1.</b> Fonte: Euromonitor International Limited; edi&ccedil;&atilde;o Eyewear 2026; vendas em valor a pre&ccedil;o de venda no varejo (rsp), todos os canais de varejo, dados de 2024.<br><b>2.</b> Dados internos da JJV, 2024.<br><b>3.</b> Dados internos da JJV, 2025. ClinicalTrials.gov (31 de outubro de 2025).<br><b>4.</b> Dados internos da JJV, 2025. ClinicalTrials.gov (31 de outubro de 2025).<br><br>&copy; <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> do Brasil 2025. Todos os direitos reservados.<br><br>Vision Made Possible&trade;<br>2025PP15560 V2</td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+</td></tr>
+</table>
+</div></td></tr>
+</table>
+</body>
+</html>
+
+</script>
+<script type="text/template" id="emailTpl2">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+<title><span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2) format('woff2'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url(https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2) format('woff2'); }
+body { margin:0; padding:0; background:#f0f0f0; }
+</style>
+</head>
+<body style="margin: 0px; padding:0px;" bgcolor="#f0f0f0">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+<tr><td bgcolor="#f0f0f0"><div align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="600" role="presentation" bgcolor="#ffffff" class="width-full">
+<tr><td align="center" valign="top">
+<!-- Header Logo -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 20px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><img alt="<span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Logo" height="21" src="https://image.s7.sfmc-content.com/lib/fe8513727c6403757c/m/1/37b58df2-716e-46c4-bf85-b05fb18623f8.png" style="display: block; height: 21px; width: 220px; border: none;" width="220"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 24px; line-height: 30px; color: #212121;" valign="top">Descubra agora como oferecer o melhor para o seu paciente!</td></tr></table></td></tr></table></td></tr></table>
+<!-- Hero Image -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%;"><tr><td><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top" width="600"><img alt="Imagem de destaque" height="279" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 279px; width: 600px; border: 0;" width="600"></td></tr></table></td></tr></table></td></tr></table>
+<!-- Body Copy -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #F8F8F8; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 0px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #63666A;" valign="top">Voc&ecirc; sabia que 9 em cada 10 pacientes est&atilde;o abertos ao uso de lentes de contato gelatinosas? Se essa ainda n&atilde;o &eacute; uma op&ccedil;&atilde;o no seu consult&oacute;rio, agora &eacute; o momento certo para oferecer essa solu&ccedil;&atilde;o com a marca n&ordm; 1 do mundo&sup1; ao seu lado.<br><br>E tem mais: importantes lan&ccedil;amentos em lentes intraoculares e equipamentos da <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> chegaram ao Brasil. Se voc&ecirc; atua em cirurgia de catarata, n&atilde;o perca a oportunidade de conhecer essas inova&ccedil;&otilde;es que v&atilde;o transformar sua pr&aacute;tica.<br><br>A <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> &eacute; uma das maiores empresas inovadoras em sa&uacute;de e oferece solu&ccedil;&otilde;es completas para a oftalmologia: lentes de contato, lentes intraoculares e equipamentos</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="600"><img alt="Clique aqui e fale com nosso especialista" height="46" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 46px; width: 375px; border: 0;" width="375"></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+<!-- Article 1: Intraoculares -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px 32px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 0px 0 32px; border-bottom: 1px solid #dddddd;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><th align="center" class="stack" valign="middle" width="300"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-right: 30px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #212121;" valign="top">Conhe&ccedil;a as solu&ccedil;&otilde;es em lentes intraoculares e equipamentos</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 14px; line-height: 20px; color: #63666A;" valign="top">Tecnologias inovadoras para cirurgia de catarata, com amplo portf&oacute;lio de lentes intraoculares, facoemulsificadores, microsc&oacute;pios, equipamentos de diagn&oacute;stico e solu&ccedil;&otilde;es com intelig&ecirc;ncia artificial.</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="231"><img alt="Saiba mais" height="41" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 41px; width: 133px; border: 0;" width="133"></td></tr></table></td></tr></table></td></tr></table></th><th align="center" class="stack" valign="middle" width="230"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top"><img alt="Icon" height="184" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 184px; width: 231px; border: none;" width="231"></td></tr></table></th></tr></table></td></tr></table></td></tr></table></td></tr></table>
+<!-- Article 2: Marca #1 -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 0px 32px 32px" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><th align="center" class="stack" rowspan="2" valign="middle" width="300"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-left: 30px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #212121;" valign="top">A marca #1 de lentes de contato do mundo&sup1;</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 14px; line-height: 20px; color: #63666A;" valign="top">L&iacute;der em vendas no mundo&sup1; e a mais confiada pelos oftalmologistas*&sup2;.<br><br>As lentes de contato ACUVUE<span style="font-size: 70%; vertical-align: top;">&reg;</span> s&atilde;o imbat&iacute;veis em Conforto**<span style="font-size: 70%; vertical-align: top;">3,4,5</span></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="231"><img alt="Saiba mais" height="41" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 41px; width: 133px; border: 0;" width="133"></td></tr></table></td></tr></table></td></tr></table></th></tr><tr><th align="center" class="stack" valign="middle" width="230"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top:30px;" valign="top"><img alt="Icon" height="113" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 113px; width: 230px; border: none;" width="230"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 10px; line-height: 16px; color: #1E22AA;" valign="top">Lentes de Contato ACUVUE<span style="font-size: 70%; vertical-align: top;">&reg;</span></td></tr></table></th></tr></table></td></tr></table></td></tr></table>
+<!-- Footer -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td align="center" valign="top" style="padding-bottom: 60px;"><table width="100%" cellpadding="0" cellspacing="0" role="presentation" border="0"><tr><td align="center" valign="middle"><table class="width-full" width="600" cellpadding="0" role="presentation" cellspacing="0" border="0"><tr><td align="center" valign="middle" bgcolor="#191919" style="padding: 0px 0;"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #191919; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px 32px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><img alt="<span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Logo" height="20" src="https://image.s7.sfmc-content.com/lib/fe8513727c6403757c/m/1/e71a30ea-fe79-45a5-ac5f-b300dca32f09.png" style="display: block; height: 20px; width: 192px; border: none;" width="192"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 10px 0 0;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="border-bottom: 1px solid #999999" valign="top">&nbsp;</td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 20px;" valign="top"><table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" style="font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12px; line-height: 18px; color: #ffffff;" valign="top"><a href="#" style="color:#ffffff;text-decoration:none;">Pol&iacute;tica de Privacidade</a></td><td align="center" style="padding-left: 0px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12px; line-height: 18px; color: #ffffff;" valign="top"><span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href="#" style="color:#ffffff;text-decoration:none;">Cancelar Inscri&ccedil;&atilde;o</a></td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding: 20px 0 0px; font-family: 'Nunito', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 9px; line-height: 15px; color: #ffffff;" valign="top">*Pesquisa realizada com 659 profissionais da &aacute;rea de cuidados com os olhos em mercados que representam mais de 70% das vendas globais de lentes de contato, incluindo Estados Unidos, Reino Unido, Jap&atilde;o, Coreia do Sul, China e Alemanha, conduzida entre outubro e novembro de 2025.<br>**Fam&iacute;lias da marca ACUVUE&reg; com alega&ccedil;&otilde;es de conforto imbat&iacute;vel: ACUVUE&reg; OASYS (incluindo as fam&iacute;lias de descarte di&aacute;rio), 1-DAY ACUVUE&reg; MOIST (dentro da categoria de lentes de descarte di&aacute;rio em hidrogel).<br><br>Refer&ecirc;ncias:<br><b>1.</b> Fonte: Euromonitor International Limited; edi&ccedil;&atilde;o Eyewear 2026; vendas em valor a pre&ccedil;o de venda no varejo (rsp), todos os canais de varejo, dados de 2024.<br><b>2.</b> Dados internos da JJV, 2024.<br><b>3.</b> Dados internos da JJV, 2025. ClinicalTrials.gov (31 de outubro de 2025).<br><b>4.</b> Dados internos da JJV, 2025. ClinicalTrials.gov (31 de outubro de 2025).<br><br>&copy; <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> do Brasil 2025. Todos os direitos reservados.<br><br>Vision Made Possible&trade;<br>2025PP15560 V2</td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+</td></tr>
+</table>
+</div></td></tr>
+</table>
+</body>
+</html>
+
+</script>
+<script type="text/template" id="emailTpl3">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+<title><span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url(https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2) format('woff2'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url(https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofIOOaBTMnFcQIG.woff2) format('woff2'); }
+body { margin:0; padding:0; background:#f0f0f0; }
+</style>
+</head>
+<body style="margin: 0px; padding:0px;" bgcolor="#f0f0f0">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+<tr><td bgcolor="#f0f0f0"><div align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="600" role="presentation" bgcolor="#ffffff" class="width-full">
+<tr><td align="center" valign="top">
+<!-- Header Logo -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 20px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><img alt="<span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Logo" height="21" src="https://image.s7.sfmc-content.com/lib/fe8513727c6403757c/m/1/37b58df2-716e-46c4-bf85-b05fb18623f8.png" style="display: block; height: 21px; width: 220px; border: none;" width="220"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 24px; line-height: 30px; color: #212121;" valign="top">Conhe&ccedil;a as solu&ccedil;&otilde;es <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> para a vis&atilde;o do seu paciente</td></tr></table></td></tr></table></td></tr></table>
+<!-- Hero Image -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%;"><tr><td><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top" width="600"><img alt="Imagem de destaque" height="279" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 279px; width: 600px; border: 0;" width="600"></td></tr></table></td></tr></table></td></tr></table>
+<!-- Body Copy -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #F8F8F8; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 12px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 18px; line-height: 24px; color: #212121;" valign="top"><span style="font-size: 24px; line-height: 30px; font-weight: bold;">Falta pouco!</span><br><br><b>Descubra como uma das maiores empresas inovadoras em sa&uacute;de pode transformar a sua clinica oftalmol&oacute;gica</b></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 12px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 24px; color: #63666A;" valign="top">Incluir servi&ccedil;os no seu consult&oacute;rio podem te ajudar a aumentar a fideliza&ccedil;&atilde;o de pacientes e gerar receita recorrente<br><br>Finalize seu cadastro e receba o contato direto dos nossos representantes</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top" width="600"><img alt="Solicite Contato" height="47" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 47px; width: 192px; border: 0; margin:0 auto;" width="192"></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+<!-- Article 1: Intraoculares -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px 32px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 0px 0 32px; border-bottom: 1px solid #dddddd;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><th align="center" class="stack" valign="middle" width="300"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-right: 30px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #212121;" valign="top">Conhe&ccedil;a as solu&ccedil;&otilde;es em lentes intraoculares e equipamentos</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 14px; line-height: 20px; color: #63666A;" valign="top">Tecnologias inovadoras para cirurgia de catarata, com amplo portf&oacute;lio de lentes intraoculares, facoemulsificadores, microsc&oacute;pios, equipamentos de diagn&oacute;stico e solu&ccedil;&otilde;es com intelig&ecirc;ncia artificial.</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="231"><img alt="Saiba mais" height="41" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 41px; width: 133px; border: 0;" width="133"></td></tr></table></td></tr></table></td></tr></table></th><th align="center" class="stack" valign="middle" width="230"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" valign="top"><img alt="Icon" height="184" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 184px; width: 231px; border: none;" width="231"></td></tr></table></th></tr></table></td></tr></table></td></tr></table></td></tr></table>
+<!-- Article 2: Marca #1 -->
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 0px 32px 32px" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><th align="center" class="stack" rowspan="2" valign="middle" width="300"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-left: 30px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #212121;" valign="top">A marca #1 de lentes de contato do mundo&sup1;</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 14px; line-height: 20px; color: #63666A;" valign="top">L&iacute;der em vendas no mundo&sup1; e a mais confiada pelos oftalmologistas*&sup2;.<br><br>As lentes de contato ACUVUE<span style="font-size: 60%; vertical-align: top;">&reg;</span> s&atilde;o imbat&iacute;veis em Conforto**<span style="font-size: 60%; vertical-align: top;">3,4,5</span>.</td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 24px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top" width="231"><img alt="Saiba mais" height="41" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 41px; width: 133px; border: 0;" width="133"></td></tr></table></td></tr></table></td></tr></table></th></tr><tr><th align="center" class="stack" valign="middle" width="230"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top:30px;" valign="top"><img alt="Icon" height="113" src="data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27600%27 height=%27200%27><rect width=%27600%27 height=%27200%27 fill=%27%23eeeeee%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2720%27 fill=%27%23999999%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>ACUVUE creative</text></svg>" style="display: block; height: 113px; width: 230px; border: none;" width="230"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding-top: 8px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: bold; font-size: 10px; line-height: 16px; color: #1E22AA;" valign="top">Lentes de Contato ACUVUE<span style="font-size: 70%; vertical-align: top;">&reg;</span></td></tr></table></th></tr></table></td></tr></table></td></tr></table>
+<!-- Footer -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation"><tr><td align="center" valign="top" style="padding-bottom: 60px;"><table width="100%" cellpadding="0" cellspacing="0" role="presentation" border="0"><tr><td align="center" valign="middle"><table class="width-full" width="600" cellpadding="0" role="presentation" cellspacing="0" border="0"><tr><td align="center" valign="middle" bgcolor="#191919" style="padding: 0px 0;"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #191919; min-width: 100%;"><tr><td style="padding: 0px;"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 32px 32px 32px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" valign="top"><img alt="<span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Logo" height="20" src="https://image.s7.sfmc-content.com/lib/fe8513727c6403757c/m/1/e71a30ea-fe79-45a5-ac5f-b300dca32f09.png" style="display: block; height: 20px; width: 192px; border: none;" width="192"></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="padding: 10px 0 0;" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="center" style="border-bottom: 1px solid #999999" valign="top">&nbsp;</td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding-top: 20px;" valign="top"><table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" style="font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12px; line-height: 18px; color: #ffffff;" valign="top"><a href="#" style="color:#ffffff;text-decoration:none;">Pol&iacute;tica de Privacidade</a></td><td align="center" style="padding-left: 0px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12px; line-height: 18px; color: #ffffff;" valign="top"><span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href="#" style="color:#ffffff;text-decoration:none;">Cancelar Inscri&ccedil;&atilde;o</a></td></tr></table></td></tr></table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tr><td align="left" style="padding: 20px 0 0px; font-family: 'Nunito', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 9px; line-height: 15px; color: #ffffff;" valign="top">*Pesquisa realizada com 659 profissionais da &aacute;rea de cuidados com os olhos em mercados que representam mais de 70% das vendas globais de lentes de contato, incluindo Estados Unidos, Reino Unido, Jap&atilde;o, Coreia do Sul, China e Alemanha, conduzida entre outubro e novembro de 2025.<br>**Fam&iacute;lias da marca ACUVUE&reg; com alega&ccedil;&otilde;es de conforto imbat&iacute;vel: ACUVUE&reg; OASYS (incluindo as fam&iacute;lias de descarte di&aacute;rio), 1-DAY ACUVUE&reg; MOIST (dentro da categoria de lentes de descarte di&aacute;rio em hidrogel).<br><br>Refer&ecirc;ncias:<br><b>1.</b> Fonte: Euromonitor International Limited; edi&ccedil;&atilde;o Eyewear 2026; vendas em valor a pre&ccedil;o de venda no varejo (rsp), todos os canais de varejo, dados de 2024.<br><b>2.</b> Dados internos da JJV, 2024.<br><b>3.</b> Dados internos da JJV, 2025. ClinicalTrials.gov (31 de outubro de 2025).<br><b>4.</b> Dados internos da JJV, 2025. ClinicalTrials.gov (31 de outubro de 2025).<br><br>&copy; <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> do Brasil 2025. Todos os direitos reservados.<br><br>Vision Made Possible&trade;<br>2025PP15560 V2</td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
+</td></tr>
+</table>
+</div></td></tr>
+</table>
+</body>
+</html>
+
+</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+
+var sent = parseInt("820") || 0;
+var opens = parseInt("344") || 0;
+var clicks = parseInt("62") || 0;
+var bounces = parseInt("16") || 0;
+var unsubs = parseInt("2") || 0;
+var b1 = parseInt("39") || 0;
+var b2 = parseInt("11") || 0;
+var b3 = parseInt("14") || 0;
+var sent2 = parseInt("805") || 0;
+var opens2 = parseInt("362") || 0;
+var clicks2 = parseInt("76") || 0;
+var bounces2 = parseInt("12") || 0;
+var unsubs2 = parseInt("2") || 0;
+var sent3 = parseInt("790") || 0;
+var opens3 = parseInt("371") || 0;
+var clicks3 = parseInt("85") || 0;
+var bounces3 = parseInt("14") || 0;
+var unsubs3 = parseInt("3") || 0;
+var sentTotal = parseInt("2415") || 0;
+var opensTotal = parseInt("1077") || 0;
+var clicksTotal = parseInt("223") || 0;
+var bouncesTotal = parseInt("42") || 0;
+var unsubsTotal = parseInt("7") || 0;
+var primaryCTATotal = parseInt("40") || 0;
+var saiba01Total = parseInt("57") || 0;
+var saiba02Total = parseInt("43") || 0;
+var b1_2 = parseInt("30") || 0;
+var b2_2 = parseInt("16") || 0;
+var b3_2 = parseInt("17") || 0;
+var b1_3 = parseInt("34") || 0;
+var b2_3 = parseInt("23") || 0;
+var b3_3 = parseInt("18") || 0;
+var deliveredTotal = sentTotal - bouncesTotal;
+var openRateTotal = deliveredTotal > 0 ? (opensTotal / deliveredTotal * 100) : 0;
+var ctrTotal = opensTotal > 0 ? (clicksTotal / opensTotal * 100) : 0;
+var ctrSendTotal = sentTotal > 0 ? (clicksTotal / sentTotal * 100) : 0;
+var totalForms = parseInt("40") || 0;
+var convRateTotal = clicksTotal > 0 ? (totalForms / clicksTotal * 100) : 0;
+// helper de taxa por linha
+function rate(n,d){ return d > 0 ? (n/d*100).toFixed(1) + '%' : '0%'; }
+function safePct(v){ var n = parseFloat(v); return (isNaN(n) || !isFinite(n)) ? '0.0' : n.toFixed(1); }
+var consentCount = parseInt("27") || 0;
+var consentTotal = parseInt("40") || 0;
+var consentRate = parseFloat(("67.50").replace(',','.')) || 0;
+var acuvueCount = parseInt("26") || 0;
+var surgicalCount = parseInt("14") || 0;
+var commentsFilled = parseInt("24") || 0;
+var commentsTotal = parseInt("40") || 0;
+var commentsRate = parseFloat(("60.00").replace(',','.')) || 0;
+var emailDivergentCount = parseInt("3") || 0;
+var emailCheckTotal = parseInt("40") || 0;
+var emailDivergentRate = parseFloat(("7.50").replace(',','.')) || 0;
+var emailMatchCount = emailCheckTotal - emailDivergentCount;
+var emailDivergentList = "Eduardo Lima, Lucas Gomes, Mariana Tavares";
+var formsArray = [];
+try { formsArray = [{"name": "Fernanda Dias", "email": "fernanda.dias@exemplo.com", "newEmail": "fernanda.dias@exemplo.com", "emailDivergent": false, "hospital": "Hospital São Geraldo - UFMG", "state": "MG", "city": "Belo Horizonte", "date": "2026-06-28", "consent": false, "comments": "", "interest": "ACUVUE"}, {"name": "Bruno Pereira", "email": "bruno.pere@exemplo.com", "newEmail": "bruno.pere@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Base - DF", "state": "DF", "city": "Brasília", "date": "2026-06-25", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "ACUVUE"}, {"name": "Gabriel Albuquerque", "email": "gabriel.albu@exemplo.com", "newEmail": "gabriel.albu@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos de Pernambuco", "state": "PE", "city": "Recife", "date": "2026-04-10", "consent": false, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "ACUVUE"}, {"name": "Eduardo Ribeiro", "email": "eduardo.ribe@exemplo.com", "newEmail": "eduardo.ribe@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - FMUSP", "state": "SP", "city": "São Paulo", "date": "2026-05-12", "consent": false, "comments": "Ótimo material, obrigado!", "interest": "ACUVUE"}, {"name": "Isabela Nogueira", "email": "isabela.nogu@exemplo.com", "newEmail": "isabela.nogu@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos Leiria de Andrade", "state": "CE", "city": "Fortaleza", "date": "2026-04-18", "consent": true, "comments": "Ótimo material, obrigado!", "interest": "ACUVUE"}, {"name": "Camila Pereira", "email": "camila.pere@exemplo.com", "newEmail": "camila.pere@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos de Pernambuco", "state": "PE", "city": "Recife", "date": "2026-06-12", "consent": true, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "ACUVUE"}, {"name": "Amanda Pereira", "email": "amanda.pere@exemplo.com", "newEmail": "amanda.pere@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos Paulista", "state": "SP", "city": "São Paulo", "date": "2026-04-14", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "ACUVUE"}, {"name": "Amanda Dias", "email": "amanda.dias@exemplo.com", "newEmail": "amanda.dias@exemplo.com", "emailDivergent": false, "hospital": "Hospital São Rafael", "state": "BA", "city": "Salvador", "date": "2026-05-19", "consent": false, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "ACUVUE"}, {"name": "Isabela Albuquerque", "email": "isabela.albu@exemplo.com", "newEmail": "isabela.albu@exemplo.com", "emailDivergent": false, "hospital": "Hospital Universitário - UFSC", "state": "SC", "city": "Florianópolis", "date": "2026-04-27", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Lucas Gomes", "email": "lucas.gome@exemplo.com", "newEmail": "lucas.gome@exemplo.com", "emailDivergent": false, "hospital": "Hospital Universitário - UFSC", "state": "SC", "city": "Florianópolis", "date": "2026-04-16", "consent": false, "comments": "", "interest": "ACUVUE"}, {"name": "Eduardo Cardoso", "email": "eduardo.card@exemplo.com", "newEmail": "eduardo.card@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos de Pernambuco", "state": "PE", "city": "Recife", "date": "2026-05-22", "consent": false, "comments": "Equipe muito atenciosa.", "interest": "ACUVUE"}, {"name": "Eduardo Costa", "email": "eduardo.cost@exemplo.com", "newEmail": "eduardo.cost@exemplo.com", "emailDivergent": false, "hospital": "Hospital Universitário - UFSC", "state": "SC", "city": "Florianópolis", "date": "2026-05-27", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Diego Souza", "email": "diego.souz@exemplo.com", "newEmail": "diego.souz@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos de Minas Gerais", "state": "MG", "city": "Belo Horizonte", "date": "2026-05-12", "consent": false, "comments": "Ótimo material, obrigado!", "interest": "ACUVUE"}, {"name": "Patrícia Dias", "email": "patrícia.dias@exemplo.com", "newEmail": "patrícia.dias@exemplo.com", "emailDivergent": false, "hospital": "Hospital São Rafael", "state": "BA", "city": "Salvador", "date": "2026-05-26", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Pedro Ribeiro", "email": "pedro.ribe@exemplo.com", "newEmail": "pedro.ribe@exemplo.com", "emailDivergent": false, "hospital": "Hospital São Paulo - UNIFESP", "state": "SP", "city": "São Paulo", "date": "2026-04-15", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "ACUVUE"}, {"name": "Patrícia Barros", "email": "patrícia.barr@exemplo.com", "newEmail": "patrícia.barr@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos do Paraná", "state": "PR", "city": "Curitiba", "date": "2026-06-16", "consent": false, "comments": "", "interest": "ACUVUE"}, {"name": "Eduardo Lima", "email": "eduardo.lima@exemplo.com", "newEmail": "eduardo.lima@clinica.com", "emailDivergent": true, "hospital": "Hospital de Olhos do Paraná", "state": "PR", "city": "Curitiba", "date": "2026-06-28", "consent": true, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "ACUVUE"}, {"name": "Beatriz Albuquerque", "email": "beatriz.albu@exemplo.com", "newEmail": "beatriz.albu@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - FMUSP", "state": "SP", "city": "São Paulo", "date": "2026-06-27", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Lucas Gomes", "email": "lucas.gome@exemplo.com", "newEmail": "lucas.gomes@clinica.com", "emailDivergent": true, "hospital": "Hospital de Clínicas - UFPR", "state": "PR", "city": "Curitiba", "date": "2026-06-09", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Camila Albuquerque", "email": "camila.albu@exemplo.com", "newEmail": "camila.albu@exemplo.com", "emailDivergent": false, "hospital": "Hospital Geral de Fortaleza", "state": "CE", "city": "Fortaleza", "date": "2026-06-19", "consent": true, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "ACUVUE"}, {"name": "Felipe Santos", "email": "felipe.sant@exemplo.com", "newEmail": "felipe.sant@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos de Minas Gerais", "state": "MG", "city": "Belo Horizonte", "date": "2026-04-20", "consent": false, "comments": "Equipe muito atenciosa.", "interest": "ACUVUE"}, {"name": "Beatriz Martins", "email": "beatriz.mart@exemplo.com", "newEmail": "beatriz.mart@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Clínicas de Porto Alegre", "state": "RS", "city": "Porto Alegre", "date": "2026-04-26", "consent": false, "comments": "Equipe muito atenciosa.", "interest": "ACUVUE"}, {"name": "Isabela Martins", "email": "isabela.mart@exemplo.com", "newEmail": "isabela.mart@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Clínicas de Porto Alegre", "state": "RS", "city": "Porto Alegre", "date": "2026-04-17", "consent": false, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "ACUVUE"}, {"name": "Lucas Costa", "email": "lucas.cost@exemplo.com", "newEmail": "lucas.cost@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - FMUSP", "state": "SP", "city": "São Paulo", "date": "2026-04-27", "consent": true, "comments": "Ótimo material, obrigado!", "interest": "ACUVUE"}, {"name": "Mariana Dias", "email": "mariana.dias@exemplo.com", "newEmail": "mariana.dias@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - FMUSP", "state": "SP", "city": "São Paulo", "date": "2026-06-10", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Patrícia Pereira", "email": "patrícia.pere@exemplo.com", "newEmail": "patrícia.pere@exemplo.com", "emailDivergent": false, "hospital": "Hospital São Rafael", "state": "BA", "city": "Salvador", "date": "2026-04-05", "consent": true, "comments": "", "interest": "ACUVUE"}, {"name": "Diego Ribeiro", "email": "diego.ribe@exemplo.com", "newEmail": "diego.ribe@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - UFPE", "state": "PE", "city": "Recife", "date": "2026-04-22", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "Surgical"}, {"name": "Rafael Moreira", "email": "rafael.more@exemplo.com", "newEmail": "rafael.more@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos Leiria de Andrade", "state": "CE", "city": "Fortaleza", "date": "2026-04-02", "consent": true, "comments": "", "interest": "Surgical"}, {"name": "Juliana Rocha", "email": "juliana.roch@exemplo.com", "newEmail": "juliana.roch@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos de Pernambuco", "state": "PE", "city": "Recife", "date": "2026-04-05", "consent": true, "comments": "", "interest": "Surgical"}, {"name": "Camila Barros", "email": "camila.barr@exemplo.com", "newEmail": "camila.barr@exemplo.com", "emailDivergent": false, "hospital": "Hospital Universitário - UFSC", "state": "SC", "city": "Florianópolis", "date": "2026-04-13", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "Surgical"}, {"name": "Beatriz Costa", "email": "beatriz.cost@exemplo.com", "newEmail": "beatriz.cost@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - UFPE", "state": "PE", "city": "Recife", "date": "2026-05-06", "consent": true, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "Surgical"}, {"name": "Pedro Souza", "email": "pedro.souz@exemplo.com", "newEmail": "pedro.souz@exemplo.com", "emailDivergent": false, "hospital": "Hospital das Clínicas - UFPE", "state": "PE", "city": "Recife", "date": "2026-06-16", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "Surgical"}, {"name": "Larissa Fernandes", "email": "larissa.fern@exemplo.com", "newEmail": "larissa.fern@exemplo.com", "emailDivergent": false, "hospital": "Hospital Universitário - UFSC", "state": "SC", "city": "Florianópolis", "date": "2026-04-01", "consent": false, "comments": "Gostaria de mais informações sobre adaptação.", "interest": "Surgical"}, {"name": "Bruno Cardoso", "email": "bruno.card@exemplo.com", "newEmail": "bruno.card@exemplo.com", "emailDivergent": false, "hospital": "Fundação Banco de Olhos", "state": "RS", "city": "Porto Alegre", "date": "2026-06-06", "consent": false, "comments": "Ótimo material, obrigado!", "interest": "Surgical"}, {"name": "Vinícius Cardoso", "email": "vinícius.card@exemplo.com", "newEmail": "vinícius.card@exemplo.com", "emailDivergent": false, "hospital": "Hospital Universitário Clementino Fraga", "state": "RJ", "city": "Rio de Janeiro", "date": "2026-06-07", "consent": true, "comments": "", "interest": "Surgical"}, {"name": "Felipe Pereira", "email": "felipe.pere@exemplo.com", "newEmail": "felipe.pere@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos do Paraná", "state": "PR", "city": "Curitiba", "date": "2026-06-10", "consent": true, "comments": "", "interest": "Surgical"}, {"name": "Camila Fernandes", "email": "camila.fern@exemplo.com", "newEmail": "camila.fern@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Base - DF", "state": "DF", "city": "Brasília", "date": "2026-04-14", "consent": true, "comments": "", "interest": "Surgical"}, {"name": "Vinícius Barros", "email": "vinícius.barr@exemplo.com", "newEmail": "vinícius.barr@exemplo.com", "emailDivergent": false, "hospital": "Hospital São Paulo - UNIFESP", "state": "SP", "city": "São Paulo", "date": "2026-04-17", "consent": true, "comments": "Equipe muito atenciosa.", "interest": "Surgical"}, {"name": "Pedro Ribeiro", "email": "pedro.ribe@exemplo.com", "newEmail": "pedro.ribe@exemplo.com", "emailDivergent": false, "hospital": "Hospital de Olhos Paulista", "state": "SP", "city": "São Paulo", "date": "2026-05-03", "consent": true, "comments": "Ótimo material, obrigado!", "interest": "Surgical"}, {"name": "Mariana Tavares", "email": "mariana.tava@exemplo.com", "newEmail": "mariana.tavares@clinica.com", "emailDivergent": true, "hospital": "Hospital das Clínicas - UFPE", "state": "PE", "city": "Recife", "date": "2026-04-10", "consent": true, "comments": "", "interest": "Surgical"}]; if (!formsArray || !formsArray.length) { formsArray = formsArray || []; } } catch(err) { formsArray = []; console.log('formsArray parse error', err); }
+formsArray = (formsArray || []).filter(function(f){ return f && typeof f === 'object'; });
+
+var delivered = sent - bounces;
+var openRate = delivered > 0 ? (opens / delivered * 100) : 0;
+var ctr = opens > 0 ? (clicks / opens * 100) : 0;
+var ctrSend = sent > 0 ? (clicks / sent * 100) : 0;
+var convRate = clicks > 0 ? (totalForms / clicks * 100) : 0;
+
+function animateValue(el, start, end, suffix, dec) {
+if (!el) return;
+suffix = suffix || '';
+dec = dec !== undefined ? dec : 0;
+var step = Math.ceil(Math.abs(end - start) / 50) || 1;
+var cur = start;
+var t = setInterval(function() {
+cur += step;
+if (cur >= end) { clearInterval(t); cur = end; }
+el.innerText = (dec === 0 ? Math.round(cur).toLocaleString() : cur.toFixed(dec)) + suffix;
+}, 18);
+}
+
+animateValue(document.getElementById('sentValue'), 0, sentTotal, '', 0);
+animateValue(document.getElementById('opensValue'), 0, opensTotal, '', 0);
+animateValue(document.getElementById('clicksValue'), 0, clicksTotal, '', 0);
+animateValue(document.getElementById('formsValue'), 0, totalForms, '', 0);
+document.getElementById('openRateBadge').innerText = safePct(openRateTotal) + '% open rate';
+document.getElementById('ctrBadge').innerText = safePct(ctrTotal) + '% CTR';
+document.getElementById('convBadge').innerText = safePct(convRateTotal) + '% conv';
+document.getElementById('or1').innerText = rate(opens, sent - bounces);
+document.getElementById('cr1').innerText = rate(clicks, sent);
+document.getElementById('or2').innerText = rate(opens2, sent2 - bounces2);
+document.getElementById('cr2').innerText = rate(clicks2, sent2);
+document.getElementById('or3').innerText = rate(opens3, sent3 - bounces3);
+document.getElementById('cr3').innerText = rate(clicks3, sent3);
+document.getElementById('orT').innerText = rate(opensTotal, deliveredTotal);
+document.getElementById('crT').innerText = rate(clicksTotal, sentTotal);
+document.getElementById('ctor1').innerText = rate(clicks, opens);
+document.getElementById('ctor2').innerText = rate(clicks2, opens2);
+document.getElementById('ctor3').innerText = rate(clicks3, opens3);
+document.getElementById('ctorT').innerText = rate(clicksTotal, opensTotal);
+
+document.getElementById('fSent').innerText = sentTotal.toLocaleString();
+document.getElementById('fOpens').innerText = opensTotal.toLocaleString();
+document.getElementById('fClicks').innerText = clicksTotal.toLocaleString();
+document.getElementById('fForms').innerText = totalForms.toLocaleString();
+document.getElementById('dropSO').innerText = '-' + (sentTotal - opensTotal).toLocaleString();
+document.getElementById('dropOC').innerText = '-' + (opensTotal - clicksTotal).toLocaleString();
+document.getElementById('dropCF').innerText = '-' + (clicksTotal - totalForms).toLocaleString();
+document.getElementById('fillFOpens').style.width = (sentTotal > 0 ? (opensTotal / sentTotal * 100) : 0) + '%';
+document.getElementById('fillFClicks').style.width = (sentTotal > 0 ? (clicksTotal / sentTotal * 100) : 0) + '%';
+document.getElementById('fillFForms').style.width = (sentTotal > 0 ? (totalForms / sentTotal * 100) : 0) + '%';
+document.getElementById('fOR').innerText = safePct(openRateTotal) + '%';
+document.getElementById('fCR').innerText = safePct(ctrSendTotal) + '%';
+document.getElementById('fCTOR').innerText = safePct(ctrTotal) + '%';
+document.getElementById('fConv').innerText = safePct(convRateTotal) + '%';
+
+// ===== FUNIL VISUAL (Chart.js) =====
+// Funil real: barras horizontais centralizadas. Cada estagio usa uma barra
+// "espacadora" transparente (offset) + a barra colorida, criando o afunilamento simetrico.
+var funnelChartInstance;
+function renderFunnel(isDark) {
+var stages = [
+{ label: 'Sent', value: sentTotal },
+{ label: 'Opens', value: opensTotal },
+{ label: 'Clicks', value: clicksTotal },
+{ label: 'Forms', value: totalForms }
+];
+var maxVal = stages[0].value || 1;
+var labels = [];
+var offsets = [];
+var values = [];
+var pctText = [];
+for (var i = 0; i < stages.length; i++) {
+var v = stages[i].value;
+labels.push(stages[i].label);
+offsets.push((maxVal - v) / 2);
+values.push(v);
+if (i === 0) { pctText.push('100%'); }
+else { var prev = stages[i-1].value; pctText.push(prev > 0 ? (v / prev * 100).toFixed(1) + '%' : '0%'); }
+}
+var barColors = isDark
+? ['#3B9AE0', '#4CAF50', '#E63946', '#E0A800']
+: ['#0066B4', '#2E7D32', '#CC0000', '#B45309'];
+var gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+var tickColor = isDark ? '#CCCCCC' : '#4A4A4A';
+var ctx = document.getElementById('funnelChart').getContext('2d');
+if (funnelChartInstance) funnelChartInstance.destroy();
+funnelChartInstance = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: labels,
+datasets: [
+{ label: 'spacer', data: offsets, backgroundColor: 'rgba(0,0,0,0)', stack: 'f', borderWidth: 0, tooltip: { enabled: false } },
+{ label: 'Stage', data: values, backgroundColor: barColors, stack: 'f', borderWidth: 0, borderRadius: 3 }
+]
+},
+options: {
+indexAxis: 'y',
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { display: false },
+tooltip: {
+filter: function(item) { return item.datasetIndex === 1; },
+callbacks: {
+label: function(c) {
+var idx = c.dataIndex;
+return labels[idx] + ': ' + values[idx].toLocaleString() + ' (' + pctText[idx] + ' of previous)';
+}
+}
+}
+},
+scales: {
+x: { stacked: true, beginAtZero: true, max: maxVal, grid: { color: gridColor }, ticks: { color: tickColor, precision: 0 } },
+y: { stacked: true, grid: { display: false }, ticks: { color: tickColor, font: { size: 13, weight: 'bold' } } }
+}
+},
+plugins: [{
+id: 'funnelLabels',
+afterDatasetsDraw: function(chart) {
+var c = chart.ctx;
+var meta = chart.getDatasetMeta(1);
+c.save();
+c.font = 'bold 12px Inter, sans-serif';
+c.textAlign = 'center';
+c.textBaseline = 'middle';
+for (var i = 0; i < meta.data.length; i++) {
+var bar = meta.data[i];
+var txt = values[i].toLocaleString() + ' (' + pctText[i] + ')';
+c.fillStyle = '#ffffff';
+if (bar.width > 60) { c.fillText(txt, bar.x - bar.width / 2, bar.y); }
+else { c.fillStyle = tickColor; c.fillText(txt, bar.x + 4 + c.measureText(txt).width / 2, bar.y); }
+}
+c.restore();
+}
+}]
+});
+}
+
+document.getElementById('autoForms').innerText = totalForms.toLocaleString();
+document.getElementById('autoClicks').innerText = clicksTotal.toLocaleString();
+document.getElementById('fillAutoForms').style.width = '100%';
+document.getElementById('fillAutoClicks').style.width = (totalForms > 0 ? Math.min(clicksTotal / totalForms * 100, 100) : 0) + '%';
+
+animateValue(document.getElementById('consentRateValue'), 0, consentRate, '%', 0);
+animateValue(document.getElementById('consentYesCount'), 0, consentCount, '', 0);
+animateValue(document.getElementById('consentNoCount'), 0, consentTotal - consentCount, '', 0);
+document.getElementById('consentBar').style.width = consentRate + '%';
+
+document.getElementById('acuvueCount').innerText = acuvueCount.toLocaleString();
+document.getElementById('surgicalCount').innerText = surgicalCount.toLocaleString();
+document.getElementById('emailMatchCount').innerText = emailMatchCount.toLocaleString();
+document.getElementById('emailDivergentCountValue').innerText = emailDivergentCount.toLocaleString();
+document.getElementById('emailDivergentRateValue').innerText = emailDivergentRate.toFixed(1) + '%';
+document.getElementById('emailDivergentBar').style.width = emailDivergentRate + '%';
+animateValue(document.getElementById('commentsFilledValue'), 0, commentsFilled, '', 0);
+document.getElementById('commentsTotalValue').innerText = commentsTotal.toLocaleString();
+document.getElementById('commentsRateValue').innerText = commentsRate.toFixed(1) + '%';
+document.getElementById('commentsBar').style.width = commentsRate + '%';
+
+var divergentContainer = document.getElementById('divergentListContainer');
+if (emailDivergentList && emailDivergentList.length > 0 && emailDivergentCount > 0) {
+var dnames = emailDivergentList.split(', ');
+divergentContainer.innerHTML = '';
+for (var d = 0; d < dnames.length; d++) {
+var di = document.createElement('div');
+di.className = 'divergent-item';
+di.innerText = dnames[d];
+divergentContainer.appendChild(di);
+}
+}
+
+var formsContainer = document.getElementById('formsList');
+if (formsArray.length > 0) {
+formsContainer.innerHTML = '';
+for (var i = 0; i < Math.min(formsArray.length, 20); i++) {
+var f = formsArray[i];
+var div = document.createElement('div');
+div.className = 'form-item';
+var consentHtml = (f.consent === true || f.consent === 'true') ? '<span class="consent-badge">Opt-in</span>' : '<span class="consent-badge" style="background:#FFEBEE; color:#C62828;">No consent</span>';
+var divergentHtml = (f.emailDivergent === true || f.emailDivergent === 'true') ? '<span class="divergent-badge">Email divergent</span>' : '';
+var commentsPreview = (f.comments && f.comments.length > 0) ? '<div style="font-size:10px;color:var(--text-soft);margin-top:4px;font-style:italic;">"' + f.comments.substring(0, 60) + (f.comments.length > 60 ? '...' : '') + '"</div>' : '';
+div.innerHTML = '<div class="form-name">' + (f.name || 'N/A') + ' ' + divergentHtml + ' <span style="font-size:9px;background:var(--bg-section);border:1px solid var(--line);padding:2px 6px;">' + (f.interest || '') + '</span></div><div class="form-detail">' + (f.hospital || '') + ' - ' + (f.city || '') + '/' + (f.state || '') + '</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span>' + (f.date || '') + '</span>' + consentHtml + '</div>' + commentsPreview;
+formsContainer.appendChild(div);
+}
+} else {
+formsContainer.innerHTML = '<div class="form-item">No form submissions found.</div>';
+}
+
+// PIE
+var lightColors = ['#0066B4', '#CC0000', '#2E7D32'];
+var darkColors = ['#3B9AE0', '#E63946', '#4CAF50'];
+var pieChart, timelineChart;
+function renderPie(isDark) {
+var colors = isDark ? darkColors : lightColors;
+var data = [primaryCTATotal, saiba01Total, saiba02Total];
+var labels = ['Primary CTA (Contact/Specialist)', 'saibamais01', 'saibamais02'];
+var ctx = document.getElementById('pieChart').getContext('2d');
+if (pieChart) { pieChart.data.datasets[0].backgroundColor = colors; pieChart.update(); }
+else {
+pieChart = new Chart(ctx, { type: 'pie', data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { var v = context.raw; var total = context.dataset.data.reduce(function(a,b){return a+b;}, 0); var p = total ? ((v / total) * 100).toFixed(1) : 0; return context.label + ': ' + v.toLocaleString() + ' (' + p + '%)'; } } } } } });
+}
+var legend = document.getElementById('pieLegend');
+var total = data.reduce(function(a,b){return a+b;}, 0);
+legend.innerHTML = '';
+for (var i = 0; i < labels.length; i++) {
+var p = total ? ((data[i] / total) * 100).toFixed(1) : 0;
+var dv = document.createElement('div');
+dv.className = 'legend-item';
+dv.innerHTML = '<div class="legend-color" style="background:' + colors[i] + ';"></div><span>' + labels[i] + ': ' + data[i].toLocaleString() + ' (' + p + '%)</span>';
+legend.appendChild(dv);
+}
+}
+
+// PER-EMAIL PIES
+var pie1, pie2, pie3;
+function makePie(canvasId, legendId, dataArr, labelsArr, isDark) {
+var colors = isDark ? darkColors : lightColors;
+var ctx = document.getElementById(canvasId).getContext('2d');
+var existing = canvasId === 'pieChart1' ? pie1 : canvasId === 'pieChart2' ? pie2 : pie3;
+if (existing) { existing.data.datasets[0].backgroundColor = colors; existing.update(); }
+else {
+var ch = new Chart(ctx, { type: 'pie', data: { labels: labelsArr, datasets: [{ data: dataArr, backgroundColor: colors, borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { var v = context.raw; var total = context.dataset.data.reduce(function(a,b){return a+b;}, 0); var p = total ? ((v / total) * 100).toFixed(1) : 0; return context.label + ': ' + v.toLocaleString() + ' (' + p + '%)'; } } } } } });
+if (canvasId === 'pieChart1') pie1 = ch; else if (canvasId === 'pieChart2') pie2 = ch; else pie3 = ch;
+}
+var legend = document.getElementById(legendId);
+var total = dataArr.reduce(function(a,b){return a+b;}, 0);
+legend.innerHTML = '';
+for (var i = 0; i < labelsArr.length; i++) {
+var p = total ? ((dataArr[i] / total) * 100).toFixed(1) : 0;
+var dv = document.createElement('div');
+dv.className = 'legend-item';
+dv.innerHTML = '<div class="legend-color" style="background:' + colors[i] + ';"></div><span>' + labelsArr[i] + ': ' + dataArr[i].toLocaleString() + '</span>';
+legend.appendChild(dv);
+}
+}
+function renderPerEmailPies(isDark) {
+makePie('pieChart1', 'pieLegend1', [b1, b2, b3], ['solicitecontato', 'saibamais01', 'saibamais02'], isDark);
+makePie('pieChart2', 'pieLegend2', [b1_2, b2_2, b3_2], ['cliqueaqui...especialista', 'saibamais01', 'saibamais02'], isDark);
+makePie('pieChart3', 'pieLegend3', [b1_3, b2_3, b3_3], ['solicitecontato', 'saibamais01', 'saibamais02'], isDark);
+}
+// TIMELINE
+function renderTimeline(filter) {
+var filtered = formsArray;
+if (filter && filter !== 'all') { filtered = formsArray.filter(function(f) { return f.interest === filter; }); }
+var byDate = {};
+for (var i = 0; i < filtered.length; i++) {
+var ds = filtered[i].date;
+if (!ds || ds === "") continue;
+byDate[ds] = (byDate[ds] || 0) + 1;
+}
+var sortedDates = Object.keys(byDate).sort();
+var counts = sortedDates.map(function(d) { return byDate[d]; });
+var labels = sortedDates.map(function(d) { return d.substring(5); });
+var ctx = document.getElementById('timelineChart').getContext('2d');
+if (timelineChart) timelineChart.destroy();
+timelineChart = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: [{ label: 'Form Submissions', data: counts, borderColor: '#CC0000', backgroundColor: 'rgba(204,0,0,0.1)', borderWidth: 2, pointRadius: 4, pointBackgroundColor: '#CC0000', pointBorderColor: '#FFFFFF', pointBorderWidth: 1, tension: 0.3, fill: true }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: { callbacks: { label: function(context) { return context.raw + ' submission' + (context.raw !== 1 ? 's' : ''); } } }, legend: { position: 'top' } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 }, title: { display: true, text: 'Submissions' } }, x: { title: { display: true, text: 'Date' }, ticks: { maxRotation: 45, autoSkip: true } } } } });
+}
+function filterTimeline(filter) {
+var ids = { all:'filterAll', ACUVUE:'filterAcuvue', Both:'filterBoth' };
+['filterAll','filterAcuvue','filterBoth'].forEach(function(id){ var b=document.getElementById(id); if(b) b.classList.remove('active'); });
+var act = document.getElementById(ids[filter]); if(act) act.classList.add('active');
+renderTimeline(filter);
+}
+
+// HOSPITALS
+function renderHospitalList() {
+var hm = {};
+for (var i = 0; i < formsArray.length; i++) {
+var h = (formsArray[i].hospital || '').trim();
+if (!h) continue;
+hm[h] = (hm[h] || 0) + 1;
+}
+var entries = Object.keys(hm).map(function(k) { return { name: k, count: hm[k] }; }).sort(function(a, b) { return b.count - a.count; }).slice(0, 10);
+if (!entries.length) return;
+var labels = entries.map(function(e) { return e.name; });
+var counts = entries.map(function(e) { return e.count; });
+var colors = entries.map(function(_, i) {
+var t = i / Math.max(entries.length - 1, 1);
+var r = Math.round(204 - t * (204 - 118));
+var g = Math.round(0 + t * 118);
+var b = Math.round(0 + t * 118);
+return 'rgb(' + r + ',' + g + ',' + b + ')';
+});
+var ctx = document.getElementById('hospitalChart').getContext('2d');
+new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Submissions', data: counts, backgroundColor: colors, borderRadius: 6, borderSkipped: false }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(ctx) { return ctx.raw + ' submission' + (ctx.raw !== 1 ? 's' : ''); } } } }, scales: { x: { display: false, beginAtZero: true }, y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11, weight: 'bold' }, color: '#767676' } } } } });
+document.getElementById('hospitalSubtitle').innerText = 'Top ' + entries.length + ' - ' + formsArray.length + ' total submissions';
+}
+
+// STATE INTEREST
+function renderStateInterest() {
+var sm = {};
+for (var i = 0; i < formsArray.length; i++) {
+var st = (formsArray[i].state || '').trim().toUpperCase();
+var interest = formsArray[i].interest || 'Unknown';
+if (!st) continue;
+if (!sm[st]) sm[st] = { ACUVUE: 0, Surgical: 0 };
+if (interest === 'ACUVUE') sm[st].ACUVUE++;
+else if (interest === 'Surgical') sm[st].Surgical++;
+else if (interest === 'Both') { sm[st].ACUVUE++; sm[st].Surgical++; }
+}
+var entries = Object.keys(sm).map(function(st) { return { state: st, acuvue: sm[st].ACUVUE, surgical: sm[st].Surgical }; }).sort(function(a, b) { return (b.acuvue + b.surgical) - (a.acuvue + a.surgical); });
+var labels = entries.map(function(e) { return e.state; });
+var acuvueData = entries.map(function(e) { return e.acuvue; });
+var surgicalData = entries.map(function(e) { return e.surgical; });
+var ctx = document.getElementById('stateInterestChart').getContext('2d');
+new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'ACUVUE', data: acuvueData, backgroundColor: '#CC0000', borderRadius: 4 }, { label: 'Surgical', data: surgicalData, backgroundColor: '#C0C0C0', borderRadius: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.raw; } } } }, scales: { x: { title: { display: true, text: 'State' } }, y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0 }, title: { display: true, text: 'Submissions' } } } } });
+document.getElementById('stateInterestSubtitle').innerText = entries.length + ' states';
+}
+
+// AUTOMATION BARS
+function updateAutomationBars() {
+var now = new Date();
+var minutes = now.getMinutes();
+var seconds = now.getSeconds();
+var totalSeconds = minutes * 60 + seconds;
+var dvCycleSeconds = 60 * 60;
+var dvDurationSeconds = 10 * 60;
+var dvElapsed = totalSeconds % dvCycleSeconds;
+var dvLastHour = new Date(now);
+dvLastHour.setMinutes(0, 0, 0);
+var dvNextHour = new Date(dvLastHour.getTime() + 3600000);
+var dvRunning = dvElapsed < dvDurationSeconds;
+var dvPct = dvRunning ? (dvElapsed / dvDurationSeconds) * 100 : 0;
+document.getElementById('dvProgressBar').style.width = dvPct + '%';
+document.getElementById('dvLastRun').innerText = dvLastHour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+document.getElementById('dvNextRun').innerText = dvNextHour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+document.getElementById('dvProgressLabel').innerText = dvRunning ? 'Running... ' + Math.round(dvPct) + '%' : 'Idle - last ran at ' + dvLastHour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+var emCycleSeconds = 30 * 60;
+var emDurationSeconds = 3 * 60;
+var emElapsed = totalSeconds % emCycleSeconds;
+var emRunning = emElapsed < emDurationSeconds;
+var emPct = emRunning ? (emElapsed / emDurationSeconds) * 100 : 0;
+var emLastRun = new Date(now);
+emLastRun.setMinutes(minutes - (minutes % 30), 0, 0);
+var emNextRun = new Date(emLastRun.getTime() + 1800000);
+document.getElementById('emProgressBar').style.width = emPct + '%';
+document.getElementById('emProgressLabel').innerText = emRunning ? 'Running... ' + Math.round(emPct) + '%' : 'Next: ' + emNextRun.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+document.getElementById('emLastRun').innerText = emLastRun.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+document.getElementById('emNextRun').innerText = emNextRun.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
+updateAutomationBars();
+setInterval(updateAutomationBars, 10000);
+
+// MODAL boxes
+var modal = document.getElementById('infoModal');
+var modalTitle = document.getElementById('modalTitle');
+var modalBody = document.getElementById('modalBody');
+document.getElementById('dvInfoBtn').addEventListener('click', function() {
+modalTitle.innerText = 'Dataviews Automation';
+modalBody.innerHTML = '<p>Queries SFMC Dataviews and updates the Email Metrics Data Extensions every hour on the hour.</p><p>Runtime: approximately 10 minutes.</p>';
+modal.style.display = 'flex';
+});
+document.getElementById('emInfoBtn').addEventListener('click', function() {
+modalTitle.innerText = 'Email Metrics Automation';
+modalBody.innerHTML = '<p>Aggregates email performance data and updates the Email_Metrics DE every 30 minutes.</p><p>Runtime: approximately 3 minutes.</p>';
+modal.style.display = 'flex';
+});
+
+// KPI card explanations
+var kpiExplanations = {
+sent: { title: 'Total Emails Sent', body: 'The total number of emails successfully sent for this send (Job ID). This is the starting point of the funnel and the base for all rate calculations such as open rate and click rate.' },
+opens: { title: 'Unique Opens', body: 'The number of unique recipients who opened this email at least once. Repeat opens by the same person are counted only once. Open Rate is calculated as Unique Opens divided by Delivered (Sent minus Bounces).' },
+clicks: { title: 'Unique Clicks', body: 'The number of unique recipients who clicked at least one link in this email. Repeat clicks by the same person are counted only once. Click-to-Open Rate (CTR) is Unique Clicks divided by Unique Opens.' },
+forms: { title: 'Form Submissions (Campaign)', body: 'The total number of Starter Kit form submissions across the entire 3-email campaign. Because the form does not record which email drove each submission, this number reflects the full campaign and is the same on every email dashboard.' }
+};
+var kpiCards = document.querySelectorAll('.stat-card');
+for (var kc = 0; kc < kpiCards.length; kc++) {
+var m = kpiCards[kc].getAttribute('data-metric');
+if (m && kpiExplanations[m]) {
+kpiCards[kc].addEventListener('click', (function(metric) {
+return function() {
+modalTitle.innerText = kpiExplanations[metric].title;
+modalBody.innerHTML = '<p>' + kpiExplanations[metric].body + '</p>';
+modal.style.display = 'flex';
+};
+})(m));
+}
+}
+document.querySelector('.close-modal').addEventListener('click', function() { modal.style.display = 'none'; });
+window.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
+
+// THEME
+var themeToggle = document.getElementById('themeToggle');
+var isDark = false;
+try { isDark = localStorage.getItem('theme') === 'dark'; } catch(e) { isDark = false; }
+if (isDark) { document.body.classList.add('dark'); themeToggle.innerText = 'Light Mode'; }
+try { renderPie(isDark); } catch(e){ console.log('pie err', e); }
+try { renderPerEmailPies(isDark); } catch(e){ console.log('perpie err', e); }
+try { renderFunnel(isDark); } catch(e){ console.log('funnel err', e); }
+try { renderTimeline('all'); } catch(e){ console.log('timeline err', e); }
+try { renderHospitalList(); } catch(e){ console.log('hospital err', e); }
+try { renderStateInterest(); } catch(e){ console.log('stateInterest err', e); }
+
+// MAP
+var brStateCoords = {
+'AC':[-8.77,-70.55],'AL':[-9.71,-35.73],'AM':[-3.47,-65.10],'AP':[1.41,-51.77],
+'BA':[-12.96,-41.70],'CE':[-5.20,-39.53],'DF':[-15.83,-47.86],'ES':[-19.19,-40.34],
+'GO':[-15.98,-49.86],'MA':[-5.42,-45.44],'MG':[-18.10,-44.38],'MS':[-20.51,-54.54],
+'MT':[-12.64,-55.42],'PA':[-3.79,-52.48],'PB':[-7.28,-36.72],'PE':[-8.38,-37.86],
+'PI':[-6.60,-42.28],'PR':[-24.89,-51.55],'RJ':[-22.25,-42.66],'RN':[-5.81,-36.59],
+'RO':[-10.83,-63.34],'RR':[1.99,-61.33],'RS':[-30.03,-53.20],'SC':[-27.45,-50.95],
+'SE':[-10.57,-37.45],'SP':[-22.19,-48.79],'TO':[-9.46,-48.26]
+};
+var stateCount = {};
+for (var si = 0; si < formsArray.length; si++) {
+var st2 = (formsArray[si].state || '').trim().toUpperCase();
+if (st2) stateCount[st2] = (stateCount[st2] || 0) + 1;
+}
+try {
+var mapInstance = L.map('map').setView([-14.235, -51.925], 4);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '(c) OSM & CartoDB' }).addTo(mapInstance);
+var maxValMap = Math.max.apply(null, Object.values(stateCount).concat([1]));
+Object.keys(stateCount).forEach(function(state) {
+var count = stateCount[state];
+if (brStateCoords[state]) {
+var intensity = count / maxValMap;
+var color = intensity > 0.8 ? '#660000' : intensity > 0.6 ? '#A30000' : intensity > 0.4 ? '#CC0000' : intensity > 0.2 ? '#E63946' : '#F08080';
+L.circle(brStateCoords[state], { radius: Math.sqrt(count) * 80000, color: color, fillColor: color, fillOpacity: 0.7, weight: 2 }).bindPopup('<b>' + state + '</b><br>Submissions: ' + count).addTo(mapInstance);
+}
+});
+var topStateBR = Object.entries(stateCount).sort(function(a,b){ return b[1]-a[1]; })[0];
+if (topStateBR) document.getElementById('mapSubtitle').innerText = 'Top: ' + topStateBR[0] + ' (' + topStateBR[1] + ' submissions)';
+} catch(e){ console.log("map err", e); }
+
+themeToggle.addEventListener('click', function() {
+document.body.classList.toggle('dark');
+var nd = document.body.classList.contains('dark');
+try { localStorage.setItem('theme', nd ? 'dark' : 'light'); } catch(e) {}
+themeToggle.innerText = nd ? 'Light Mode' : 'Dark Mode';
+try { renderPie(nd); } catch(e) {}
+try { renderPerEmailPies(nd); } catch(e) {}
+try { renderFunnel(nd); } catch(e) {}
+});
+document.getElementById('refreshBtn').addEventListener('click', function() { window.location.reload(); });
+
+document.getElementById('exportMetricsCSV').addEventListener('click', function() {
+var csv = 'Job ID,Sent,Delivered,Opens,Clicks,Bounces,Unsubs,Open Rate,Click Rate,CTOR\n';
+csv += '"' + ("4400101") + ' (E01)",' + sent + ',' + delivered + ',' + opens + ',' + clicks + ',' + bounces + ',' + unsubs + ',' + openRate.toFixed(1) + '%,' + ctrSend.toFixed(1) + '%,' + (opens > 0 ? (clicks/opens*100).toFixed(1) : '0') + '%\n';
+csv += '"' + ("4400102") + ' (E02)",' + sent2 + ',' + (sent2 - bounces2) + ',' + opens2 + ',' + clicks2 + ',' + bounces2 + ',' + unsubs2 + ',' + (sent2 - bounces2 > 0 ? (opens2/(sent2-bounces2)*100).toFixed(1) : '0') + '%,' + (sent2 > 0 ? (clicks2/sent2*100).toFixed(1) : '0') + '%,' + (opens2 > 0 ? (clicks2/opens2*100).toFixed(1) : '0') + '%\n';
+csv += '"' + ("4400103") + ' (E03)",' + sent3 + ',' + (sent3 - bounces3) + ',' + opens3 + ',' + clicks3 + ',' + bounces3 + ',' + unsubs3 + ',' + (sent3 - bounces3 > 0 ? (opens3/(sent3-bounces3)*100).toFixed(1) : '0') + '%,' + (sent3 > 0 ? (clicks3/sent3*100).toFixed(1) : '0') + '%,' + (opens3 > 0 ? (clicks3/opens3*100).toFixed(1) : '0') + '%\n';
+csv += 'TOTAL,' + sentTotal + ',' + deliveredTotal + ',' + opensTotal + ',' + clicksTotal + ',' + bouncesTotal + ',' + unsubsTotal + ',' + openRateTotal.toFixed(1) + '%,' + ctrSendTotal.toFixed(1) + '%,' + ctrTotal.toFixed(1) + '%\n';
+var blob = new Blob([csv], {type: 'text/csv'});
+var a = document.createElement('a');
+a.href = URL.createObjectURL(blob);
+a.download = 'wave01_metrics.csv';
+a.click();
+URL.revokeObjectURL(a.href);
+});
+document.getElementById('exportFormsCSV').addEventListener('click', function() {
+var csv = 'Name,Email,NewEmail,EmailDivergent,Hospital,State,City,Date,Consent,Comments,Interest\n';
+for (var i = 0; i < formsArray.length; i++) {
+var f = formsArray[i];
+csv += '"' + (f.name || '') + '","' + (f.email || '') + '","' + (f.newEmail || '') + '","' + (f.emailDivergent ? 'Yes' : 'No') + '","' + (f.hospital || '') + '","' + (f.state || '') + '","' + (f.city || '') + '","' + (f.date || '') + '","' + f.consent + '","' + ((f.comments || '').replace(/"/g, '""')) + '","' + (f.interest || '') + '"\n';
+}
+var blob = new Blob([csv], {type: 'text/csv'});
+var a = document.createElement('a');
+a.href = URL.createObjectURL(blob);
+a.download = 'form_submissions.csv';
+a.click();
+URL.revokeObjectURL(a.href);
+});
+
+var badge = document.querySelector('.badge-date');
+if (badge) { var nowB = new Date(); badge.innerText = nowB.toLocaleDateString('en-US') + ' ' + nowB.toLocaleTimeString('en-US'); }
+
+
+/* ===== Email Preview Modal ===== */
+(function(){
+var overlay = document.getElementById('emailModalOverlay');
+var frame = document.getElementById('emailModalFrame');
+var titleEl = document.getElementById('emailModalTitle');
+var subEl = document.getElementById('emailModalSub');
+var closeBtn = document.getElementById('emailModalClose');
+if (!overlay || !frame) { return; }
+
+var titles = {
+'1': ['Email 01', 'Transforme a experiencia visual dos seus pacientes'],
+'2': ['Email 02', 'Descubra agora como oferecer o melhor para o seu paciente'],
+'3': ['Email 03', 'Conheca as solucoes ACUVUE para a visao do seu paciente']
+};
+
+function openEmail(n){
+try {
+var tpl = document.getElementById('emailTpl' + n);
+if (!tpl) { return; }
+var html = tpl.innerHTML;
+if (titleEl && titles[n]) { titleEl.innerText = titles[n][0]; }
+if (subEl && titles[n]) { subEl.innerText = titles[n][1]; }
+frame.setAttribute('srcdoc', html);
+overlay.className = 'email-modal-overlay open';
+document.body.style.overflow = 'hidden';
+} catch(e) {}
+}
+
+function closeEmail(){
+try {
+overlay.className = 'email-modal-overlay';
+frame.setAttribute('srcdoc', '');
+document.body.style.overflow = '';
+} catch(e) {}
+}
+
+var btns = document.querySelectorAll('.email-link, .email-link-hint');
+for (var i = 0; i < btns.length; i++) {
+(function(btn){
+btn.addEventListener('click', function(){
+var n = btn.getAttribute('data-email');
+openEmail(n);
+});
+})(btns[i]);
+}
+
+if (closeBtn) { closeBtn.addEventListener('click', closeEmail); }
+overlay.addEventListener('click', function(ev){
+if (ev.target === overlay) { closeEmail(); }
+});
+document.addEventListener('keydown', function(ev){
+if (ev.key === 'Escape' || ev.keyCode === 27) { closeEmail(); }
+});
+})();
+
+</script>
+</body>
+</html>

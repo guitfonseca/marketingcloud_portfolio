@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Institute Event Invitation | JnJ Dashboard (2 Campaigns + Comparison)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+--red:       #CC0000;
+--red-dark:  #A30000;
+--black:     #1A1A1A;
+--gray-dark: #4A4A4A;
+--gray-mid:  #767676;
+--gray-line: #E0E0E0;
+--gray-bg:   #F5F5F5;
+--white:     #FFFFFF;
+--ff-serif:  'Noto Serif', Georgia, serif;
+--ff-sans:   'Inter', sans-serif;
+--bg-page:   #FFFFFF;
+--bg-card:   #FFFFFF;
+--bg-section:#F5F5F5;
+--text-main: #1A1A1A;
+--text-mid:  #4A4A4A;
+--text-soft: #767676;
+--border:    #E0E0E0;
+}
+body.dark {
+--bg-page:   #111111;
+--bg-card:   #1C1C1C;
+--bg-section:#181818;
+--text-main: #F0F0F0;
+--text-mid:  #CCCCCC;
+--text-soft: #888888;
+--border:    #2E2E2E;
+--gray-line: #2E2E2E;
+}
+body { background: var(--bg-page); font-family: var(--ff-sans); color: var(--text-main); min-height: 100vh; transition: background 0.3s, color 0.3s; }
+.page { min-height: 100vh; padding-bottom: 0; }
+/* TOP BAR */
+.topbar { background: #0A0A0A; padding: 0 40px; height: 40px; display: flex; align-items: center; justify-content: space-between; }
+.topbar-brand { display: flex; align-items: center; gap: 10px; }
+.topbar-brand .jnj-mark { font-family: var(--ff-serif); font-size: 13px; color: #fff; letter-spacing: 0.04em; opacity: 0.9; }
+.topbar-brand .tsep { width: 1px; height: 14px; background: rgba(255,255,255,0.25); }
+.topbar-brand .vision-mark { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.topbar-link { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.6); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+.topbar-link:hover { color: #fff; }
+.topbar-link svg { width: 12px; height: 12px; }
+/* HEADER */
+.header { border-bottom: 1px solid var(--border); padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: var(--bg-page); position: sticky; top: 0; z-index: 100; transition: background 0.3s, border-color 0.3s; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-wordmark { font-family: var(--ff-serif); font-size: 18px; font-weight: 700; color: var(--text-main); letter-spacing: 0.03em; }
+.header-divider { width: 1px; height: 22px; background: var(--border); }
+.header-sub { font-size: 12px; color: var(--text-soft); letter-spacing: 0.08em; text-transform: uppercase; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.btn-hub { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--red); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--red); padding: 6px 14px; transition: all 0.2s; }
+.btn-hub:hover { background: var(--red); color: #fff; }
+.btn-hub svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+.btn-action { font-size: 11px; font-weight: 600; color: var(--text-soft); background: none; border: 1px solid var(--border); padding: 6px 14px; cursor: pointer; font-family: var(--ff-sans); letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s; }
+.btn-action:hover { border-color: var(--text-main); color: var(--text-main); }
+.dark-toggle { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 12px; cursor: pointer; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.6); font-family: var(--ff-sans); transition: all 0.2s; }
+.dark-toggle:hover { background: rgba(255,255,255,0.15); color: #fff; }
+/* HERO */
+.hero { position: relative; background: var(--bg-section); border-bottom: 3px solid var(--red); padding: 48px 40px 40px; overflow: hidden; transition: background 0.3s; }
+.hero::after { content: ''; position: absolute; right: -60px; top: -60px; width: 380px; height: 380px; border-radius: 50%; border: 70px solid rgba(204,0,0,0.04); pointer-events: none; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; color: var(--red); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--red); }
+.hero h1 { font-family: var(--ff-serif); font-size: clamp(22px, 3vw, 38px); font-weight: 700; line-height: 1.15; color: var(--text-main); margin-bottom: 10px; }
+.hero p { font-size: 14px; font-weight: 300; color: var(--text-mid); line-height: 1.6; }
+/* CONTAINER */
+.container { max-width: 1200px; margin: 0 auto; padding: 48px 40px 80px; }
+/* SECTION TITLE */
+.section-title {
+font-family: var(--ff-serif);
+font-size: 20px;
+font-weight: 700;
+margin: 48px 0 24px;
+padding-bottom: 14px;
+border-bottom: 2px solid var(--text-main);
+display: flex;
+align-items: baseline;
+justify-content: space-between;
+color: var(--text-main);
+}
+.section-title:first-child { margin-top: 0; }
+.section-title small { font-family: var(--ff-sans); font-size: 12px; font-weight: 400; color: var(--text-soft); }
+/* STAT CARDS */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 28px; }
+.stat-card {
+background: var(--bg-card);
+border: 1px solid var(--border);
+padding: 22px;
+cursor: pointer;
+transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s, background 0.3s;
+position: relative;
+}
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); width: 0; transition: width 0.3s ease; }
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); border-color: var(--red); }
+.stat-card:hover::before { width: 100%; }
+.stat-icon { width: 40px; height: 40px; background: var(--bg-section); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.stat-icon svg { width: 20px; height: 20px; stroke: var(--red); stroke-width: 1.5; fill: none; }
+.stat-value { font-family: var(--ff-serif); font-size: 30px; font-weight: 700; color: var(--text-main); line-height: 1; margin-bottom: 6px; }
+.stat-label { font-size: 11px; color: var(--text-soft); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+.stat-card small { display: block; font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+/* TWO COLUMNS */
+.two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+/* CARD */
+.card { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; transition: background 0.3s, border-color 0.3s; }
+.card-title {
+font-family: var(--ff-serif);
+font-size: 15px;
+font-weight: 700;
+margin-bottom: 18px;
+padding-bottom: 12px;
+border-bottom: 1px solid var(--border);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 10px;
+color: var(--text-main);
+}
+.badge-highlight { background: var(--red); color: white; padding: 3px 10px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--ff-sans); }
+/* DONUT */
+.donut-container { position: relative; max-width: 240px; margin: 0 auto; }
+.donut-stats { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.donut-stats .total { font-family: var(--ff-serif); font-size: 24px; font-weight: 700; color: var(--red); display: block; }
+.donut-stats .label { font-size: 10px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+/* PROGRESS */
+.progress-bar-container { background: var(--border); height: 6px; margin: 16px 0 6px; }
+.progress-bar-fill { background: var(--red); height: 100%; width: 0; transition: width 1s ease; }
+/* COMPARISON GRID */
+.comparison-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 28px; }
+/* FOOTER */
+.site-footer { background: #0A0A0A; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; }
+.site-footer .brand { font-family: var(--ff-serif); font-size: 13px; color: rgba(255,255,255,0.6); }
+.site-footer .brand strong { color: rgba(255,255,255,0.9); }
+.site-footer .data { font-size: 11px; color: rgba(255,255,255,0.3); }
+/* MODAL */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+.modal-content { background: var(--bg-card); border: 1px solid var(--border); max-width: 450px; width: 90%; padding: 28px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--red); padding-bottom: 12px; margin-bottom: 16px; }
+.modal-header h3 { font-family: var(--ff-serif); font-size: 17px; font-weight: 700; color: var(--text-main); }
+.close-modal { font-size: 24px; cursor: pointer; color: var(--text-soft); background: none; border: none; line-height: 1; }
+.close-modal:hover { color: var(--red); }
+.modal-body { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+@media (max-width: 768px) {
+.two-columns, .comparison-grid { grid-template-columns: 1fr; }
+.topbar, .header, .hero, .container { padding-left: 20px; padding-right: 20px; }
+.site-footer { flex-direction: column; gap: 10px; padding: 20px; text-align: center; }
+}
+/* ====== AI CHAT PANEL ====== */
+.chat-fab{position:fixed;bottom:32px;right:32px;width:52px;height:52px;background:var(--red);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(204,0,0,0.4);z-index:9998;transition:transform 0.2s,box-shadow 0.2s}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(204,0,0,0.5)}
+.chat-fab svg{width:24px;height:24px;stroke:white;fill:none;stroke-width:2}
+.chat-panel{position:fixed;bottom:0;right:0;width:380px;height:100vh;background:var(--bg-card);border-left:1px solid var(--border);box-shadow:-8px 0 40px rgba(0,0,0,0.15);z-index:9999;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.32s cubic-bezier(0.4,0,0.2,1)}
+.chat-panel.open{transform:translateX(0)}
+.chat-panel-header{background:#0A0A0A;padding:20px 20px 16px;flex-shrink:0;position:relative}
+.chat-panel-eyebrow{font-size:9px;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.chat-panel-eyebrow::before{content:'';display:block;width:16px;height:1px;background:var(--red)}
+.chat-panel-title{font-family:var(--ff-serif);font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.chat-panel-sub{font-size:11px;color:rgba(255,255,255,0.4)}
+.chat-panel-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:20px;cursor:pointer;line-height:1;font-family:var(--ff-sans)}
+.chat-panel-close:hover{color:#fff}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.chat-msg{max-width:92%}
+.chat-msg.assistant{align-self:flex-start}
+.chat-msg.user{align-self:flex-end}
+.chat-bubble{padding:12px 14px;font-size:13px;line-height:1.65}
+.chat-msg.assistant .chat-bubble{background:var(--bg-section);border:1px solid var(--border);border-radius:0 12px 12px 12px;color:var(--text-main)}
+.chat-msg.user .chat-bubble{background:var(--red);color:#fff;border-radius:12px 0 12px 12px}
+.chat-msg-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px}
+.chat-msg.user .chat-msg-label{text-align:right;color:rgba(204,0,0,0.7)}
+.chat-actions{padding:16px 20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;flex-shrink:0;overflow-y:auto;max-height:320px}
+.chat-btn{background:var(--bg-section);border:1px solid var(--border);padding:10px 14px;font-size:12px;font-weight:600;color:var(--text-main);cursor:pointer;font-family:var(--ff-sans);text-align:left;transition:all 0.2s;letter-spacing:0.02em}
+.chat-btn:hover{border-color:var(--red);color:var(--red)}
+.chat-btn.primary{background:var(--red);color:#fff;border-color:var(--red)}
+.chat-btn.primary:hover{background:var(--red-dark)}
+.chat-actions-divider{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-soft);padding:4px 0 2px;border-top:1px solid var(--border);margin-top:4px}
+.chat-typing{display:flex;align-items:center;gap:4px;padding:4px 0}
+.chat-typing span{width:6px;height:6px;background:var(--text-soft);border-radius:50%;animation:typingDot 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:0.2s}
+.chat-typing span:nth-child(3){animation-delay:0.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-4px);opacity:1}}
+@media(max-width:480px){.chat-panel{width:100vw}}
+</style>
+</head>
+<body>
+<div class="page">
+<!-- TOP BAR -->
+<div class="topbar">
+<div class="topbar-brand">
+<span class="jnj-mark"><span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Vision</span>
+<div class="tsep"></div>
+<span class="vision-mark">ACUVUE</span>
+</div>
+<div class="topbar-right">
+<a href="0" class="topbar-link">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    Dashboard Hub
+</a>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="header-left">
+<span class="header-wordmark">Institute Event Invitation</span>
+<div class="header-divider"></div>
+<span class="header-sub">Dual Campaign View</span>
+</div>
+<div class="header-right">
+<a href="0" class="btn-hub">
+<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    Dashboard Hub
+</a>
+<button class="btn-action" id="themeToggle">Dark Mode</button>
+<button class="btn-action" id="refreshBtn">Refresh</button>
+</div>
+</header>
+<!-- HERO -->
+<section class="hero">
+<div class="hero-eyebrow">Campaign Intelligence</div>
+<h1>Institute Event Invitation &mdash; Dual Campaign View</h1>
+<p>JnJ Vision &middot; Real-time metrics &middot; Email 1 vs Email 2 comparison</p>
+</section>
+<div class="container">
+<!-- SECTION 1 -->
+<div class="section-title">Email 1 &mdash; Dates: May, August, October <small>Job ID: 4400001</small></div>
+<div class="stats-grid">
+<div class="stat-card" data-metric="sent1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4v16h16V4H4z"/><path d="M22 6L12 13 2 6"/></svg></div><div class="stat-value" id="totalSentValue1">0</div><div class="stat-label">Total Sent</div></div>
+<div class="stat-card" data-metric="opens1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="stat-value" id="openRateValue1">0%</div><div class="stat-label">Open Rate</div><small id="uniqueOpensValue1">0 opens</small></div>
+<div class="stat-card" data-metric="clicks1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3v3a4 4 0 0 0 8 0V3"/><path d="M18 9v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/></svg></div><div class="stat-value" id="clickRateValue1">0%</div><div class="stat-label">CTR (Click-to-Open)</div><small id="uniqueClicksValue1">0 unique clicks</small></div>
+<div class="stat-card" data-metric="abandoned1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></div><div class="stat-value" id="abandonedValue1">0</div><div class="stat-label">Opened but no click</div></div>
+</div>
+<div class="two-columns">
+<div class="card"><div class="card-title"><span>Email Engagement</span><span class="badge-highlight">Opened vs Not Opened</span></div><div class="donut-container"><canvas id="donutChart1" width="200" height="200"></canvas><div class="donut-stats"><div class="total" id="totalSentDonut1">0</div><div class="label">total sent</div></div></div></div>
+<div class="card"><div class="card-title"><span>Event Date Preference (May / Aug / Oct)</span><span class="badge-highlight">Total clicks: 821</span></div><canvas id="barChart1" height="180"></canvas><div class="progress-bar-container" style="margin-top:16px"><div class="progress-bar-fill" id="progressMay1" style="width:0%"></div><div style="display:flex; justify-content:space-between; font-size:11px; margin-top:4px"><span>May: <span id="mayPercent1">0</span>%</span><span>Aug: <span id="augustPercent1">0</span>%</span><span>Oct: <span id="octoberPercent1">0</span>%</span></div></div></div>
+</div>
+<div class="stats-grid">
+<div class="stat-card" data-metric="may1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="stat-value" id="mayValue1">0</div><div class="stat-label">Clicks &middot; May</div></div>
+<div class="stat-card" data-metric="august1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="stat-value" id="augustValue1">0</div><div class="stat-label">Clicks &middot; August</div></div>
+<div class="stat-card" data-metric="october1"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="stat-value" id="octoberValue1">0</div><div class="stat-label">Clicks &middot; October</div></div>
+</div>
+<!-- SECTION 2 -->
+<div class="section-title">Email 2 &mdash; Dates: August, September, October <small>Job ID: 4400002</small></div>
+<div class="stats-grid">
+<div class="stat-card" data-metric="sent2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4v16h16V4H4z"/><path d="M22 6L12 13 2 6"/></svg></div><div class="stat-value" id="totalSentValue2">0</div><div class="stat-label">Total Sent</div></div>
+<div class="stat-card" data-metric="opens2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="stat-value" id="openRateValue2">0%</div><div class="stat-label">Open Rate</div><small id="uniqueOpensValue2">0 opens</small></div>
+<div class="stat-card" data-metric="clicks2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3v3a4 4 0 0 0 8 0V3"/><path d="M18 9v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/></svg></div><div class="stat-value" id="clickRateValue2">0%</div><div class="stat-label">CTR (Click-to-Open)</div><small id="uniqueClicksValue2">0 unique clicks</small></div>
+<div class="stat-card" data-metric="abandoned2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></div><div class="stat-value" id="abandonedValue2">0</div><div class="stat-label">Opened but no click</div></div>
+</div>
+<div class="two-columns">
+<div class="card"><div class="card-title"><span>Email Engagement</span><span class="badge-highlight">Opened vs Not Opened</span></div><div class="donut-container"><canvas id="donutChart2" width="200" height="200"></canvas><div class="donut-stats"><div class="total" id="totalSentDonut2">0</div><div class="label">total sent</div></div></div></div>
+<div class="card"><div class="card-title"><span>Event Date Preference (Aug / Sep / Oct)</span><span class="badge-highlight">Total clicks: 648</span></div><canvas id="barChart2" height="180"></canvas><div class="progress-bar-container" style="margin-top:16px"><div class="progress-bar-fill" id="progressAug2" style="width:0%"></div><div style="display:flex; justify-content:space-between; font-size:11px; margin-top:4px"><span>Aug: <span id="augustPercent2">0</span>%</span><span>Sep: <span id="septemberPercent2">0</span>%</span><span>Oct: <span id="octoberPercent2">0</span>%</span></div></div></div>
+</div>
+<div class="stats-grid">
+<div class="stat-card" data-metric="august2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="stat-value" id="augustValue2">0</div><div class="stat-label">Clicks &middot; August</div></div>
+<div class="stat-card" data-metric="september2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="stat-value" id="septemberValue2">0</div><div class="stat-label">Clicks &middot; September</div></div>
+<div class="stat-card" data-metric="october2"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="stat-value" id="octoberValue2">0</div><div class="stat-label">Clicks &middot; October</div></div>
+</div>
+<!-- SECTION 3: COMPARISON -->
+<div class="section-title">Comparative Analysis: Email 1 vs Email 2</div>
+<div class="comparison-grid">
+<div class="card"><div class="card-title">Open Rate (%)</div><canvas id="compOpenChart" height="200"></canvas></div>
+<div class="card"><div class="card-title">Click-to-Open Rate (CTR %)</div><canvas id="compCTRChart" height="200"></canvas></div>
+<div class="card"><div class="card-title">Total Unique Clicks</div><canvas id="compClicksChart" height="200"></canvas></div>
+<div class="card"><div class="card-title">Total Sent</div><canvas id="compSentChart" height="200"></canvas></div>
+</div>
+</div>
+<footer class="site-footer">
+<span class="brand"><strong>ACUVUE</strong> &middot; <span style="font-family:'Noto Serif',Georgia,serif;font-weight:700;">J&amp;J</span> Vision Care</span>
+<span class="data">Email 1: 01/22/2026 09:14:00 &nbsp;&middot;&nbsp; Email 2: 01/22/2026 09:14:00 &nbsp;&middot;&nbsp; Auto-refresh every 15 min</span>
+</footer>
+</div>
+<!-- MODAL -->
+<div id="infoModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="modalTitle">Metric</h3><span class="close-modal">&times;</span></div><div class="modal-body" id="modalBody"><p></p></div></div></div>
+<script>
+// ========== EMAIL 1 DATA ==========
+var totalSent1 = parseInt("12450") || 0;
+var uniqueOpens1 = parseInt("3735") || 0;
+var uniqueClicks1 = parseInt("821") || 0;
+var mayClicks1 = parseInt("198") || 0;
+var augustClicks1 = parseInt("402") || 0;
+var octoberClicks1 = parseInt("221") || 0;
+var openRate1 = parseFloat(("30.0").replace(",",".")) || 0;
+var ctrRate1 = parseFloat(("21.98").replace(",",".")) || 0;
+var abandoned1 = parseInt("2914") || 0;
+var mayPercent1 = parseFloat(("24.1").replace(",",".")) || 0;
+var augustPercent1 = parseFloat(("49.0").replace(",",".")) || 0;
+var octoberPercent1 = parseFloat(("26.9").replace(",",".")) || 0;
+// ========== EMAIL 2 DATA ==========
+var totalSent2 = parseInt("8160") || 0;
+var uniqueOpens2 = parseInt("2530") || 0;
+var uniqueClicks2 = parseInt("648") || 0;
+var augustClicks2 = parseInt("301") || 0;
+var septemberClicks2 = parseInt("188") || 0;
+var octoberClicks2 = parseInt("159") || 0;
+var openRate2 = parseFloat(("31.0").replace(",",".")) || 0;
+var ctrRate2 = parseFloat(("25.61").replace(",",".")) || 0;
+var abandoned2 = parseInt("1882") || 0;
+var augustPercent2 = parseFloat(("46.4").replace(",",".")) || 0;
+var septemberPercent2 = parseFloat(("29.0").replace(",",".")) || 0;
+var octoberPercent2 = parseFloat(("24.5").replace(",",".")) || 0;
+// ========== HELPER ANIMATION ==========
+function animateValue(el, start, end, suffix, dec) {
+suffix = suffix || '';
+dec = dec !== undefined ? dec : 0;
+var range = end - start, current = start, step = Math.ceil(range / 50) || 1;
+var timer = setInterval(function() {
+  current += step;
+  if (current >= end) { clearInterval(timer); current = end; }
+  el.innerText = current.toFixed(dec) + suffix;
+}, 20);
+}
+// ========== EMAIL 1 UI ==========
+animateValue(document.getElementById('totalSentValue1'), 0, totalSent1, '');
+animateValue(document.getElementById('openRateValue1'), 0, openRate1, '%', 1);
+animateValue(document.getElementById('clickRateValue1'), 0, ctrRate1, '%', 1);
+animateValue(document.getElementById('abandonedValue1'), 0, abandoned1, '');
+document.getElementById('uniqueOpensValue1').innerHTML = uniqueOpens1 + ' opens';
+document.getElementById('uniqueClicksValue1').innerHTML = uniqueClicks1 + ' unique clicks';
+animateValue(document.getElementById('mayValue1'), 0, mayClicks1, '');
+animateValue(document.getElementById('augustValue1'), 0, augustClicks1, '');
+animateValue(document.getElementById('octoberValue1'), 0, octoberClicks1, '');
+document.getElementById('totalSentDonut1').innerText = totalSent1;
+document.getElementById('mayPercent1').innerText = mayPercent1.toFixed(1);
+document.getElementById('augustPercent1').innerText = augustPercent1.toFixed(1);
+document.getElementById('octoberPercent1').innerText = octoberPercent1.toFixed(1);
+document.getElementById('progressMay1').style.width = mayPercent1 + '%';
+// Donut Email 1
+new Chart(document.getElementById('donutChart1'), {
+  type: 'doughnut',
+  data: { labels: ['Opened', 'Not opened'], datasets: [{ data: [uniqueOpens1, totalSent1-uniqueOpens1], backgroundColor: ['#C8102E', '#E5E5E5'], cutout: '65%' }] },
+  options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+});
+// Bar Email 1
+new Chart(document.getElementById('barChart1'), {
+  type: 'bar',
+  data: { labels: ['May', 'August', 'October'], datasets: [{ label: 'Clicks per date', data: [mayClicks1, augustClicks1, octoberClicks1], backgroundColor: '#C8102E', borderRadius: 8 }] },
+  options: { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, title: { display: true, text: 'Clicks' } } } }
+});
+// ========== EMAIL 2 UI ==========
+animateValue(document.getElementById('totalSentValue2'), 0, totalSent2, '');
+animateValue(document.getElementById('openRateValue2'), 0, openRate2, '%', 1);
+animateValue(document.getElementById('clickRateValue2'), 0, ctrRate2, '%', 1);
+animateValue(document.getElementById('abandonedValue2'), 0, abandoned2, '');
+document.getElementById('uniqueOpensValue2').innerHTML = uniqueOpens2 + ' opens';
+document.getElementById('uniqueClicksValue2').innerHTML = uniqueClicks2 + ' unique clicks';
+animateValue(document.getElementById('augustValue2'), 0, augustClicks2, '');
+animateValue(document.getElementById('septemberValue2'), 0, septemberClicks2, '');
+animateValue(document.getElementById('octoberValue2'), 0, octoberClicks2, '');
+document.getElementById('totalSentDonut2').innerText = totalSent2;
+document.getElementById('augustPercent2').innerText = augustPercent2.toFixed(1);
+document.getElementById('septemberPercent2').innerText = septemberPercent2.toFixed(1);
+document.getElementById('octoberPercent2').innerText = octoberPercent2.toFixed(1);
+document.getElementById('progressAug2').style.width = augustPercent2 + '%';
+// Donut Email 2
+new Chart(document.getElementById('donutChart2'), {
+  type: 'doughnut',
+  data: { labels: ['Opened', 'Not opened'], datasets: [{ data: [uniqueOpens2, totalSent2-uniqueOpens2], backgroundColor: ['#C8102E', '#E5E5E5'], cutout: '65%' }] },
+  options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+});
+// Bar Email 2
+new Chart(document.getElementById('barChart2'), {
+  type: 'bar',
+  data: { labels: ['August', 'September', 'October'], datasets: [{ label: 'Clicks per date', data: [augustClicks2, septemberClicks2, octoberClicks2], backgroundColor: '#C8102E', borderRadius: 8 }] },
+  options: { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, title: { display: true, text: 'Clicks' } } } }
+});
+// ========== COMPARISON CHARTS ==========
+new Chart(document.getElementById('compOpenChart'), {
+  type: 'bar',
+  data: { labels: ['Email 1 (May/Aug/Oct)', 'Email 2 (Aug/Sep/Oct)'], datasets: [{ label: 'Open Rate (%)', data: [openRate1, openRate2], backgroundColor: '#C8102E', borderRadius: 8 }] },
+  options: { responsive: true, scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: 'Percentage' } } } }
+});
+new Chart(document.getElementById('compCTRChart'), {
+  type: 'bar',
+  data: { labels: ['Email 1', 'Email 2'], datasets: [{ label: 'Click-to-Open Rate (%)', data: [ctrRate1, ctrRate2], backgroundColor: '#C8102E', borderRadius: 8 }] },
+  options: { responsive: true, scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: 'Percentage' } } } }
+});
+new Chart(document.getElementById('compClicksChart'), {
+  type: 'bar',
+  data: { labels: ['Email 1', 'Email 2'], datasets: [{ label: 'Total Unique Clicks', data: [uniqueClicks1, uniqueClicks2], backgroundColor: '#C8102E', borderRadius: 8 }] },
+  options: { responsive: true, scales: { y: { beginAtZero: true, title: { display: true, text: 'Clicks' } } } }
+});
+new Chart(document.getElementById('compSentChart'), {
+  type: 'bar',
+  data: { labels: ['Email 1', 'Email 2'], datasets: [{ label: 'Total Sent', data: [totalSent1, totalSent2], backgroundColor: '#C8102E', borderRadius: 8 }] },
+  options: { responsive: true, scales: { y: { beginAtZero: true, title: { display: true, text: 'Emails Sent' } } } }
+});
+// ========== MODAL EXPLANATIONS ==========
+var explanations = {
+  sent1: { title: 'Total Sent (Email 1)', body: 'Total invitations sent for the first campaign (May/Aug/Oct). Value: ' + totalSent1 },
+  opens1: { title: 'Open Rate (Email 1)', body: '(Unique Opens / Total Sent) x 100. Current: ' + openRate1.toFixed(1) + '%' },
+  clicks1: { title: 'CTR (Email 1)', body: '(Unique Clicks / Unique Opens) x 100. Current: ' + ctrRate1.toFixed(1) + '%' },
+  abandoned1: { title: 'Opened but no click (Email 1)', body: 'Opened the email but did not click any link. Value: ' + abandoned1 },
+  may1: { title: 'Clicks - May (Email 1)', body: 'Total clicks on the May date link: ' + mayClicks1 },
+  august1: { title: 'Clicks - August (Email 1)', body: 'Total clicks on the August date link: ' + augustClicks1 },
+  october1: { title: 'Clicks - October (Email 1)', body: 'Total clicks on the October date link: ' + octoberClicks1 },
+  sent2: { title: 'Total Sent (Email 2)', body: 'Total invitations sent for the second campaign (Aug/Sep/Oct). Value: ' + totalSent2 },
+  opens2: { title: 'Open Rate (Email 2)', body: '(Unique Opens / Total Sent) x 100. Current: ' + openRate2.toFixed(1) + '%' },
+  clicks2: { title: 'CTR (Email 2)', body: '(Unique Clicks / Unique Opens) x 100. Current: ' + ctrRate2.toFixed(1) + '%' },
+  abandoned2: { title: 'Opened but no click (Email 2)', body: 'Opened but did not click. Value: ' + abandoned2 },
+  august2: { title: 'Clicks - August (Email 2)', body: 'Total clicks on the August date link: ' + augustClicks2 },
+  september2: { title: 'Clicks - September (Email 2)', body: 'Total clicks on the September date link: ' + septemberClicks2 },
+  october2: { title: 'Clicks - October (Email 2)', body: 'Total clicks on the October date link: ' + octoberClicks2 }
+};
+// Dark mode & refresh
+var themeToggle = document.getElementById('themeToggle');
+if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+if (themeToggle) {
+  themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+      themeToggle.innerText = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+  });
+}
+document.getElementById('refreshBtn')?.addEventListener('click', function(){ window.location.reload(); });
+// ========== CHAT ==========
+(function() {
+  function initChat() {
+      var fab = document.getElementById('chatFab');
+      var panel = document.getElementById('chatPanel');
+      var closeBtn = document.getElementById('chatClose');
+      var msgs = document.getElementById('chatMessages');
+      var actions = document.getElementById('chatActions');
+      if (!fab || !panel || !closeBtn || !msgs || !actions) {
+          console.warn('Chat não inicializado: elementos faltando', {fab, panel, closeBtn, msgs, actions});
+          return;
+      }
+      fab.addEventListener('click', function() { panel.classList.add('open'); });
+      closeBtn.addEventListener('click', function() { panel.classList.remove('open'); });
+      function addMsg(role, text) {
+          var div = document.createElement('div');
+          div.className = 'chat-msg ' + role;
+          var label = role === 'assistant' ? 'Assistant' : 'You';
+          div.innerHTML = '<div class="chat-msg-label">' + label + '</div><div class="chat-bubble">' + text + '</div>';
+          msgs.appendChild(div);
+          msgs.scrollTop = msgs.scrollHeight;
+      }
+      function showTyping() {
+          var div = document.createElement('div');
+          div.className = 'chat-msg assistant';
+div.id = 'typingIndicator';
+          div.innerHTML = '<div class="chat-msg-label">Assistant</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>';
+          msgs.appendChild(div);
+          msgs.scrollTop = msgs.scrollHeight;
+      }
+      function removeTyping() { var el = document.getElementById('typingIndicator'); if(el) el.remove(); }
+      function rating(val, good, ok) { return val >= good ? 'strong' : val >= ok ? 'moderate' : 'below average'; }
+      function generateResponse(query) {
+          var benchOpen = 20, benchCTR = 10;
+          var or1  = typeof openRate1  !== 'undefined' ? openRate1  : 0;
+          var or2  = typeof openRate2  !== 'undefined' ? openRate2  : 0;
+          var ctr1v = typeof ctrRate1  !== 'undefined' ? ctrRate1   : 0;
+          var ctr2v = typeof ctrRate2  !== 'undefined' ? ctrRate2   : 0;
+          var s1   = typeof totalSent1 !== 'undefined' ? totalSent1 : 0;
+          var s2   = typeof totalSent2 !== 'undefined' ? totalSent2 : 0;
+          var c1   = typeof uniqueClicks1 !== 'undefined' ? uniqueClicks1 : 0;
+          var c2   = typeof uniqueClicks2 !== 'undefined' ? uniqueClicks2 : 0;
+          var ab1  = typeof abandoned1 !== 'undefined' ? abandoned1 : 0;
+          var ab2  = typeof abandoned2 !== 'undefined' ? abandoned2 : 0;
+          var may1v = typeof mayClicks1     !== 'undefined' ? mayClicks1     : 0;
+          var aug1v = typeof augustClicks1  !== 'undefined' ? augustClicks1  : 0;
+          var oct1v = typeof octoberClicks1 !== 'undefined' ? octoberClicks1 : 0;
+          var aug2v = typeof augustClicks2  !== 'undefined' ? augustClicks2  : 0;
+          var sep2v = typeof septemberClicks2 !== 'undefined' ? septemberClicks2 : 0;
+          var oct2v = typeof octoberClicks2 !== 'undefined' ? octoberClicks2 : 0;
+          var r1o = rating(or1,  benchOpen, benchOpen*0.75);
+          var r2o = rating(or2,  benchOpen, benchOpen*0.75);
+          var r1c = rating(ctr1v, benchCTR, benchCTR*0.75);
+          var r2c = rating(ctr2v, benchCTR, benchCTR*0.75);
+          var lines = [];
+          if (query === 'email1') {
+              lines.push('<strong>Email 1 (May / August / October)</strong>');
+              lines.push('Sent to <strong>' + s1.toLocaleString() + '</strong> recipients. Open rate: <strong>' + or1.toFixed(1) + '%</strong> (' + r1o + ' vs ' + benchOpen + '% benchmark). CTR: <strong>' + ctr1v.toFixed(1) + '%</strong> (' + r1c + ' vs ' + benchCTR + '% benchmark).');
+              lines.push(ab1 + ' recipients opened but did not click.');
+              var d1 = [{l:'May',v:may1v},{l:'August',v:aug1v},{l:'October',v:oct1v}].sort(function(a,b){return b.v-a.v;});
+              lines.push('Top date preference: <strong>' + d1[0].l + '</strong> (' + d1[0].v + ' clicks), then ' + d1[1].l + ' (' + d1[1].v + ') and ' + d1[2].l + ' (' + d1[2].v + ').');
+          } else if (query === 'email2') {
+              lines.push('<strong>Email 2 (August / September / October)</strong>');
+              lines.push('Sent to <strong>' + s2.toLocaleString() + '</strong> recipients. Open rate: <strong>' + or2.toFixed(1) + '%</strong> (' + r2o + ' vs ' + benchOpen + '% benchmark). CTR: <strong>' + ctr2v.toFixed(1) + '%</strong> (' + r2c + ' vs ' + benchCTR + '% benchmark).');
+              lines.push(ab2 + ' recipients opened but did not click.');
+              var d2 = [{l:'August',v:aug2v},{l:'September',v:sep2v},{l:'October',v:oct2v}].sort(function(a,b){return b.v-a.v;});
+              lines.push('Top date preference: <strong>' + d2[0].l + '</strong> (' + d2[0].v + ' clicks), then ' + d2[1].l + ' (' + d2[1].v + ') and ' + d2[2].l + ' (' + d2[2].v + ').');
+          } else if (query === 'compare') {
+              lines.push('<strong>Email 1 vs Email 2</strong>');
+              lines.push('Open Rate: E1 <strong>' + or1.toFixed(1) + '%</strong> vs E2 <strong>' + or2.toFixed(1) + '%</strong> -- ' + (or1 >= or2 ? 'Email 1' : 'Email 2') + ' performed better.');
+              lines.push('CTR: E1 <strong>' + ctr1v.toFixed(1) + '%</strong> vs E2 <strong>' + ctr2v.toFixed(1) + '%</strong> -- ' + (ctr1v >= ctr2v ? 'Email 1' : 'Email 2') + ' had higher click engagement.');
+              lines.push('Volume: E1 reached ' + s1.toLocaleString() + ' vs E2\'s ' + s2.toLocaleString() + ' recipients.');
+              var diff = Math.abs(or1 - or2);
+              lines.push(diff < 2 ? 'Performance was closely matched between the two versions.' : 'There was a notable difference of ' + diff.toFixed(1) + ' percentage points in open rate.');
+          } else if (query === 'dates') {
+              lines.push('<strong>Best Performing Event Date</strong>');
+              var all = [{l:'May (E1)',v:may1v},{l:'Aug (E1)',v:aug1v},{l:'Oct (E1)',v:oct1v},{l:'Aug (E2)',v:aug2v},{l:'Sep (E2)',v:sep2v},{l:'Oct (E2)',v:oct2v}].sort(function(a,b){return b.v-a.v;});
+              lines.push('<strong>' + all[0].l + '</strong> had the highest click volume: <strong>' + all[0].v + ' clicks</strong>.');
+              lines.push('Full ranking: ' + all.map(function(d){return d.l+' ('+d.v+')';}).join(', ') + '.');
+              lines.push('Consider prioritizing ' + all[0].l.split(' ')[0] + ' in future event invitations based on this preference data.');
+          } else if (query === 'abandonment') {
+              lines.push('<strong>Abandonment Analysis</strong>');
+              var abRate1 = (uniqueOpens1 > 0) ? ((ab1 / uniqueOpens1) * 100).toFixed(1) : '0.0';
+              var abRate2 = (uniqueOpens2 > 0) ? ((ab2 / uniqueOpens2) * 100).toFixed(1) : '0.0';
+              lines.push('Email 1: <strong>' + ab1 + '</strong> recipients opened but did not click — an abandonment rate of <strong>' + abRate1 + '%</strong> of openers.');
+              lines.push('Email 2: <strong>' + ab2 + '</strong> recipients opened but did not click — an abandonment rate of <strong>' + abRate2 + '%</strong> of openers.');
+              var winner = parseFloat(abRate1) <= parseFloat(abRate2) ? 'Email 1' : 'Email 2';
+              lines.push(winner + ' retained a higher proportion of openers through to a click.');
+              lines.push('High abandonment may suggest the CTA placement, copy, or event date options need review to better convert engaged readers.');
+          } else if (query === 'winner') {
+              lines.push('<strong>Overall Winner</strong>');
+              var score1 = 0, score2 = 0;
+              if (or1 > or2) score1++; else if (or2 > or1) score2++;
+              if (ctr1v > ctr2v) score1++; else if (ctr2v > ctr1v) score2++;
+              if (c1 > c2) score1++; else if (c2 > c1) score2++;
+              var winner2 = score1 > score2 ? 'Email 1' : score2 > score1 ? 'Email 2' : 'a tie';
+              lines.push('Scoring across open rate, CTR, and total clicks: <strong>Email 1: ' + score1 + '/3</strong> &nbsp;|&nbsp; <strong>Email 2: ' + score2 + '/3</strong>.');
+              lines.push(winner2 !== 'a tie' ? '<strong>' + winner2 + '</strong> performed better overall.' : 'Both emails performed at a similar level across the key metrics.');
+              lines.push('Open rates: E1 ' + or1.toFixed(1) + '% vs E2 ' + or2.toFixed(1) + '%. CTR: E1 ' + ctr1v.toFixed(1) + '% vs E2 ' + ctr2v.toFixed(1) + '%.');
+          } else if (query === 'reach') {
+              lines.push('<strong>Combined Reach</strong>');
+              var total = s1 + s2;
+              var totalOpens = uniqueOpens1 + uniqueOpens2;
+              var totalClicks = c1 + c2;
+              var combinedOpenRate = total > 0 ? ((totalOpens / total) * 100).toFixed(1) : '0.0';
+              lines.push('Both campaigns combined reached <strong>' + total.toLocaleString() + ' recipients</strong>.');
+              lines.push('Total unique opens: <strong>' + totalOpens.toLocaleString() + '</strong> (' + combinedOpenRate + '% blended open rate).');
+              lines.push('Total unique clicks across all date options: <strong>' + totalClicks.toLocaleString() + '</strong>.');
+              lines.push('Email 1 accounted for ' + (total > 0 ? ((s1/total)*100).toFixed(0) : 0) + '% of the total audience; Email 2 for the remaining ' + (total > 0 ? ((s2/total)*100).toFixed(0) : 0) + '%.');
+          } else if (query === 'topdate') {
+              lines.push('<strong>Top Date Across Both Campaigns</strong>');
+              var allDates = [
+                  {l:'May', e:'E1', v:may1v},
+                  {l:'August', e:'E1', v:aug1v},
+                  {l:'October', e:'E1', v:oct1v},
+                  {l:'August', e:'E2', v:aug2v},
+                  {l:'September', e:'E2', v:sep2v},
+                  {l:'October', e:'E2', v:oct2v}
+              ].sort(function(a,b){return b.v-a.v;});
+              lines.push('Across all six date options, <strong>' + allDates[0].l + ' (' + allDates[0].e + ')</strong> received the most clicks: <strong>' + allDates[0].v + '</strong>.');
+              lines.push('Runner-up: ' + allDates[1].l + ' (' + allDates[1].e + ') with ' + allDates[1].v + ' clicks. Third: ' + allDates[2].l + ' (' + allDates[2].e + ') with ' + allDates[2].v + '.');
+              var augTotal = aug1v + aug2v;
+              lines.push('August accumulated <strong>' + augTotal + ' total clicks</strong> across both emails, making it the most represented month in the campaign.');
+          } else if (query === 'recommendations') {
+              lines.push('<strong>Recommendations</strong>');
+              var bestEmail = (or1 >= or2 && ctr1v >= ctr2v) ? 'Email 1' : (or2 >= or1 && ctr2v >= ctr1v) ? 'Email 2' : 'both emails equally';
+              var allDatesRec = [{l:'May',v:may1v},{l:'Aug(E1)',v:aug1v},{l:'Oct(E1)',v:oct1v},{l:'Aug(E2)',v:aug2v},{l:'Sep',v:sep2v},{l:'Oct(E2)',v:oct2v}].sort(function(a,b){return b.v-a.v;});
+              lines.push('1. <strong>Date selection:</strong> Prioritize <strong>' + allDatesRec[0].l.replace('(E1)','').replace('(E2)','').trim() + '</strong> in the next send — it drove the highest engagement across all options.');
+              lines.push('2. <strong>Email version:</strong> The structure of <strong>' + bestEmail + '</strong> drove stronger results. Use it as the baseline for the next iteration.');
+              var totalAbandoned = ab1 + ab2;
+              if (totalAbandoned > 0) {
+                  lines.push('3. <strong>CTA optimization:</strong> A combined ' + totalAbandoned + ' recipients opened without clicking. Consider A/B testing subject lines, CTA button copy, or adding urgency cues to reduce drop-off.');
+              }
+              lines.push('4. <strong>Audience sizing:</strong> The two sends had significantly different list sizes (E1: ' + s1.toLocaleString() + ' vs E2: ' + s2.toLocaleString() + '). Align audience sizes in future tests for a cleaner comparison.');
+          } else {
+              lines.push('<strong>Full Campaign Summary</strong>');
+              lines.push('Combined reach: <strong>' + (s1+s2).toLocaleString() + '</strong> recipients across both email versions.');
+              lines.push('Email 1: ' + or1.toFixed(1) + '% open rate, ' + ctr1v.toFixed(1) + '% CTR (' + r1o + ' / ' + r1c + '). Email 2: ' + or2.toFixed(1) + '% open rate, ' + ctr2v.toFixed(1) + '% CTR (' + r2o + ' / ' + r2c + ').');
+              var allD = [{l:'May',v:may1v},{l:'Aug(E1)',v:aug1v},{l:'Oct(E1)',v:oct1v},{l:'Aug(E2)',v:aug2v},{l:'Sep',v:sep2v},{l:'Oct(E2)',v:oct2v}].sort(function(a,b){return b.v-a.v;});
+              lines.push('Top date: <strong>' + allD[0].l + '</strong> with ' + allD[0].v + ' clicks.');
+              var scores = [r1o,r2o,r1c,r2c].filter(function(r){return r==='strong';}).length;
+              lines.push(scores >= 3 ? 'Overall, both campaigns performed strongly against B2C benchmarks.' : scores >= 2 ? 'Overall, solid performance with room for improvement in some areas.' : 'Mixed results. Consider reviewing subject lines and audience segmentation.');
+          }
+          return lines.join('<br><br>');
+      }
+      actions.addEventListener('click', function(e) {
+          var btn = e.target.closest('[data-query]');
+          if (!btn) return;
+          var q = btn.getAttribute('data-query');
+          var labels = {
+              full:'Full Campaign Summary',
+              email1:'Analyze Email 1',
+              email2:'Analyze Email 2',
+              compare:'Compare Both Emails',
+              dates:'Best Performing Date',
+              abandonment:'Abandonment Analysis',
+              winner:'Which Email Won?',
+              reach:'Combined Campaign Reach',
+              topdate:'Top Date Across Both Emails',
+              recommendations:'Recommendations for Next Send'
+          };
+          addMsg('user', labels[q] || q);
+          showTyping();
+          setTimeout(function(){ removeTyping(); addMsg('assistant', generateResponse(q)); }, 900);
+      });
+  }
+  if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initChat);
+  } else {
+      initChat();
+  }
+})();
+// ========== MODAL INTERACTIVITY ==========
+document.querySelectorAll('.stat-card').forEach(function(card) {
+  card.addEventListener('click', function() {
+      var metric = this.getAttribute('data-metric');
+      if (metric && explanations[metric]) {
+          document.getElementById('modalTitle').innerText = explanations[metric].title;
+          document.getElementById('modalBody').innerHTML = '<p>' + explanations[metric].body + '</p>';
+          document.getElementById('infoModal').style.display = 'flex';
+      }
+  });
+});
+document.querySelector('.close-modal').addEventListener('click', function() {
+  document.getElementById('infoModal').style.display = 'none';
+});
+window.addEventListener('click', function(e) {
+  if (e.target === document.getElementById('infoModal')) {
+      document.getElementById('infoModal').style.display = 'none';
+  }
+});
+</script>
+<button class="chat-fab" id="chatFab" title="Campaign AI Assistant">
+<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+<div class="chat-panel-header">
+<div class="chat-panel-eyebrow">Campaign Intelligence</div>
+<div class="chat-panel-title">Campaign Assistant</div>
+<div class="chat-panel-sub">Automated analysis based on live dashboard data</div>
+<button class="chat-panel-close" id="chatClose">×</button>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="chat-msg assistant">
+<div class="chat-msg-label">Assistant</div>
+<div class="chat-bubble">Hi! I can analyze the Institute Event Invitation campaign performance. What would you like to know?</div>
+</div>
+</div>
+<div class="chat-actions" id="chatActions">
+<button class="chat-btn primary" data-query="full"> Full Campaign Summary</button>
+<button class="chat-btn" data-query="email1">Analyze Email 1 (May / Aug / Oct)</button>
+<button class="chat-btn" data-query="email2">Analyze Email 2 (Aug / Sep / Oct)</button>
+<button class="chat-btn" data-query="compare">Compare Both Emails</button>
+<button class="chat-btn" data-query="dates">Best Performing Date</button>
+<div class="chat-actions-divider">Deeper Analysis</div>
+<button class="chat-btn secondary" data-query="abandonment">Abandonment Analysis</button>
+<button class="chat-btn secondary" data-query="winner">Which Email Won?</button>
+<button class="chat-btn secondary" data-query="reach">Combined Campaign Reach</button>
+<button class="chat-btn secondary" data-query="topdate">Top Date Across Both Emails</button>
+<button class="chat-btn secondary" data-query="recommendations">Recommendations for Next Send</button>
+</div>
+</div>
+</body>
+</html>
