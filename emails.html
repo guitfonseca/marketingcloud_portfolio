@@ -13,215 +13,92 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
-    min-height: 100vh;
-    font-family: var(--sans);
+    min-height: 100vh; font-family: var(--sans);
     background: linear-gradient(135deg, #0d3b6e 0%, #2a3a9c 30%, #4b3bbf 55%, #6b4fd8 78%, #3d2a8c 100%);
-    background-attachment: fixed;
-    color: var(--white);
+    background-attachment: fixed; color: var(--white);
     -webkit-font-smoothing: antialiased;
   }
-
   .page { max-width: 1180px; margin: 0 auto; padding: 0 26px 70px; }
 
-  /* ---------- top bar ---------- */
-  .topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 26px 0 10px;
-  }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 26px 0 10px; }
   .back {
     display: inline-flex; align-items: center; gap: 8px;
-    color: rgba(255,255,255,0.85); text-decoration: none;
-    font-size: 14px; font-weight: 600;
+    color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 600;
     padding: 8px 14px; border-radius: 100px;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
-    transition: background 0.2s;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); transition: background 0.2s;
   }
   .back:hover { background: rgba(255,255,255,0.18); }
   .brand-mini { display: inline-flex; align-items: center; gap: 9px; font-weight: 700; font-size: 16px; }
   .brand-mini .logo { width: 32px; height: 32px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; }
   .brand-mini .logo svg { width: 17px; height: 17px; }
 
-  /* ============================================================
-     HERO — big counter ball + heading
-     ============================================================ */
-  .hero {
-    display: flex; align-items: center; gap: 40px;
-    padding: 30px 0 38px;
-    flex-wrap: wrap;
-  }
+  .hero { display: flex; align-items: center; gap: 40px; padding: 30px 0 38px; flex-wrap: wrap; }
   .counter-ball {
-    flex-shrink: 0;
-    width: 210px; height: 210px;
-    border-radius: 50%;
+    flex-shrink: 0; width: 210px; height: 210px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #7a5cff 0%, #4b3bbf 55%, #2a1d6e 100%);
     box-shadow: 0 30px 70px -20px rgba(40,20,110,0.8), inset 0 2px 20px rgba(255,255,255,0.18);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    position: relative;
-    border: 1px solid rgba(255,255,255,0.2);
+    position: relative; border: 1px solid rgba(255,255,255,0.2);
   }
-  .counter-ball::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    background: radial-gradient(circle at 70% 80%, rgba(122,92,255,0.4) 0%, transparent 50%);
-  }
-  .counter-num {
-    font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -0.03em;
-    color: #fff; text-shadow: 0 4px 20px rgba(20,10,60,0.5); z-index: 1;
-  }
+  .counter-ball::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 70% 80%, rgba(122,92,255,0.4) 0%, transparent 50%); }
+  .counter-num { font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 20px rgba(20,10,60,0.5); z-index: 1; }
   .counter-plus { font-size: 40px; vertical-align: super; }
-  .counter-cap {
-    margin-top: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: rgba(255,255,255,0.8); z-index: 1;
-  }
-  .hero-text h1 {
-    font-size: 46px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05;
-  }
-  .hero-text p {
-    margin-top: 14px; font-size: 16px; line-height: 1.55;
-    color: rgba(255,255,255,0.88); max-width: 460px;
-  }
+  .counter-cap { margin-top: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); z-index: 1; }
+  .hero-text h1 { font-size: 46px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .hero-text p { margin-top: 14px; font-size: 16px; line-height: 1.55; color: rgba(255,255,255,0.88); max-width: 460px; }
   .hero-text .pills { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 7px; }
-  .hero-text .pill {
-    font-size: 11.5px; font-weight: 600; color: #fff;
-    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28);
-    padding: 5px 12px; border-radius: 100px;
-  }
+  .hero-text .pill { font-size: 11.5px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28); padding: 5px 12px; border-radius: 100px; }
 
-  /* ============================================================
-     EMAIL GRID
-     ============================================================ */
-  .section-label {
-    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
-    font-weight: 700; color: rgba(255,255,255,0.6); margin: 8px 0 18px;
-  }
-  .email-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-  }
+  .section-label { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.6); margin: 8px 0 18px; }
+  .email-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
   .email-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 16px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
-    backdrop-filter: blur(4px);
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 16px; overflow: hidden; cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s; backdrop-filter: blur(4px);
   }
-  .email-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 24px 50px -20px rgba(8,16,40,0.6);
-    border-color: rgba(255,255,255,0.35);
-  }
-  .email-thumb {
-    height: 200px;
-    background: #f1f4f8;
-    position: relative;
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  /* placeholder thumb look */
-  .email-thumb .ph {
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    color: #9fb1c8; font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
-  }
+  .email-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -20px rgba(8,16,40,0.6); border-color: rgba(255,255,255,0.35); }
+  .email-thumb { height: 200px; background: #f1f4f8; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .email-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  .email-thumb .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9fb1c8; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
   .email-thumb .ph svg { width: 30px; height: 30px; opacity: 0.6; }
-  .email-meta { padding: 15px 17px; }
-  .email-meta .tag {
-    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
-    text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
-    margin-bottom: 9px;
-    background: rgba(122,92,255,0.25); color: #cdbcff; border: 1px solid rgba(122,92,255,0.4);
+  /* live mini-render fallback thumbnail */
+  .email-thumb .mini {
+    position: absolute; top: 0; left: 0; width: 250%; height: 250%;
+    transform: scale(0.4); transform-origin: top left; pointer-events: none;
   }
+  .email-meta { padding: 15px 17px; }
+  .email-meta .tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; margin-bottom: 9px; background: rgba(122,92,255,0.25); color: #cdbcff; border: 1px solid rgba(122,92,255,0.4); }
   .email-meta h3 { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
   .email-meta .desc { margin-top: 4px; font-size: 12.5px; color: rgba(255,255,255,0.65); line-height: 1.45; }
-  .email-meta .open {
-    margin-top: 12px; display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12.5px; font-weight: 700; color: #b9a6ff;
-  }
+  .email-meta .open { margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: #b9a6ff; }
   .email-card:hover .open .arrow { transform: translateX(4px); }
   .open .arrow { transition: transform 0.2s; }
 
-  /* ============================================================
-     MODAL — split view (email | code) with sync highlight
-     ============================================================ */
-  .modal-backdrop {
-    position: fixed; inset: 0; z-index: 100;
-    background: rgba(6,12,30,0.75);
-    backdrop-filter: blur(8px);
-    display: none;
-    align-items: center; justify-content: center;
-    padding: 28px;
-  }
+  /* MODAL */
+  .modal-backdrop { position: fixed; inset: 0; z-index: 100; background: rgba(6,12,30,0.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 28px; }
   .modal-backdrop.open { display: flex; }
-  .modal {
-    width: 100%; max-width: 1140px; height: 86vh;
-    background: #0d1b2a;
-    border-radius: 18px;
-    overflow: hidden;
-    display: flex; flex-direction: column;
-    box-shadow: 0 50px 100px -30px rgba(0,0,0,0.8);
-    border: 1px solid rgba(255,255,255,0.12);
-  }
-  .modal-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 20px;
-    background: #11243a;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
+  .modal { width: 100%; max-width: 1140px; height: 86vh; background: #0d1b2a; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 50px 100px -30px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.12); }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: #11243a; border-bottom: 1px solid rgba(255,255,255,0.1); }
   .modal-head .title { display: flex; align-items: baseline; gap: 12px; }
   .modal-head .title .k { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7fa8d8; font-weight: 700; }
   .modal-head .title .t { font-size: 15px; font-weight: 700; color: #fff; }
-  .modal-head .hint-sync { font-size: 11.5px; color: #6f86a8; font-style: italic; }
-  .modal-close {
-    width: 34px; height: 34px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.06); color: #cdd9e8; cursor: pointer;
-    font-size: 18px; display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s;
-  }
+  .modal-close { width: 34px; height: 34px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: #cdd9e8; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
   .modal-close:hover { background: rgba(255,255,255,0.16); }
-
   .modal-split { flex: 1; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
   .pane { overflow: auto; height: 100%; }
   .pane-email { background: #e9edf1; border-right: 1px solid rgba(0,0,0,0.15); }
-  .pane-email .pane-lbl {
-    position: sticky; top: 0; z-index: 3;
-    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
-    color: #5a6b80; background: rgba(233,237,241,0.95); padding: 9px 16px;
-    border-bottom: 1px solid #d4dce4;
-  }
+  .pane-email .pane-lbl { position: sticky; top: 0; z-index: 3; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #5a6b80; background: rgba(233,237,241,0.95); padding: 9px 16px; border-bottom: 1px solid #d4dce4; }
   .email-render { padding: 22px 18px 50px; display: flex; justify-content: center; }
-
   .pane-code { background: #0d1b2a; }
-  .pane-code .pane-lbl {
-    position: sticky; top: 0; z-index: 3;
-    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
-    color: #7fa8d8; background: rgba(13,27,42,0.95); padding: 9px 16px;
-    border-bottom: 1px solid #1b3050;
-  }
-  pre.code {
-    margin: 0; padding: 16px 18px 50px;
-    font-family: var(--mono); font-size: 12px; line-height: 1.7; color: #c7d4e3;
-    white-space: pre; tab-size: 2;
-  }
-  .code-seg { display: block; padding: 2px 8px; margin: 0 -8px; border-radius: 5px; transition: background 0.25s, box-shadow 0.25s; }
-  /* highlighted code segment when hovering email part */
-  .code-seg.lit { background: rgba(122,92,255,0.22); box-shadow: inset 3px 0 0 #7a5cff; }
-
-  /* email parts that are hoverable (in the sample) */
-  .epart { transition: outline 0.2s, background 0.2s; cursor: pointer; }
-  .epart.lit { outline: 2px dashed #7a5cff; outline-offset: 2px; background: rgba(122,92,255,0.08); }
-
-  .t  { color: #5f9ad6; } .a { color: #9bd1a0; } .v { color: #e0a96d; }
-  .c  { color: #5a6b80; font-style: italic; } .x { color: #c7d4e3; }
+  .pane-code .pane-lbl { position: sticky; top: 0; z-index: 3; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #7fa8d8; background: rgba(13,27,42,0.95); padding: 9px 16px; border-bottom: 1px solid #1b3050; display: flex; justify-content: space-between; align-items: center; }
+  .copy-btn { font-family: var(--mono); font-size: 10.5px; color: #9fc1e8; background: #1b3050; border: 1px solid #2a4a72; border-radius: 5px; padding: 3px 9px; cursor: pointer; text-transform: none; }
+  .copy-btn:hover { background: #244369; }
+  pre.code { margin: 0; padding: 16px 18px 50px; font-family: var(--mono); font-size: 12px; line-height: 1.7; color: #c7d4e3; white-space: pre-wrap; word-break: break-word; tab-size: 2; }
 
   @media (max-width: 820px) {
     .email-grid { grid-template-columns: 1fr 1fr; }
-    .hero { gap: 24px; }
-    .counter-ball { width: 150px; height: 150px; }
-    .counter-num { font-size: 52px; }
-    .hero-text h1 { font-size: 34px; }
-    .modal-split { grid-template-columns: 1fr; }
-    .modal { height: 90vh; }
+    .hero { gap: 24px; } .counter-ball { width: 150px; height: 150px; } .counter-num { font-size: 52px; } .hero-text h1 { font-size: 34px; }
+    .modal-split { grid-template-columns: 1fr; } .modal { height: 90vh; }
   }
   @media (max-width: 540px) { .email-grid { grid-template-columns: 1fr; } }
 </style>
@@ -229,7 +106,6 @@
 <body>
   <div class="page">
 
-    <!-- ---------- top bar ---------- -->
     <div class="topbar">
       <a class="back" href="index.html"><span style="font-size:16px;">&larr;</span> Back</a>
       <span class="brand-mini">
@@ -238,7 +114,6 @@
       </span>
     </div>
 
-    <!-- ---------- hero with counter ball ---------- -->
     <div class="hero">
       <div class="counter-ball">
         <div class="counter-num"><span id="count">0</span><span class="counter-plus">+</span></div>
@@ -248,216 +123,210 @@
         <h1>HTML Emails</h1>
         <p>30+ responsive, cross-client emails built so far in 2026 for regulated life-sciences programs — with compliant ISI placement and tested rendering across major clients.</p>
         <div class="pills">
-          <span class="pill">Responsive</span>
-          <span class="pill">Inline CSS</span>
-          <span class="pill">ISI / Fair Balance</span>
-          <span class="pill">Outlook-safe</span>
+          <span class="pill">Responsive</span><span class="pill">Inline CSS</span><span class="pill">ISI / Fair Balance</span><span class="pill">Outlook-safe</span>
         </div>
       </div>
     </div>
 
-    <!-- ---------- email grid ---------- -->
     <div class="section-label">Selected work · tap to view email &amp; code</div>
-    <div class="email-grid" id="emailGrid">
-      <!-- 6 placeholder email cards -->
-      <!-- card 1 is the SAMPLE with real render + sync highlight -->
-      <div class="email-card" onclick="openModal('sample')">
-        <div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>
-        <div class="email-meta">
-          <span class="tag">HCP · Launch</span>
-          <h3>VITA — Launch Announcement</h3>
-          <div class="desc">Product launch email for eye care professionals.</div>
-          <span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>
-        </div>
-      </div>
-
-      <div class="email-card" onclick="openModal('ph')">
-        <div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>
-        <div class="email-meta">
-          <span class="tag">Patient</span>
-          <h3>Starter Kit — Welcome</h3>
-          <div class="desc">Onboarding email with CTA and safety info.</div>
-          <span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>
-        </div>
-      </div>
-
-      <div class="email-card" onclick="openModal('ph')">
-        <div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>
-        <div class="email-meta">
-          <span class="tag">Reminder</span>
-          <h3>VAT Rewards — Reminder</h3>
-          <div class="desc">Re-engagement email with dynamic content.</div>
-          <span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>
-        </div>
-      </div>
-
-      <div class="email-card" onclick="openModal('ph')">
-        <div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>
-        <div class="email-meta">
-          <span class="tag">HCP · Event</span>
-          <h3>Institute — Event Invite</h3>
-          <div class="desc">Event invitation with calendar links.</div>
-          <span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>
-        </div>
-      </div>
-
-      <div class="email-card" onclick="openModal('ph')">
-        <div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>
-        <div class="email-meta">
-          <span class="tag">Bilingual</span>
-          <h3>VITA Canada — EN / FR</h3>
-          <div class="desc">Bilingual launch email, dual-language blocks.</div>
-          <span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>
-        </div>
-      </div>
-
-      <div class="email-card" onclick="openModal('ph')">
-        <div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>
-        <div class="email-meta">
-          <span class="tag">Promo</span>
-          <h3>MyACUVUE — Lens Offer</h3>
-          <div class="desc">Personalized offer with AMPscript fields.</div>
-          <span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>
-        </div>
-      </div>
-    </div>
+    <div class="email-grid" id="emailGrid"><!-- cards injected by JS --></div>
 
   </div>
 
-  <!-- ============================================================
-       MODAL
-       ============================================================ -->
+  <!-- MODAL -->
   <div class="modal-backdrop" id="modal" onclick="if(event.target===this)closeModal()">
     <div class="modal">
       <div class="modal-head">
-        <div class="title">
-          <span class="k" id="mTag">Email</span>
-          <span class="t" id="mTitle">Preview</span>
-        </div>
-        <span class="hint-sync" id="mHint">Hover a part of the email to highlight its code &rarr;</span>
+        <div class="title"><span class="k" id="mTag">Email</span><span class="t" id="mTitle">Preview</span></div>
         <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-split">
-        <!-- EMAIL render -->
         <div class="pane pane-email">
           <div class="pane-lbl">Rendered email</div>
-          <div class="email-render" id="emailRender"><!-- injected --></div>
+          <div class="email-render" id="emailRender"></div>
         </div>
-        <!-- CODE -->
         <div class="pane pane-code">
-          <div class="pane-lbl">HTML source</div>
-          <pre class="code" id="codeRender"><!-- injected --></pre>
+          <div class="pane-lbl"><span>HTML source</span><button class="copy-btn" onclick="copyCode()">Copy</button></div>
+          <pre class="code" id="codeRender"></pre>
         </div>
       </div>
     </div>
   </div>
 
 <script>
-  // ---------- counter animation ----------
+  /* ============================================================
+     ▼▼▼  YOUR EMAILS GO HERE — THIS IS THE ONLY PLACE TO EDIT  ▼▼▼
+
+     For each email, fill in 4 things:
+       tag    : small label (e.g. "HCP · Launch")
+       title  : the email name
+       image  : (optional) path to a thumbnail, e.g. "img/vita.png"
+                — if left as "", a live mini-preview of the HTML is shown instead
+       html   : paste the FULL email HTML between the backticks ` `
+
+     The same `html` is used to: render the email (left side of modal)
+     AND show the formatted code (right side). You paste it ONCE.
+     ============================================================ */
+
+  var EMAILS = [
+    {
+      tag: "HCP · Launch",
+      title: "VITA — Launch Announcement",
+      image: "",
+      html: `<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:560px;max-width:560px;background:#fff;border:1px solid #e3e3e3;font-family:Arial,Helvetica,sans-serif;">
+  <tr><td style="padding:20px 26px;border-bottom:3px solid #0a4d8c;">
+    <span style="font-size:19px;font-weight:bold;color:#0a4d8c;">CLARIVUE&trade;</span>
+  </td></tr>
+  <tr><td style="background:#0a4d8c;padding:34px 26px;text-align:center;">
+    <div style="font-size:12px;color:#9ec7ef;text-transform:uppercase;letter-spacing:2px;">Now Available</div>
+    <div style="font-size:25px;color:#fff;font-weight:bold;margin-top:8px;">Introducing CLARIVUE&trade; 1-Day</div>
+  </td></tr>
+  <tr><td style="padding:26px 26px 8px;">
+    <p style="margin:0 0 14px;font-size:14px;line-height:22px;color:#333;">Dear Dr. <span style="color:#0a4d8c;font-weight:bold;">%%FirstName%%</span>,</p>
+    <p style="margin:0;font-size:14px;line-height:22px;color:#333;">We are pleased to introduce CLARIVUE&trade; 1-Day to your practice.</p>
+  </td></tr>
+  <tr><td align="center" style="padding:20px 26px 28px;">
+    <a href="#" style="display:inline-block;background:#0a4d8c;color:#fff;font-size:14px;font-weight:bold;text-decoration:none;padding:13px 32px;border-radius:6px;">Request a Fitting Set</a>
+  </td></tr>
+  <tr><td style="background:#f4f6f8;border-top:1px solid #dfe5ea;padding:20px 26px;">
+    <div style="font-size:12px;font-weight:bold;color:#0a4d8c;text-transform:uppercase;margin-bottom:8px;">Important Safety Information</div>
+    <p style="margin:0;font-size:11px;line-height:17px;color:#555;"><strong>Indications:</strong> CLARIVUE&trade; 1-Day (etafilcon B) soft contact lenses are indicated for daily wear for the correction of refractive ametropia.</p>
+  </td></tr>
+</table>`
+    },
+    {
+      tag: "Patient",
+      title: "Starter Kit — Welcome",
+      image: "",
+      html: ``   // ← paste this email's HTML here
+    },
+    {
+      tag: "Reminder",
+      title: "VAT Rewards — Reminder",
+      image: "",
+      html: ``
+    },
+    {
+      tag: "HCP · Event",
+      title: "Institute — Event Invite",
+      image: "",
+      html: ``
+    },
+    {
+      tag: "Bilingual",
+      title: "VITA Canada — EN / FR",
+      image: "",
+      html: ``
+    },
+    {
+      tag: "Promo",
+      title: "MyACUVUE — Lens Offer",
+      image: "",
+      html: ``
+    }
+  ];
+
+  /* ▲▲▲  STOP EDITING HERE — everything below is automatic  ▲▲▲ */
+
+  // ---------- counter ----------
   function runCounter() {
-    var el = document.getElementById('count');
-    var target = 30, cur = 0;
-    var step = function() {
-      cur += 1;
-      el.textContent = cur;
-      if (cur < target) setTimeout(step, 38);
-    };
-    step();
+    var el = document.getElementById('count'), target = 30, cur = 0;
+    (function step(){ cur++; el.textContent = cur; if (cur < target) setTimeout(step, 38); })();
   }
   window.addEventListener('load', runCounter);
 
-  // ---------- SAMPLE email (render + code, with synced parts) ----------
-  // Each hoverable email part has data-seg matching a code segment id.
-  var sampleEmail = `
-    <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:560px;max-width:560px;background:#fff;border:1px solid #e3e3e3;font-family:Arial,Helvetica,sans-serif;">
-      <tr><td class="epart" data-seg="s-logo" style="padding:20px 26px;border-bottom:3px solid #0a4d8c;">
-        <span style="font-size:19px;font-weight:bold;color:#0a4d8c;">CLARIVUE&trade;</span>
-      </td></tr>
-      <tr><td class="epart" data-seg="s-hero" style="background:#0a4d8c;padding:34px 26px;text-align:center;">
-        <div style="font-size:12px;color:#9ec7ef;text-transform:uppercase;letter-spacing:2px;">Now Available</div>
-        <div style="font-size:25px;color:#fff;font-weight:bold;margin-top:8px;">Introducing CLARIVUE&trade; 1-Day</div>
-      </td></tr>
-      <tr><td class="epart" data-seg="s-body" style="padding:26px 26px 8px;">
-        <p style="margin:0 0 14px;font-size:14px;line-height:22px;color:#333;">Dear Dr. <span style="color:#0a4d8c;font-weight:bold;">%%FirstName%%</span>,</p>
-        <p style="margin:0;font-size:14px;line-height:22px;color:#333;">We're pleased to introduce CLARIVUE&trade; 1-Day to your practice.</p>
-      </td></tr>
-      <tr><td class="epart" data-seg="s-cta" align="center" style="padding:20px 26px 28px;">
-        <a href="#" style="display:inline-block;background:#0a4d8c;color:#fff;font-size:14px;font-weight:bold;text-decoration:none;padding:13px 32px;border-radius:6px;">Request a Fitting Set</a>
-      </td></tr>
-      <tr><td class="epart" data-seg="s-isi" style="background:#f4f6f8;border-top:1px solid #dfe5ea;padding:20px 26px;">
-        <div style="font-size:12px;font-weight:bold;color:#0a4d8c;text-transform:uppercase;margin-bottom:8px;">Important Safety Information</div>
-        <p style="margin:0;font-size:11px;line-height:17px;color:#555;"><strong>Indications:</strong> CLARIVUE&trade; 1-Day (etafilcon B) soft contact lenses are indicated for daily wear for the correction of refractive ametropia...</p>
-      </td></tr>
-    </table>`;
-
-  var sampleCode = [
-    {id:'s-logo', html:'<span class="c">&lt;!-- Logo bar --&gt;</span>\\n<span class="t">&lt;tr&gt;&lt;td</span> <span class="a">style</span>=<span class="v">"border-bottom:3px solid #0a4d8c"</span><span class="t">&gt;</span>\\n  <span class="x">CLARIVUE&trade;</span>\\n<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>'},
-    {id:'s-hero', html:'<span class="c">&lt;!-- Hero banner --&gt;</span>\\n<span class="t">&lt;tr&gt;&lt;td</span> <span class="a">style</span>=<span class="v">"background:#0a4d8c;text-align:center"</span><span class="t">&gt;</span>\\n  <span class="x">Introducing CLARIVUE&trade; 1-Day</span>\\n<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>'},
-    {id:'s-body', html:'<span class="c">&lt;!-- Body copy + personalization --&gt;</span>\\n<span class="t">&lt;p&gt;</span><span class="x">Dear Dr. </span><span class="v">%%FirstName%%</span><span class="x">,</span><span class="t">&lt;/p&gt;</span>\\n<span class="t">&lt;p&gt;</span><span class="x">We&rsquo;re pleased to introduce...</span><span class="t">&lt;/p&gt;</span>'},
-    {id:'s-cta', html:'<span class="c">&lt;!-- CTA button --&gt;</span>\\n<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"#"</span> <span class="a">style</span>=<span class="v">"background:#0a4d8c;border-radius:6px"</span><span class="t">&gt;</span>\\n  <span class="x">Request a Fitting Set</span>\\n<span class="t">&lt;/a&gt;</span>'},
-    {id:'s-isi', html:'<span class="c">&lt;!-- ISI — required safety info --&gt;</span>\\n<span class="t">&lt;td</span> <span class="a">style</span>=<span class="v">"background:#f4f6f8"</span><span class="t">&gt;</span>\\n  <span class="x">Important Safety Information</span>\\n  <span class="t">&lt;strong&gt;</span><span class="x">Indications:</span><span class="t">&lt;/strong&gt;</span> <span class="x">...etafilcon B...</span>\\n<span class="t">&lt;/td&gt;</span>'}
-  ];
-
-  var placeholderCode = [
-    '<span class="c">&lt;!-- Paste this email&rsquo;s HTML here. --&gt;</span>',
-    '<span class="c">&lt;!-- Table-based layout, inline CSS, --&gt;</span>',
-    '<span class="c">&lt;!-- ISI block, %%personalization%% fields. --&gt;</span>',
-    '',
-    '<span class="t">&lt;table</span> <span class="a">role</span>=<span class="v">"presentation"</span> <span class="a">width</span>=<span class="v">"600"</span><span class="t">&gt;</span>',
-    '  <span class="t">&lt;tr&gt;&lt;td&gt;</span> <span class="x">...</span> <span class="t">&lt;/td&gt;&lt;/tr&gt;</span>',
-    '<span class="t">&lt;/table&gt;</span>'
-  ].join('\n');
-
-  function openModal(kind) {
-    var modal = document.getElementById('modal');
-    var render = document.getElementById('emailRender');
-    var code = document.getElementById('codeRender');
-    var hint = document.getElementById('mHint');
-
-    if (kind === 'sample') {
-      document.getElementById('mTag').textContent = 'HCP · Launch';
-      document.getElementById('mTitle').textContent = 'VITA — Launch Announcement';
-      render.innerHTML = sampleEmail;
-      // build code with segments
-      var codeHtml = '';
-      sampleCode.forEach(function(seg) {
-        var segHtml = seg.html.replace(/\\n/g, '\n');
-        codeHtml += '<span class="code-seg" id="code-' + seg.id + '">' + segHtml + '</span>\n';
-      });
-      code.innerHTML = codeHtml;
-      hint.style.display = '';
-      // wire sync hover
-      var parts = render.querySelectorAll('.epart');
-      parts.forEach(function(part) {
-        part.addEventListener('mouseenter', function() {
-          var seg = part.getAttribute('data-seg');
-          part.classList.add('lit');
-          var c = document.getElementById('code-' + seg);
-          if (c) { c.classList.add('lit'); c.scrollIntoView({block:'center', behavior:'smooth'}); }
-        });
-        part.addEventListener('mouseleave', function() {
-          part.classList.remove('lit');
-          var seg = part.getAttribute('data-seg');
-          var c = document.getElementById('code-' + seg);
-          if (c) c.classList.remove('lit');
-        });
-      });
-    } else {
-      // placeholder email
-      document.getElementById('mTag').textContent = 'Email';
-      document.getElementById('mTitle').textContent = 'Preview (placeholder)';
-      render.innerHTML = '<div style="width:560px;max-width:100%;background:#fff;border:1px solid #e3e3e3;border-radius:6px;padding:60px 30px;text-align:center;color:#9fb1c8;font-family:Arial;"><div style="font-size:40px;margin-bottom:14px;">&#9993;</div><div style="font-size:14px;font-weight:bold;color:#5a6b80;">Email preview goes here</div><div style="font-size:12px;margin-top:6px;">Paste your email HTML to replace this placeholder.</div></div>';
-      code.innerHTML = placeholderCode;
-      hint.style.display = 'none';
+  // ---------- turn raw HTML into colored, escaped code ----------
+  function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  // Tokenize raw HTML into tags / comments / text, then color each token.
+  // Uses placeholder tokens so inserted spans are never re-matched.
+  function colorize(raw){
+    var COL = { tag:'#5f9ad6', attr:'#9bd1a0', val:'#e0a96d', comment:'#5a6b80', perso:'#e0a96d' };
+    var out = '';
+    var re = /<!--[\s\S]*?-->|<\/?[a-zA-Z][^>]*>|[^<]+/g;
+    var m;
+    while ((m = re.exec(raw)) !== null) {
+      var tok = m[0];
+      if (tok.indexOf('<!--') === 0) {
+        out += '<span style="color:'+COL.comment+';font-style:italic;">' + escapeHtml(tok) + '</span>';
+      } else if (tok[0] === '<') {
+        // a tag: split into name + attributes
+        var inner = tok.slice(1, -1);                 // strip < >
+        var closing = inner[0] === '/';
+        if (closing) inner = inner.slice(1);
+        var sp = inner.indexOf(' ');
+        var name = sp === -1 ? inner : inner.slice(0, sp);
+        var attrs = sp === -1 ? '' : inner.slice(sp);
+        var nameHtml = '<span style="color:'+COL.tag+';">' + escapeHtml(name) + '</span>';
+        // color attributes:  attr="value"
+        var attrHtml = escapeHtml(attrs).replace(
+          /([a-zA-Z-]+)=(&quot;|&#34;|")([\s\S]*?)(\2)/g,
+          function(_,a,q,v){ return '<span style="color:'+COL.attr+';">'+a+'</span>=<span style="color:'+COL.val+';">'+q+v+q+'</span>'; }
+        );
+        out += '<span style="color:'+COL.tag+';">&lt;'+(closing?'/':'')+'</span>' + nameHtml + attrHtml + '<span style="color:'+COL.tag+';">&gt;</span>';
+      } else {
+        // text node: escape, then highlight %%fields%%
+        out += escapeHtml(tok).replace(/(%%[^%]+%%)/g, '<span style="color:'+COL.perso+';font-weight:bold;">$1</span>');
+      }
     }
-
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    return out;
   }
 
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-    document.body.style.overflow = '';
+  // ---------- build the grid ----------
+  function buildGrid(){
+    var grid = document.getElementById('emailGrid');
+    EMAILS.forEach(function(em, i){
+      var card = document.createElement('div');
+      card.className = 'email-card';
+      card.onclick = function(){ openModal(i); };
+
+      var thumb;
+      if (em.image) {
+        thumb = '<div class="email-thumb"><img src="'+em.image+'" alt=""></div>';
+      } else if (em.html.trim()) {
+        // live mini-preview of the actual email
+        thumb = '<div class="email-thumb"><div class="mini">'+em.html+'</div></div>';
+      } else {
+        thumb = '<div class="email-thumb"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>EMAIL PREVIEW</div></div>';
+      }
+
+      card.innerHTML = thumb +
+        '<div class="email-meta">' +
+          '<span class="tag">'+em.tag+'</span>' +
+          '<h3>'+em.title+'</h3>' +
+          '<span class="open">View email &amp; code <span class="arrow">&rarr;</span></span>' +
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+  buildGrid();
+
+  // ---------- modal ----------
+  var currentCode = '';
+  function openModal(i){
+    var em = EMAILS[i];
+    document.getElementById('mTag').textContent = em.tag;
+    document.getElementById('mTitle').textContent = em.title;
+    var render = document.getElementById('emailRender');
+    var code = document.getElementById('codeRender');
+
+    if (em.html.trim()) {
+      render.innerHTML = em.html;
+      code.innerHTML = colorize(em.html);
+      currentCode = em.html;
+    } else {
+      render.innerHTML = '<div style="width:560px;max-width:100%;background:#fff;border:1px solid #e3e3e3;border-radius:6px;padding:60px 30px;text-align:center;color:#9fb1c8;font-family:Arial;"><div style="font-size:40px;margin-bottom:14px;">&#9993;</div><div style="font-size:14px;font-weight:bold;color:#5a6b80;">No HTML added yet</div><div style="font-size:12px;margin-top:6px;">Paste this email&rsquo;s HTML in the EMAILS list to see it here.</div></div>';
+      code.innerHTML = '<span style="color:#5a6b80;font-style:italic;">// Paste this email\u2019s HTML in the EMAILS array<br>// (the html: `` field). It will render on the left<br>// and appear here as formatted code automatically.</span>';
+      currentCode = '';
+    }
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){ document.getElementById('modal').classList.remove('open'); document.body.style.overflow = ''; }
+  function copyCode(){
+    if(!currentCode) return;
+    navigator.clipboard.writeText(currentCode).then(function(){
+      var b = document.querySelector('.copy-btn'); var o = b.textContent; b.textContent='Copied'; setTimeout(function(){b.textContent=o;},1300);
+    });
   }
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
 </script>
