@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudPages — SFMC Portfolio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height:100vh; font-family:'Poppins','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:linear-gradient(135deg,#0d3b6e 0%,#2a3a9c 30%,#4b3bbf 55%,#6b4fd8 78%,#3d2a8c 100%);
+    background-attachment:fixed; color:#fff; -webkit-font-smoothing:antialiased; }
+  .page { max-width:1100px; margin:0 auto; padding:0 26px 70px; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:26px 0 10px; }
+  .back { display:inline-flex; align-items:center; gap:8px; color:rgba(255,255,255,.85); text-decoration:none;
+    font-size:14px; font-weight:600; padding:8px 14px; border-radius:100px;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); transition:background .2s; }
+  .back:hover { background:rgba(255,255,255,.18); }
+  .brand-mini { display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:16px; }
+  .brand-mini .logo { width:32px; height:32px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; }
+  .brand-mini .logo svg { width:17px; height:17px; }
+
+  .head { padding:40px 0 34px; }
+  .head h1 { font-size:46px; font-weight:800; letter-spacing:-.02em; }
+  .head p { margin-top:12px; font-size:16px; color:rgba(255,255,255,.85); max-width:520px; line-height:1.5; }
+
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .card { display:block; text-decoration:none; color:#fff; border-radius:18px; padding:30px 28px;
+    background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); backdrop-filter:blur(4px);
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s, background .25s; min-height:190px;
+    display:flex; flex-direction:column; justify-content:space-between; }
+  .card:hover { transform:translateY(-6px); box-shadow:0 26px 55px -22px rgba(8,16,40,.6);
+    border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.12); }
+  .card .ico { width:54px; height:54px; border-radius:14px; background:rgba(122,92,255,.25);
+    border:1px solid rgba(122,92,255,.45); display:flex; align-items:center; justify-content:center; }
+  .card .ico svg { width:28px; height:28px; stroke:#cdbcff; }
+  .card .tag { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#cdbcff; margin-bottom:8px; }
+  .card h3 { font-size:21px; font-weight:700; letter-spacing:-.01em; }
+  .card .open { margin-top:10px; display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:#b9a6ff; }
+  .card:hover .open .arrow { transform:translateX(4px); }
+  .open .arrow { transition:transform .2s; }
+  .card.disabled { pointer-events:none; opacity:.55; }
+  .card.disabled .open { color:rgba(255,255,255,.4); }
+
+  @media (max-width:720px){ .grid{ grid-template-columns:1fr; } .head h1{ font-size:34px; } }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <a class="back" href="index.html"><span style="font-size:16px;">&larr;</span> Back</a>
+      <span class="brand-mini">
+        <span class="logo"><svg viewBox="0 0 24 24" fill="#4b3bbf"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+        SFMC Portfolio
+      </span>
+    </div>
+
+    <div class="head">
+      <h1>CloudPages</h1>
+      <p>Interactive Marketing Cloud CloudPage dashboards — campaign metrics, reporting views, and form tools built with AMPscript and Chart.js.</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- ▼ EDIT: paste each CloudPage URL in href="" ▼ -->
+
+      <a class="card" href="" target="_blank">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <div>
+          <div class="tag">Campaign · Multi-wave</div>
+          <h3>Project Hunter Dashboard</h3>
+          <span class="open">Open CloudPage <span class="arrow">&rarr;</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="" target="_blank">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div>
+          <div class="tag">Rewards</div>
+          <h3>VAT Rewards Metrics</h3>
+          <span class="open">Open CloudPage <span class="arrow">&rarr;</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="" target="_blank">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <div>
+          <div class="tag">Forms</div>
+          <h3>Starter Kit Form Viewer</h3>
+          <span class="open">Open CloudPage <span class="arrow">&rarr;</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="" target="_blank">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 12l5-3"/><path d="M21 3l-3 6-3-3z"/></svg></div>
+        <div>
+          <div class="tag">Monitoring</div>
+          <h3>Automation Monitor</h3>
+          <span class="open">Open CloudPage <span class="arrow">&rarr;</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</body>
+</html>
