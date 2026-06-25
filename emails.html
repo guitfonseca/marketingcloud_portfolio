@@ -57,15 +57,22 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s; backdrop-filter: blur(4px);
   }
   .email-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -20px rgba(8,16,40,0.6); border-color: rgba(255,255,255,0.35); }
-  .email-thumb { height: 200px; background: #f1f4f8; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .email-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-  .email-thumb .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9fb1c8; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
+  .email-thumb { height: 230px; background: #f1f4f8; position: relative; overflow-y: auto; overflow-x: hidden; display: block; }
+  .email-thumb img { max-width: 100%; }
+  .email-thumb .ph { height: 230px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #9fb1c8; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
   .email-thumb .ph svg { width: 30px; height: 30px; opacity: 0.6; }
-  /* live mini-render fallback thumbnail */
+  /* live mini-render — scaled down, scrollable inside the card */
   .email-thumb .mini {
-    position: absolute; top: 0; left: 0; width: 250%; height: 250%;
-    transform: scale(0.4); transform-origin: top left; pointer-events: none;
+    width: 167%;                /* 600px-ish email shown at ~60% */
+    transform: scale(0.6); transform-origin: top left;
+    margin-bottom: -40%;        /* pull up the empty space from scaling */
+    pointer-events: none;
   }
+  /* nicer thin scrollbar inside the card */
+  .email-thumb::-webkit-scrollbar { width: 8px; }
+  .email-thumb::-webkit-scrollbar-track { background: #e2e8f0; }
+  .email-thumb::-webkit-scrollbar-thumb { background: #b0bccc; border-radius: 4px; }
+  .email-thumb::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   .email-meta { padding: 15px 17px; }
   .email-meta .tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; margin-bottom: 9px; background: rgba(122,92,255,0.25); color: #cdbcff; border: 1px solid rgba(122,92,255,0.4); }
   .email-meta h3 { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
@@ -2409,7 +2416,7 @@
      
       <tr>
        <td align="center" class="width-full-img width-full" valign="top" width="600">
-        <img alt="Persona sosteniendo una lente de contacto frente al ojo" data-assetid="0" height="220" src="https://example.com" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 220px; width: 600px; border: none;" width="600"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #13264B; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Content article Image Primary Start-->
+        <img alt="Persona sosteniendo una lente de contacto frente al ojo" data-assetid="0" height="220" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/af381317-c938-4d8f-bc35-d5d5afc26c67.jpg" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 220px; width: 600px; border: none;" width="600"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #13264B; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Content article Image Primary Start-->
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
   <tr>
     <td align="center" class="pad-0LR" style="padding: 0px 32px" valign="top">
@@ -2421,7 +2428,7 @@
             <table border="0" cellpadding="0" cellspacing="0" class="hide" role="presentation" width="100%">
               <tr>
                 <td align="center" class="width-full-img" valign="top">
-                  <img alt="Line left" data-assetid="0" height="140" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: rgb(0, 0, 1); padding: 0px; height: 140px; width: 16px; border: none;" width="16">
+                  <img alt="Line left" data-assetid="0" height="140" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/b02eaee1-549c-4e59-9d45-bd627cdf3f90.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: rgb(0, 0, 1); padding: 0px; height: 140px; width: 16px; border: none;" width="16">
                 </td>
               </tr>
             </table>
@@ -2431,7 +2438,7 @@
               <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                 <tr>
                   <td align="center" class="width-full-img pad-20T pad-40B" valign="top">
-                    <img alt="Line center" data-assetid="0" height="18" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 18px; width: 140px; border: none;" width="140">
+                    <img alt="Line center" data-assetid="0" height="18" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/6ddafbbb-70c3-46bc-8634-463665586f86.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 18px; width: 140px; border: none;" width="140">
                   </td>
                 </tr>
               </table>
@@ -2474,7 +2481,7 @@
                   <table border="0" cellpadding="0" cellspacing="0" class="hide" role="presentation" width="100%">
                     <tr>
                       <td align="center" class="width-full-img" valign="top">
-                        <img alt="Line Right" data-assetid="0" height="140" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 140px; width: 16px; border: none;" width="16">
+                        <img alt="Line Right" data-assetid="0" height="140" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/df9e2dc6-f559-4f3e-ad47-ac3576f0eceb.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 140px; width: 16px; border: none;" width="16">
                       </td>
                     </tr>
                   </table>
@@ -2485,7 +2492,7 @@
                     <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                       <tr>
                         <td align="center" class="width-full-img pad-40T pad-20B" valign="top">
-                          <img alt="Line" data-assetid="0" height="18" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 18px; width: 140px; border: none;" width="140">
+                          <img alt="Line" data-assetid="0" height="18" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/0f6cf2fa-8848-477d-b527-a85765ed32b2.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 18px; width: 140px; border: none;" width="140">
                         </td>
                       </tr>
                     </table>
@@ -2529,7 +2536,7 @@
              
               <tr>
                <td align="left" valign="top">
-                <img alt="Icon Alt" data-assetid="0" height="5" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 5px; width: 105px; border: none;" width="105"></td></tr></table><!-- Image End --><!-- Header Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <img alt="Icon Alt" data-assetid="0" height="5" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/e95b19ab-4d5a-4a95-933b-4f67b57e248b.jpg" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 5px; width: 105px; border: none;" width="105"></td></tr></table><!-- Image End --><!-- Header Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
              
               <tr>
                <td align="left" class="font-14" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 22px; color: #13264B; mso-line-height-rule: exactly;" valign="top">
@@ -2543,7 +2550,7 @@
          
           <tr>
            <td align="center" class="width-full-img pad-0LR pad-20T" style="padding-left: 30px;" valign="top">
-            <img alt="Persona colocando una lente de contacto en el ojo" data-assetid="0" height="175" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 175px; width: 260px; border: none;" width="260"></td></tr></table><!-- Image End --></th></tr></table></td></tr></table><!-- Content article Image Secondary End --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Content article Image Secondary Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+            <img alt="Persona colocando una lente de contacto en el ojo" data-assetid="0" height="175" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/08831026-f88e-4974-9d65-70cf5896d93a.jpg" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 175px; width: 260px; border: none;" width="260"></td></tr></table><!-- Image End --></th></tr></table></td></tr></table><!-- Content article Image Secondary End --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Content article Image Secondary Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
  
   <tr>
    <td align="center" class="pad-20LR pad-10T pad-10B" style="padding: 20px 32px 32px" valign="top">
@@ -2559,7 +2566,7 @@
              
               <tr>
                <td align="left" valign="top">
-                <img alt="Icon Alt" data-assetid="0" height="5" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 5px; width: 105px; border: none;" width="105"></td></tr></table><!-- Image End --><!-- Header Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <img alt="Icon Alt" data-assetid="0" height="5" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/e95b19ab-4d5a-4a95-933b-4f67b57e248b.jpg" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 5px; width: 105px; border: none;" width="105"></td></tr></table><!-- Image End --><!-- Header Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
              
               <tr>
                <td align="left" class="font-14" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 22px; color: #13264B; mso-line-height-rule: exactly;" valign="top">
@@ -2584,7 +2591,7 @@
          
           <tr>
            <td align="center" class="width-full-img pad-0LR pad-20T" style="padding-left: 30px;" valign="top">
-            <img alt="Ícono de mensaje con marcador de ubicación" data-assetid="0" height="175" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 175px; width: 260px; border: none;" width="260"></td></tr></table><!-- Image End --></th></tr></table></td></tr></table><!-- Content article Image Secondary End --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Body Copy Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+            <img alt="Ícono de mensaje con marcador de ubicación" data-assetid="0" height="175" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/124b01a8-3023-4c3c-9aa2-7da75a9283d8.jpg" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 175px; width: 260px; border: none;" width="260"></td></tr></table><!-- Image End --></th></tr></table></td></tr></table><!-- Content article Image Secondary End --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Body Copy Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
  
   <tr>
    <td align="center" class="pad-20LR pad-10T" style="padding: 16px 32px;" valign="top">
@@ -2617,7 +2624,7 @@
          
           <tr>
            <td align="center" class="width-full-img width-full" valign="top" width="600">
-            <img alt="Productos de lentes de contacto ACUVUE" data-assetid="0" height="220" src="https://example.com" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; height: 220px; width: 400px; text-align: center; border: none;" width="400"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Body Copy Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+            <img alt="Productos de lentes de contacto ACUVUE" data-assetid="0" height="220" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/ae73ffc7-8ec8-4d5e-ba3c-5aa26822e329.png" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; height: 220px; width: 400px; text-align: center; border: none;" width="400"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Body Copy Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
  
   <tr>
    <td align="center" class="pad-20LR pad-10T" style="padding: 0px 32px;" valign="top">
@@ -2645,7 +2652,7 @@
                      
                       <tr>
                        <td align="center" class="pad-0T" valign="top">
-                        <img alt="Ícono de pantalla" data-assetid="0" height="90" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: rgb(99, 102, 106); padding: 0px; height: 90px; width: 90px; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <img alt="Ícono de pantalla" data-assetid="0" height="90" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/a9045fce-d144-4b7b-9204-7212dc0dacff.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: rgb(99, 102, 106); padding: 0px; height: 90px; width: 90px; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                      
                       <tr>
                        <td align="center" class="align-center font-14 pad-10T" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 9px; line-height: 12px; color: #ffffff; mso-line-height-rule: exactly;" valign="top">
@@ -2658,7 +2665,7 @@
                      
                       <tr>
                        <td align="center" class="pad-0T " valign="top">
-                        <img alt="Ícono de calendario" data-assetid="0" height="90" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #63666A; padding: 0px; height: 90px; width: 90px; text-align: center; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <img alt="Ícono de calendario" data-assetid="0" height="90" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/5f498f18-9ef5-47ea-9628-a3ca9dbbd136.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #63666A; padding: 0px; height: 90px; width: 90px; text-align: center; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                      
                       <tr>
                        <td align="center" class="align-center font-14 pad-10T" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 9px; line-height: 12px; color: #ffffff; mso-line-height-rule: exactly;" valign="top">
@@ -2671,7 +2678,7 @@
                      
                       <tr>
                        <td align="center" class="pad-0T" valign="top">
-                        <img alt="Ícono de ubicación" data-assetid="0" height="90" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #63666A; padding: 0px; height: 90px; width: 90px; text-align: center; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <img alt="Ícono de ubicación" data-assetid="0" height="90" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/a62673d6-7108-427d-9b6d-0906b9e545a1.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #63666A; padding: 0px; height: 90px; width: 90px; text-align: center; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                      
                       <tr>
                        <td align="center" class="align-center font-14 pad-10T" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 9px; line-height: 12px; color: #ffffff; mso-line-height-rule: exactly;" valign="top">
@@ -2684,7 +2691,7 @@
                      
                       <tr>
                        <td align="center" class="pad-0T" valign="top">
-                        <img alt="Ícono de lentes de contacto" data-assetid="0" height="90" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #63666A; padding: 0px; height: 90px; width: 90px; text-align: center; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <img alt="Ícono de lentes de contacto" data-assetid="0" height="90" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/01f859d3-1b5c-4496-afeb-d4e108fe92b6.png" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #63666A; padding: 0px; height: 90px; width: 90px; text-align: center; border: none;" width="90"></td></tr></table><!-- Image End --><!-- Body Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                      
                       <tr>
                        <td align="center" class="align-center font-14 pad-10T" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: normal; font-size: 9px; line-height: 12px; color: #ffffff; mso-line-height-rule: exactly;" valign="top">
@@ -2696,11 +2703,11 @@
              
               <tr>
                <td align="right" class="width-half-img width-full" valign="top" width="600">
-                <img alt="ACUVUE Logo" data-assetid="0" height="66" src="https://example.com" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 66px; width: 367px; border: none;" width="367"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table><!-- Dark Blue background End --></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <img alt="ACUVUE Logo" data-assetid="0" height="66" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/20022b59-4076-43c0-9d08-1a342efd0172.png" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 66px; width: 367px; border: none;" width="367"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table><!-- Dark Blue background End --></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
  
   <tr>
    <td align="center" class="width-full-img width-full pad-20LR" style="padding: 20px 0 10px" valign="top" width="489">
-    <img alt="VISITÁ A TU PROFESIONAL DE LA VISIÓN PARA REALIZAR EL EXAMEN VISUAL ANUAL. ESTE ES UN MENSAJE DE SALUD PÚBLICA A LA COMUNIDAD. CONSULTÁ CON TU PROFESIONAL DE LA VISIÓN." data-assetid="0" height="24" src="https://example.com" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 24px; width: 496px; border: none;" width="496"></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Body Copy Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <img alt="VISITÁ A TU PROFESIONAL DE LA VISIÓN PARA REALIZAR EL EXAMEN VISUAL ANUAL. ESTE ES UN MENSAJE DE SALUD PÚBLICA A LA COMUNIDAD. CONSULTÁ CON TU PROFESIONAL DE LA VISIÓN." data-assetid="0" height="24" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/24a256e5-884e-40c5-8ba3-62c8f1216453.png" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 24px; width: 496px; border: none;" width="496"></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: transparent; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><!-- Body Copy Start--><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
  
   <tr>
    <td align="center" class="pad-20LR" style="padding: 10px 44px 12px;" valign="top">
@@ -2727,7 +2734,7 @@
              
               <tr>
                <td align="left" valign="top">
-                <img alt="Icon Alt" data-assetid="0" height="5" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 5px; width: 105px; border: none;" width="105"></td></tr></table><!-- Image End --><!-- Header Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                <img alt="Icon Alt" data-assetid="0" height="5" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/e95b19ab-4d5a-4a95-933b-4f67b57e248b.jpg" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 5px; width: 105px; border: none;" width="105"></td></tr></table><!-- Image End --><!-- Header Text Start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
              
               <tr>
                <td align="left" class="font-14" style="padding-top: 10px; font-family: 'Nunito', Arial, Helvetica, sans-serif; font-weight: 700; font-size: 18px; line-height: 22px; color: #13264B; mso-line-height-rule: exactly;" valign="top">
@@ -2751,7 +2758,7 @@ necesidades de corrección visual.
          
           <tr>
            <td align="center" class="width-full-img pad-0LR pad-20T" style="padding-right: 30px;" valign="top">
-            <img alt="Ícono de lentes de contacto" data-assetid="0" height="175" src="https://example.com" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 175px; width: 260px; border: none;" width="260"></td></tr></table><!-- Image End --></th></tr></table></td></tr></table><!-- Content article Image Secondary End --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><!-- Full-Width Image start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+            <img alt="Ícono de lentes de contacto" data-assetid="0" height="175" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/71c63f05-b71b-4296-b35c-3dc41865d8f0.jpg" style="display: block; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 175px; width: 260px; border: none;" width="260"></td></tr></table><!-- Image End --></th></tr></table></td></tr></table><!-- Content article Image Secondary End --></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><!-- Full-Width Image start --><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
  
   <tr>
    <td align="left" class="pad-20T" style="padding: 0 10px" valign="top">
@@ -2759,7 +2766,7 @@ necesidades de corrección visual.
      
       <tr>
        <td align="right" class="width-half-img" valign="top" width="600">
-        <img alt="ACUVUE Logo" data-assetid="0" height="76" src="https://example.com" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 76px; width: 433px; border: none;" width="433"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table>
+        <img alt="ACUVUE Logo" data-assetid="0" height="76" src="https://image.la.acuvue.com/lib/fe9513737762067c70/m/1/53a3c3ed-f2f5-49e7-85fa-4297efef7534.png" style="display: block; font-family: Nunito, Arial, Helvetica, sans-serif; font-weight: normal; font-size: 16px; line-height: 20px; color: #000001; padding: 0px; text-align: center; height: 76px; width: 433px; border: none;" width="433"></td></tr></table></td></tr></table><!-- Full-Width Image end --></td></tr></table>
 
               </td>
             </tr>
